@@ -24,6 +24,7 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 export default {
+  name: "MainPage",
   components: {
     RecipePreviewList
   }
