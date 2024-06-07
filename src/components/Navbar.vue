@@ -16,7 +16,7 @@
           <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
         </li>
         <li>
-          <b-nav-item-dropdown text="Pesonal">
+          <b-nav-item-dropdown text="Pesonal" v-if="$root.store.username">
             <b-dropdown-item herf="#">
               <a class="dropdown-item active" href="#">
                   <router-link class="nav-link" :to="{ name: 'favorite' }">Favorites</router-link>
