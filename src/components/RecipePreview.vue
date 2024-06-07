@@ -18,14 +18,32 @@
         <h5 class="card-title">{{ recipe.title }}</h5>
       </router-link>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{ recipe.readyInMinutes }} minutes</li>
-        <li class="list-group-item">{{ recipe.aggregateLikes }} likes</li>
+        <li class="list-group-item">
+          {{ recipe.readyInMinutes }} minutes
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ recipe.aggregateLikes }} likes
+          <b-button
+            v-if="!isFavorite"
+            variant="outline-warning"
+            @click="toggleFavorite"
+          >
+            Favourite
+          </b-button>
+          <b-button
+            v-else
+            variant="success"
+            :pressed="true"
+            disabled
+          >
+            In your FAV!
+          </b-button>
+        </li>
       </ul>
       <div class="logos">
         <img v-if="recipe.glutenFree" src="@/assets/pictures/gluten_free.jpg" alt="Gluten Free" class="logo" />
         <img v-if="recipe.vegetarian" src="@/assets/pictures/vegeterian.jpg" alt="Vegetarian" class="logo" />
         <img v-if="recipe.vegan" src="@/assets/pictures/vegan.png" alt="Vegan" class="logo" />
-
       </div>
     </div>
   </div>
@@ -37,6 +55,20 @@ export default {
     recipe: {
       type: Object,
       required: true
+    }
+  },
+  data() {
+    return {
+      isFavorite: false
+    };
+  },
+  methods: {
+    toggleFavorite() {
+      if (!this.isFavorite) {
+        this.isFavorite = true;
+        // Add the recipe to the favorites list (this could be a call to a Vuex store action or an API request)
+        this.$root.store.addFavorite(this.recipe);
+      }
     }
   }
 };
@@ -75,4 +107,16 @@ export default {
   height: 30px;
   margin: 0 5px;
 }
+.star-button {
+  border: none;
+  background: black;
+  color: #ffc107;
+}
+.star-button.active {
+  color: #ffc107;
+}
+.star-button i {
+  font-size: 1rem;
+}
 </style>
+
