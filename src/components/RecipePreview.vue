@@ -6,7 +6,7 @@
     >
       <img
         :src="recipe.image"
-        class="card-img-top hoverable"
+        class="card-img-top"
         alt="Recipe image"
       />
     </router-link>
@@ -15,12 +15,18 @@
         :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
         class="card-link hoverable"
       >
-        <h5 class="card-title hoverable">{{ recipe.title }}</h5>
+        <h5 class="card-title">{{ recipe.title }}</h5>
       </router-link>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">{{ recipe.readyInMinutes }} minutes</li>
         <li class="list-group-item">{{ recipe.aggregateLikes }} likes</li>
       </ul>
+      <div class="logos">
+        <img v-if="recipe.glutenFree" src="@/assets/pictures/gluten_free.jpg" alt="Gluten Free" class="logo" />
+        <img v-if="recipe.vegetarian" src="@/assets/pictures/vegeterian.jpg" alt="Vegetarian" class="logo" />
+        <img v-if="recipe.vegan" src="@/assets/pictures/vegan.png" alt="Vegan" class="logo" />
+
+      </div>
     </div>
   </div>
 </template>
@@ -58,5 +64,15 @@ export default {
 .hoverable:hover {
   cursor: pointer;
   opacity: 0.8;
+}
+.logos {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.logo {
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
 }
 </style>
