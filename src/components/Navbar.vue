@@ -12,6 +12,9 @@
           <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'search' }">Search</router-link>
           </li>
+          <li class ="nav-item">
+            <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
+          </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item" v-if="!$root.store.username">
