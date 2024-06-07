@@ -49,9 +49,18 @@ export default {
         console.log(recipes);
         this.recipes = [];
         this.recipes.push(...recipes);
+        randomizeRecipes();
       } catch (error) {
         console.log(error);
       }
+    },
+    randomizeRecipes() {
+      for (let i = this.recipes.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [this.recipes[i], this.recipes[j]] = [this.recipes[j], this.recipes[i]];
+      }
+      // Trigger a re-render by setting the recipes array to a new reference
+      this.recipes = [...this.recipes];
     }
   }
 };

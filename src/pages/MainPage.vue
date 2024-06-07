@@ -4,9 +4,9 @@
     <div class="row">
       <!-- Left side for random recipes -->
       <div class="col-md-6">
-        <RecipePreviewList title="Explore this recipes" class="RandomRecipes center" />
-      </div>
-      <!-- Right side for login or last viewed recipes -->
+        <RecipePreviewList ref="recipeList" title="Explore these recipes" class="RandomRecipes center" />
+        <b-button @click="randomizeRecipes" class="mb-3">Randomize Recipes</b-button>
+        </div>
       <div class="col-md-6">
         <div v-if="$root.store.username">
           <RecipePreviewList
@@ -36,6 +36,11 @@ export default {
   components: {
     RecipePreviewList,
     LoginForm
+  },
+  methods: {
+    randomizeRecipes() {
+      this.$refs.recipeList.randomizeRecipes();
+    }
   }
 };
 </script>
