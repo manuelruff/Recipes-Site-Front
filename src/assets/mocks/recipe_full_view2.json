@@ -9,7 +9,37 @@
         "vegan": false,
         "glutenFree": false,
         "summary": "You can never have too many main course recipes, so give Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs a try. One serving contains <b>543 calories</b>, <b>17g of protein</b>, and <b>16g of fat</b>. For <b>$1.57 per serving</b>, this recipe <b>covers 22%</b> of your daily requirements of vitamins and minerals. This recipe serves 2. A mixture of butter, white wine, pasta, and a handful of other ingredients are all it takes to make this recipe so yummy. 209 people have tried and liked this recipe. It is brought to you by fullbellysisters.blogspot.com. From preparation to the plate, this recipe takes approximately <b>45 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 83%</b>, which is tremendous. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1230187\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229807\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>, and <a href=\"https://spoonacular.com/recipes/pasta-with-garlic-scallions-cauliflower-breadcrumbs-1229669\">Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs</a>.",
-        "analyzedInstructions": [],
+        "analyzedInstructions": [
+            {
+            "name": "",
+            "steps": [
+                {
+                "number": 1,
+                "step": "Boil water in a large pot. Cook pasta according to package instructions."
+                },
+                {
+                "number": 2,
+                "step": "In a skillet, heat olive oil over medium heat. Add garlic and scallions, and cook until fragrant."
+                },
+                {
+                "number": 3,
+                "step": "Add cauliflower florets and cook until tender."
+                },
+                {
+                "number": 4,
+                "step": "Add cooked pasta to the skillet and toss with the cauliflower mixture."
+                },
+                {
+                "number": 5,
+                "step": "Sprinkle with breadcrumbs and grated cheese."
+                },
+                {
+                "number": 6,
+                "step": "Serve hot and enjoy!"
+                }
+            ]
+            }
+        ],
         "instructions": "",
         "extendedIngredients": [
             {
@@ -321,7 +351,41 @@
         "vegan": false,
         "glutenFree": false,
         "summary": "Chicken Parmesan is a delicious and classic Italian-American dish. One serving contains <b>750 calories</b>, <b>45g of protein</b>, and <b>30g of fat</b>. For <b>$2.50 per serving</b>, this recipe <b>covers 35%</b> of your daily requirements of vitamins and minerals. This recipe serves 4. A mixture of chicken breasts, marinara sauce, mozzarella cheese, and a handful of other ingredients are all it takes to make this recipe so yummy. 350 people have tried and liked this recipe. It is brought to you by foodnetwork.com. From preparation to the plate, this recipe takes approximately <b>60 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 90%</b>, which is tremendous. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/chicken-parmesan-1230187\">Chicken Parmesan</a>, <a href=\"https://spoonacular.com/recipes/chicken-parmesan-1229807\">Chicken Parmesan</a>, and <a href=\"https://spoonacular.com/recipes/chicken-parmesan-1229669\">Chicken Parmesan</a>.",
-        "analyzedInstructions": [],
+        "analyzedInstructions": [
+            {
+            "name": "",
+            "steps": [
+                {
+                "number": 1,
+                "step": "Preheat your oven to 375°F (190°C)."
+                },
+                {
+                "number": 2,
+                "step": "Season the chicken breasts with salt and pepper."
+                },
+                {
+                "number": 3,
+                "step": "Dip each chicken breast into beaten eggs, then coat with breadcrumbs."
+                },
+                {
+                "number": 4,
+                "step": "In a skillet, heat olive oil over medium-high heat. Brown the chicken breasts on both sides."
+                },
+                {
+                "number": 5,
+                "step": "Transfer the chicken breasts to a baking dish. Top each breast with marinara sauce and shredded mozzarella cheese."
+                },
+                {
+                "number": 6,
+                "step": "Bake in the preheated oven for 25-30 minutes, or until the chicken is cooked through and the cheese is bubbly and golden."
+                },
+                {
+                "number": 7,
+                "step": "Serve hot with your favorite pasta or salad. Enjoy!"
+                }
+            ]
+            }
+        ],
         "instructions": "",
         "extendedIngredients": [
             {
@@ -437,7 +501,37 @@
         "vegan": true,
         "glutenFree": true,
         "summary": "Vegan Tacos are a healthy and delicious meal option. One serving contains <b>350 calories</b>, <b>12g of protein</b>, and <b>10g of fat</b>. For <b>$2.00 per serving</b>, this recipe <b>covers 20%</b> of your daily requirements of vitamins and minerals. This recipe serves 4. A mixture of black beans, corn tortillas, avocado, and a handful of other ingredients are all it takes to make this recipe so yummy. 150 people have tried and liked this recipe. It is brought to you by minimalistbaker.com. From preparation to the plate, this recipe takes approximately <b>30 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 85%</b>, which is outstanding. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/vegan-tacos-1230187\">Vegan Tacos</a>, <a href=\"https://spoonacular.com/recipes/vegan-tacos-1229807\">Vegan Tacos</a>, and <a href=\"https://spoonacular.com/recipes/vegan-tacos-1229669\">Vegan Tacos</a>.",
-        "analyzedInstructions": [],
+        "analyzedInstructions": [
+            {
+            "name": "",
+            "steps": [
+                {
+                "number": 1,
+                "step": "Warm the corn tortillas in a dry skillet over medium heat for about 30 seconds on each side until they are soft and pliable."
+                },
+                {
+                "number": 2,
+                "step": "In a separate skillet, heat a small amount of oil over medium heat. Add minced garlic and cook for about 1 minute until fragrant."
+                },
+                {
+                "number": 3,
+                "step": "Add the drained and rinsed black beans to the skillet with garlic. Cook for about 5 minutes, stirring occasionally, until heated through."
+                },
+                {
+                "number": 4,
+                "step": "To assemble the tacos, place a spoonful of the black bean mixture onto each warm tortilla."
+                },
+                {
+                "number": 5,
+                "step": "Top with sliced avocado and any other desired toppings, such as salsa, chopped cilantro, or hot sauce."
+                },
+                {
+                "number": 6,
+                "step": "Serve immediately and enjoy your delicious vegan tacos!"
+                }
+            ]
+            }
+        ],
         "instructions": "",
         "extendedIngredients": [
             {
@@ -553,7 +647,37 @@
         "vegan": false,
         "glutenFree": true,
         "summary": "Gluten-Free Pancakes are a perfect breakfast option. One serving contains <b>290 calories</b>, <b>8g of protein</b>, and <b>12g of fat</b>. For <b>$1.50 per serving</b>, this recipe <b>covers 15%</b> of your daily requirements of vitamins and minerals. This recipe serves 4. A mixture of gluten-free flour, eggs, milk, and a handful of other ingredients are all it takes to make this recipe so yummy. 180 people have tried and liked this recipe. It is brought to you by kingarthurflour.com. From preparation to the plate, this recipe takes approximately <b>25 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 80%</b>, which is outstanding. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/gluten-free-pancakes-1230187\">Gluten-Free Pancakes</a>, <a href=\"https://spoonacular.com/recipes/gluten-free-pancakes-1229807\">Gluten-Free Pancakes</a>, and <a href=\"https://spoonacular.com/recipes/gluten-free-pancakes-1229669\">Gluten-Free Pancakes</a>.",
-        "analyzedInstructions": [],
+        "analyzedInstructions": [
+            {
+            "name": "",
+            "steps": [
+                {
+                "number": 1,
+                "step": "In a large mixing bowl, whisk together the gluten-free flour, eggs, milk, and maple syrup until well combined."
+                },
+                {
+                "number": 2,
+                "step": "Heat a non-stick skillet or griddle over medium heat. Lightly grease the surface with oil or cooking spray."
+                },
+                {
+                "number": 3,
+                "step": "Pour about 1/4 cup of batter onto the skillet for each pancake. Cook until bubbles form on the surface, then flip and cook until golden brown on both sides."
+                },
+                {
+                "number": 4,
+                "step": "Repeat with the remaining batter, greasing the skillet as needed."
+                },
+                {
+                "number": 5,
+                "step": "Serve the pancakes warm with your favorite toppings, such as fresh fruit, maple syrup, or dairy-free yogurt."
+                },
+                {
+                "number": 6,
+                "step": "Enjoy your delicious gluten-free pancakes!"
+                }
+            ]
+            }
+        ],
         "instructions": "",
         "extendedIngredients": [
             {
@@ -669,7 +793,37 @@
         "vegan": false,
         "glutenFree": false,
         "summary": "Shrimp Scampi is a quick and easy seafood dish. One serving contains <b>400 calories</b>, <b>35g of protein</b>, and <b>20g of fat</b>. For <b>$3.00 per serving</b>, this recipe <b>covers 25%</b> of your daily requirements of vitamins and minerals. This recipe serves 4. A mixture of shrimp, garlic, lemon, and a handful of other ingredients are all it takes to make this recipe so yummy. 220 people have tried and liked this recipe. It is brought to you by allrecipes.com. From preparation to the plate, this recipe takes approximately <b>20 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 88%</b>, which is outstanding. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/shrimp-scampi-1230187\">Shrimp Scampi</a>, <a href=\"https://spoonacular.com/recipes/shrimp-scampi-1229807\">Shrimp Scampi</a>, and <a href=\"https://spoonacular.com/recipes/shrimp-scampi-1229669\">Shrimp Scampi</a>.",
-        "analyzedInstructions": [],
+        "analyzedInstructions": [
+            {
+            "name": "Instructions",
+            "steps": [
+                {
+                "number": 1,
+                "step": "In a large skillet, melt the butter over medium heat."
+                },
+                {
+                "number": 2,
+                "step": "Add the minced garlic to the skillet and cook for about 1 minute, or until fragrant."
+                },
+                {
+                "number": 3,
+                "step": "Add the peeled and deveined shrimp to the skillet, cooking until they turn pink, about 2-3 minutes per side."
+                },
+                {
+                "number": 4,
+                "step": "Pour in the lemon juice, stirring to combine with the shrimp and garlic. Cook for an additional minute."
+                },
+                {
+                "number": 5,
+                "step": "Remove the skillet from the heat and serve the shrimp scampi immediately."
+                },
+                {
+                "number": 6,
+                "step": "Garnish with chopped parsley, if desired, and enjoy!"
+                }
+            ]
+            }
+        ],
         "instructions": "",
         "extendedIngredients": [
             {
