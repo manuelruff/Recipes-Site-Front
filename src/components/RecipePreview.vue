@@ -8,12 +8,14 @@
         :src="recipe.image"
         class="card-img-top"
         alt="Recipe image"
+        title="Go to recipe"
       />
     </router-link>
     <div class="card-body">
       <router-link
         :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
         class="card-link hoverable"
+        title="Go to recipe"
       >
         <h5 class="card-title">{{ recipe.title }}</h5>
       </router-link>
