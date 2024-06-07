@@ -16,24 +16,13 @@
           <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
         </li>
         <li>
-          <b-nav-item-dropdown text="Pesonal" v-if="$root.store.username">
-            <b-dropdown-item herf="#">
-              <a class="dropdown-item active" href="#">
-                  <router-link class="nav-link" :to="{ name: 'favorite' }">Favorites</router-link>
-              </a>
-            </b-dropdown-item>
-            <b-dropdown-item herf="#">
-              <a class="dropdown-item active" href="#">
-                  <router-link class="nav-link" :to="{ name: 'myRecipe' }">My recipes</router-link>
-              </a>
-            </b-dropdown-item>
-            <b-dropdown-item herf="#">
-              <a class="dropdown-item active" href="#">
-                  <router-link class="nav-link" :to="{ name: 'myFamily' }">Family recipes</router-link>
-              </a>
-            </b-dropdown-item>
+          <b-nav-item-dropdown text="Personal" v-if="$root.store.username">
+            <router-link :to="{ name: 'favorite' }" class="dropdown-item">Favorites</router-link>
+            <router-link :to="{ name: 'myRecipe' }" class="dropdown-item">My recipes</router-link>
+            <router-link :to="{ name: 'myFamily' }" class="dropdown-item">Family recipes</router-link>
           </b-nav-item-dropdown>
         </li>
+
         <li class="nav-item" v-if="$root.store.username">
           <router-link class="nav-link" :to="{ name: 'new_rec' }">New Recipe</router-link>
         </li>
@@ -73,5 +62,8 @@ export default {
 <style scoped>
 .navbar {
   margin-bottom: 20px;
+}
+.dropdown-item {
+  color: black; /* Change to your desired text color */
 }
 </style>
