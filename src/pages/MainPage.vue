@@ -6,7 +6,7 @@
       <div class="col-md-6">
         <RecipePreviewList ref="recipeList" title="Explore these recipes" class="RandomRecipes center" />
         <b-button @click="randomizeRecipes" class="mb-3">Randomize Recipes</b-button>
-        </div>
+      </div>
       <div class="col-md-6">
         <div v-if="$root.store.username">
           <RecipePreviewList 

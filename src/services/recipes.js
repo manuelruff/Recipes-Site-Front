@@ -14,8 +14,14 @@ export function mockGetRecipesPreview(amount = 1) {
 }
 
 export function mockGetRecipeFullDetails(recipeId) {
-    return { data: { recipe: recipe_full_view } } ;
-  }
+  return {
+    // this is a good response
+    status: 200,
+    // this is a bad response
+    // status: 400,
+    data: { recipe: recipe_full_view }
+  };
+}
   
 
 export function mockGetRecipesPreview2(amount = 1) {
@@ -28,5 +34,8 @@ export function mockGetRecipesPreview2(amount = 1) {
 
 export function mockGetRecipeFullDetails2(recipeId) {
   const recipe = recipe_full_view2.find(r => r.id === recipeId);
-  return { data: { recipe: recipe || null } };
+  return {
+    status: recipe ? 200 : 404,
+    data: { recipe: recipe || null }
+  };
 }
