@@ -77,14 +77,20 @@
         <b-form-invalid-feedback v-if="!$v.form.password.required">
           Password is required
         </b-form-invalid-feedback>
-        <b-form-text v-else-if="$v.form.password.$error" text-variant="info">
-          Your password should be <strong>strong</strong>. <br />
-          For that, your password should be also:
-        </b-form-text>
         <b-form-invalid-feedback
-          v-if="$v.form.password.required && !$v.form.password.length"
+          v-if="$v.form.password.required && !$v.form.password.minLength"
         >
-          Have length between 5-10 characters long
+          Password must be at least 5 characters long
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback
+          v-if="$v.form.password.required && !$v.form.password.containsNumber"
+        >
+          Password must contain at least one number
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback
+          v-if="$v.form.password.required && !$v.form.password.containsSpecialChar"
+        >
+          Password must contain at least one special character
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -143,9 +149,14 @@ import {
   maxLength,
   alpha,
   sameAs,
-  email
+  email,
+  helpers
 } from "vuelidate/lib/validators";
 import { mockRegister } from "../services/auth.js";
+
+const containsNumber = helpers.regex('containsNumber', /\d/);
+const containsSpecialChar = helpers.regex('containsSpecialChar', /[!@#$%^&*(),.?":{}|<>]/);
+
 export default {
   name: "Register",
   data() {
@@ -181,7 +192,9 @@ export default {
       },
       password: {
         required,
-        length: (p) => minLength(5)(p) && maxLength(10)(p)
+        minLength: minLength(5),
+        containsNumber,
+        containsSpecialChar
       },
       confirmedPassword: {
         required,
