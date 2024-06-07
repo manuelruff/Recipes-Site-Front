@@ -15,26 +15,24 @@
         <li class="nav-item">
           <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
         </li>
-        <li class="nav-item dropdown" v-if="$root.store.username">
-          <div>
-            <b-dropdown id="dropdown-1" text="Personal" class="m-md-2">
-              <b-dropdown-item>             
-                <a class="dropdown-item active" href="#">
+        <li>
+          <b-nav-item-dropdown text="Pesonal">
+            <b-dropdown-item herf="#">
+              <a class="dropdown-item active" href="#">
                   <router-link class="nav-link" :to="{ name: 'favorite' }">Favorites</router-link>
-                </a>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                <a class="dropdown-item active" href="#">
+              </a>
+            </b-dropdown-item>
+            <b-dropdown-item herf="#">
+              <a class="dropdown-item active" href="#">
                   <router-link class="nav-link" :to="{ name: 'myRecipe' }">My recipes</router-link>
-                </a>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                <a class="dropdown-item active" href="#">
+              </a>
+            </b-dropdown-item>
+            <b-dropdown-item herf="#">
+              <a class="dropdown-item active" href="#">
                   <router-link class="nav-link" :to="{ name: 'myFamily' }">Family recipes</router-link>
-                </a>
-              </b-dropdown-item>
-            </b-dropdown>
-          </div>
+              </a>
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
         </li>
         <li class="nav-item" v-if="$root.store.username">
           <router-link class="nav-link" :to="{ name: 'new_rec' }">New Recipe</router-link>
