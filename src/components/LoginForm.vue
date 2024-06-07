@@ -56,6 +56,9 @@
     >
       Login failed: {{ form.submitError }}
     </b-alert>
+     <!-- <b-card class="mt-3" header="Form Data Result">
+      <pre class="m-0">{{ form }}</pre>
+    </b-card> -->
   </div>
 </template>
 
@@ -91,8 +94,22 @@ export default {
     },
     async Login() {
       try {
+        
+        // const response = await this.axios.post(
+        //   this.$root.store.server_domain +"/Login",
+
+
+        //   {
+        //     username: this.form.username,
+        //     password: this.form.password
+        //   }
+        // );
+
         const success = true; // Modify this to test the error handling
         const response = mockLogin(this.form.username, this.form.password, success);
+
+        // console.log(response);
+        // this.$root.loggedIn = true;
 
         this.$root.store.login(this.form.username);
         this.$router.push("/");
@@ -102,11 +119,15 @@ export default {
       }
     },
     onLogin() {
+      // console.log("login method called");
       this.form.submitError = undefined;
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
+
+      // console.log("login method go");
+
       this.Login();
     }
   }
