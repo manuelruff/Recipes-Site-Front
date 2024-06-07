@@ -16,12 +16,24 @@
           <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
         </li>
         <li class="nav-item dropdown" v-if="$root.store.username">
-          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Personal
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item active" href="#">Action</a>
-            <a class="dropdown-item active" href="#">Another action</a>
+          <div>
+            <b-dropdown id="dropdown-1" text="Personal" class="m-md-2">
+              <b-dropdown-item>             
+                <a class="dropdown-item active" href="#">
+                  <router-link class="nav-link" :to="{ name: 'favorite' }">Favorites</router-link>
+                </a>
+              </b-dropdown-item>
+              <b-dropdown-item>
+                <a class="dropdown-item active" href="#">
+                  <router-link class="nav-link" :to="{ name: 'myRecipe' }">My recipes</router-link>
+                </a>
+              </b-dropdown-item>
+              <b-dropdown-item>
+                <a class="dropdown-item active" href="#">
+                  <router-link class="nav-link" :to="{ name: 'myFamily' }">Family recipes</router-link>
+                </a>
+              </b-dropdown-item>
+            </b-dropdown>
           </div>
         </li>
         <li class="nav-item" v-if="$root.store.username">
