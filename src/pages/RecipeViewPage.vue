@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mockGetRecipeFullDetails } from "../services/recipes.js";
+import { mockGetRecipeFullDetails,mockGetRecipeFullDetails2 } from "../services/recipes.js";
 export default {
   data() {
     return {
@@ -62,11 +62,12 @@ export default {
         //   }
         // );
 
-        response = mockGetRecipeFullDetails(this.$route.params.recipeId);
+        response = mockGetRecipeFullDetails2(this.$route.params.recipeId);
 
         // console.log("response.status", response.status);
         if (response.status !== 200) this.$router.replace("/NotFound");
-      } catch (error) {
+      } 
+      catch (error) {
         console.log("error.response.status", error.response.status);
         this.$router.replace("/NotFound");
         return;
