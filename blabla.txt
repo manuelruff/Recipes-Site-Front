@@ -5,7 +5,11 @@
 1. מודל יצירת מתכון
 2. בונוסים!!
 
-
+need to do:
+already viewed
+added to favorites
+last viewed + no random there
+create new modal mashu
 
 מנואל עושה
 
@@ -13,11 +17,6 @@
 
 
 עומרי עושה
-הוספה לnav bar
-עמוד של האבאוט
-הוספה של מייל לעמוד רגיסטר
-
-
 
 
 נגמר!
