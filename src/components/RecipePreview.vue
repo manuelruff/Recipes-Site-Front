@@ -2,20 +2,20 @@
   <div class="recipe-preview card" style="width: 18rem;">
     <router-link
       :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-      class="card-link"
+      class="card-link hoverable"
     >
       <img
         :src="recipe.image"
-        class="card-img-top"
+        class="card-img-top hoverable"
         alt="Recipe image"
       />
     </router-link>
     <div class="card-body">
       <router-link
         :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-        class="card-link"
+        class="card-link hoverable"
       >
-        <h5 class="card-title">{{ recipe.title }}</h5>
+        <h5 class="card-title hoverable">{{ recipe.title }}</h5>
       </router-link>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">{{ recipe.readyInMinutes }} minutes</li>
@@ -54,5 +54,9 @@ export default {
 }
 .card-link:hover {
   text-decoration: none;
+}
+.hoverable:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 </style>
