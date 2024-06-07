@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <h1 class="title">Main Page</h1>
+    <!-- <h1 class="title">Main Page</h1> -->
     <div class="row">
       <!-- Left side for random recipes -->
       <div class="col-md-6">
-        <RecipePreviewList title="Random Recipes" class="RandomRecipes center" />
+        <RecipePreviewList title="Explore this recipes" class="RandomRecipes center" />
       </div>
       <!-- Right side for login or last viewed recipes -->
       <div class="col-md-6">

@@ -14,7 +14,7 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
-import { mockGetRecipesPreview } from "../services/recipes.js";
+import { mockGetRecipesPreview,  mockGetRecipesPreview2 } from "../services/recipes.js";
 export default {
   name: "RecipePreviewList",
   components: {
@@ -42,7 +42,7 @@ export default {
         // );
 
         const amountToFetch = 3; // Set this to how many recipes you want to fetch
-        const response = mockGetRecipesPreview(amountToFetch);
+        const response = mockGetRecipesPreview2(amountToFetch);
 
         console.log(response);
         const recipes = response.data.recipes;
