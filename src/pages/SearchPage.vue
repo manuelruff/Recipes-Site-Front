@@ -105,7 +105,7 @@ export default {
     const dietString = this.selectedFilters.diet.join(',');
     const cuisineString = this.selectedFilters.cuisine.join(',');
     const intolerancesString = this.selectedFilters.intolerances.join(',');
-    const url = `https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=${this.resultsPerPage}&diet=${dietString}&cuisine=${cuisineString}&intolerances=${intolerancesString}&apiKey=${apiKey}`;
+    const url = `https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=${this.resultsPerPage}&diet=${dietString}&cuisine=${cuisineString}&intolerances=${intolerancesString}&apiKey=${apiKey}&addRecipeInformation=true`;
     // Log the URL and parameters to the console
     console.log("Generated URL:", url);
     console.log("Query:", this.query);
