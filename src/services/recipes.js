@@ -32,6 +32,14 @@ export function mockGetRecipesPreview2(amount = 1) {
   return { data: { recipes: recipes } };
 }
 
+export function mockGetRecipesPreviewFromJson(json) {
+  let recipes = [];
+  for (let i = 0; i < json.data.recipes.length; i++) {
+    recipes.push(json.data.recipes[i]);
+  }
+  return { data: { recipes: recipes } };
+}
+
 export function mockGetRecipeFullDetails2(recipeId) {
   const recipe = recipe_full_view2.find(r => r.id === recipeId);
   return {
