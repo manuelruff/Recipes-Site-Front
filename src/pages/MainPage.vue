@@ -10,7 +10,7 @@
       <div class="col-md-6">
         <div v-if="$root.store.username">
           <RecipePreviewList 
-          ref="recipeList"
+          ref="recipeList_lastViewed"
             title="Last Viewed Recipes"
             :class="{
               RandomRecipes: true,

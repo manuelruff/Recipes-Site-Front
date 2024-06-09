@@ -1,22 +1,17 @@
 <template>
   <div class="recipe-preview card" style="width: 18rem;">
-    <router-link
-      :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-      class="card-link hoverable"
-    >
-      <img
-        :src="recipe.image"
-        class="card-img-top"
-        alt="Recipe image"
-        title="Go to recipe"
-      />
-    </router-link>
     <div class="card-body">
       <router-link
         :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
         class="card-link hoverable"
         title="Go to recipe"
-      >
+        >
+      <img
+        :src="recipe.image"
+        class="card-img-top"
+        alt="Recipe image"
+        title="Go to recipe"
+        />
         <h5 class="card-title">{{ recipe.title }}</h5>
       </router-link>
       <ul class="list-group list-group-flush">
@@ -65,18 +60,29 @@ export default {
     };
   },
   methods: {
+    // need to continue
     toggleFavorite() {
       if (!this.isFavorite) {
         this.isFavorite = true;
         // Add the recipe to the favorites list (this could be a call to a Vuex store action or an API request)
         this.$root.store.addFavorite(this.recipe);
+        console.log("Added to favorites");
       }
-    }
+    },
+    // need to continue
+      handleCardClick() {
+        // Your action here
+        this.$root.store.addLastViwed(this.recipe);
+        console.log('Card clicked!');
+      }
   }
 };
 </script>
 
 <style scoped>
+.card-body {
+    padding: 0.5rem; 
+}
 .recipe-preview {
   display: inline-block;
   margin: 10px 10px;

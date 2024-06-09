@@ -11,6 +11,28 @@
           aria-label="Search"
         />
         <b-form-select
+          v-model="diet"
+          :options="dietOptions"
+          class="form-control mr-sm-2"
+          placeholder="Select Diet"
+        ></b-form-select>
+        <b-form-select
+          v-model="cuisine"
+          :options="cuisineOptions"
+          class="form-control mr-sm-2"
+          placeholder="Select Cuisine"
+        ></b-form-select>
+        <multiselect 
+          v-model="intolerances" 
+          :options="intolerancesOptions" 
+          :multiple="true" 
+          :taggable="true"
+          placeholder="Select Intolerances"
+          label="text"
+          track-by="value"
+          class="mr-sm-2"
+        ></multiselect>
+        <b-form-select
           v-model="resultsPerPage"
           :options="resultsOptions"
           class="form-control mr-sm-2"
@@ -32,6 +54,9 @@
   </div>
 </template>
 
+
+
+
 <script>
 export default {
   name: "SearchPage",
@@ -40,7 +65,28 @@ export default {
       query: "",
       results: [],
       resultsPerPage: 5,
-      resultsOptions: [5, 10, 15]
+      diet: "",
+      cuisine: "",
+      intolerances: [],
+      resultsOptions: [5, 10, 15],
+      dietOptions: [
+        { value: "", text: "All Diets" },
+        { value: "vegetarian", text: "Vegetarian" },
+        { value: "vegan", text: "Vegan" },
+        // add more diet options as needed
+      ],
+      cuisineOptions: [
+        { value: "", text: "All Cuisines" },
+        { value: "italian", text: "Italian" },
+        { value: "mexican", text: "Mexican" },
+        // add more cuisine options as needed
+      ],
+      intolerancesOptions: [
+        { value: "dairy", text: "Dairy" },
+        { value: "gluten", text: "Gluten" },
+        { value: "peanut", text: "Peanut" },
+        // add more intolerance options as needed
+      ],
     };
   },
   computed: {
@@ -50,13 +96,19 @@ export default {
   },
   methods: {
     async onSearch() {
-      // Replace with your actual search API call
-      const response = await fetch(`https://api.example.com/search?q=${this.query}`);
-      const data = await response.json();
-      this.results = data.results;
+      const apiKey = 'YOUR_SPOONACULAR_API_KEY';
+      const url = `https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=${this.resultsPerPage}&diet=${this.diet}&cuisine=${this.cuisine}&intolerances=${this.intolerances.join(',')}&apiKey=${apiKey}`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        this.results = data.results;
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     }
   }
 };
+
 </script>
 
 <style scoped>
