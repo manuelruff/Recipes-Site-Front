@@ -128,15 +128,6 @@ export default {
 
 </script>
 
-<!-- try {
-  console.log(url);
-  // const response = await fetch(url);
-  // const data = await response.json();
-  // this.results = data.results;
-} catch (error) {
-  console.error('Error fetching data:', error);
-} -->
-
 <style scoped>
 .container {
   max-width: 800px;
@@ -152,61 +143,3 @@ export default {
 </style>
 
 
-
-
-
-
-
-<!-- <script>
-export default {
-  name: "SearchPage",
-  data() {
-    return {
-      query: "",
-      results: [],
-      resultsPerPage: 5,
-      diet: "",
-      cuisine: "",
-      intolerances: [],
-      resultsOptions: [5, 10, 15],
-      dietOptions: [
-        { value: "", text: "All Diets" },
-        { value: "vegetarian", text: "Vegetarian" },
-        { value: "vegan", text: "Vegan" },
-        // add more diet options as needed
-      ],
-      cuisineOptions: [
-        { value: "", text: "All Cuisines" },
-        { value: "italian", text: "Italian" },
-        { value: "mexican", text: "Mexican" },
-        // add more cuisine options as needed
-      ],
-      intolerancesOptions: [
-        { value: "dairy", text: "Dairy" },
-        { value: "gluten", text: "Gluten" },
-        { value: "peanut", text: "Peanut" },
-        // add more intolerance options as needed
-      ],
-    };
-  },
-  computed: {
-    paginatedResults() {
-      return this.results.slice(0, this.resultsPerPage);
-    }
-  },
-  methods: {
-    async onSearch() {
-      const apiKey = 'YOUR_SPOONACULAR_API_KEY';
-      const url = `https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=${this.resultsPerPage}&diet=${this.diet}&cuisine=${this.cuisine}&intolerances=${this.intolerances.join(',')}&apiKey=${apiKey}`;
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        this.results = data.results;
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-  }
-};
-
-</script> -->
