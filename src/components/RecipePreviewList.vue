@@ -5,7 +5,7 @@
       <slot></slot>
     </h3>
     <b-row>
-      <b-col v-for="r in recipes" :key="r.id">
+      <b-col v-for="r in randomizedRecipes" :key="r.id">
         <RecipePreview class="recipePreview" :recipe="r" />
       </b-col>
     </b-row>
@@ -14,7 +14,7 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
-import { mockGetRecipesPreview,  mockGetRecipesPreview2 } from "../services/recipes.js";
+
 export default {
   name: "RecipePreviewList",
   components: {
@@ -24,43 +24,38 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    recipes: {
+      type: Array,
+      required: true,
+      default: () => []
     }
   },
   data() {
     return {
-      recipes: []
+      randomizedRecipes: []
     };
   },
   mounted() {
-    this.updateRecipes();
+    this.randomizeRecipes();
   },
   methods: {
-    async updateRecipes() {
-      try {
-        // const response = await this.axios.get(
-        //   this.$root.store.server_domain + "/recipes/random",
-        // );
-
-        const amountToFetch = 3; // Set this to how many recipes you want to fetch
-        const response = mockGetRecipesPreview2(amountToFetch);
-
-        console.log(response);
-        const recipes = response.data.recipes;
-        console.log(recipes);
-        this.recipes = [];
-        this.recipes.push(...recipes);
-        randomizeRecipes();
-      } catch (error) {
-        console.log(error);
-      }
-    },
     randomizeRecipes() {
-      for (let i = this.recipes.length - 1; i > 0; i--) {
+      const recipesCopy = [...this.recipes];
+      for (let i = recipesCopy.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [this.recipes[i], this.recipes[j]] = [this.recipes[j], this.recipes[i]];
+        [recipesCopy[i], recipesCopy[j]] = [recipesCopy[j], recipesCopy[i]];
       }
-      // Trigger a re-render by setting the recipes array to a new reference
-      this.recipes = [...this.recipes];
+      this.randomizedRecipes = recipesCopy;
+    }
+  },
+  watch: {
+    recipes: {
+      handler() {
+        this.randomizeRecipes();
+      },
+      deep: true,
+      immediate: true
     }
   }
 };

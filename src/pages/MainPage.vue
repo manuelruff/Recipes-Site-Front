@@ -4,13 +4,18 @@
     <div class="row">
       <!-- Left side for random recipes -->
       <div class="col-md-6">
-        <RecipePreviewList ref="recipeList" title="Explore these recipes" class="RandomRecipes center" />
+        <RecipePreviewList
+          ref="recipeList"
+          title="Explore these recipes"
+          class="RandomRecipes center"
+          :recipes="recipes"
+        />
         <b-button @click="randomizeRecipes" class="mb-3">Randomize Recipes</b-button>
       </div>
       <div class="col-md-6">
         <div v-if="$root.store.username">
-          <RecipePreviewList 
-          ref="recipeList_lastViewed"
+          <RecipePreviewList
+            ref="recipeList_lastViewed"
             title="Last Viewed Recipes"
             :class="{
               RandomRecipes: true,
@@ -18,6 +23,7 @@
               center: true
             }"
             :disabled="!$root.store.username"
+            :recipes="lastViewedRecipes"
           />
         </div>
         <div v-else>
@@ -31,6 +37,7 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import LoginForm from "../components/LoginForm";
+import { mockGetRecipesPreview2 } from "../services/recipes.js";
 
 export default {
   name: "MainPage",
@@ -38,7 +45,35 @@ export default {
     RecipePreviewList,
     LoginForm
   },
+  data() {
+    return {
+      recipes: [],
+      lastViewedRecipes: []
+    };
+  },
+  mounted() {
+    this.fetchRecipes();
+  },
   methods: {
+    async fetchRecipes() {
+      try {
+        const amountToFetch = 3; // Set this to how many recipes you want to fetch
+        const response = mockGetRecipesPreview2(amountToFetch);
+
+        console.log(response);
+        const recipes = response.data.recipes;
+        console.log(recipes);
+        this.recipes = recipes;
+
+        // Assuming you fetch last viewed recipes similarly
+        const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
+        console.log(lastViewedResponse);
+        const lastViewed = lastViewedResponse.data.recipes;
+        this.lastViewedRecipes = lastViewed;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     randomizeRecipes() {
       this.$refs.recipeList.randomizeRecipes();
     }
