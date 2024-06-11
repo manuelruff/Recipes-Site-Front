@@ -36,9 +36,6 @@ export default {
       randomizedRecipes: []
     };
   },
-  mounted() {
-    this.randomizeRecipes();
-  },
   methods: {
     randomizeRecipes() {
       const recipesCopy = [...this.recipes];

@@ -70,6 +70,7 @@ export default {
         console.log(lastViewedResponse);
         const lastViewed = lastViewedResponse.data.recipes;
         this.lastViewedRecipes = lastViewed;
+        this.$refs.recipeList.randomizeRecipes();
       } catch (error) {
         console.log(error);
       }

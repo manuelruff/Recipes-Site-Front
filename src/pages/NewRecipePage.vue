@@ -1,7 +1,32 @@
 <template>
   <div>
-    <button class="modal-button" @click="openModal">Create New Recipe</button>
+    <h1>Main Page</h1>
+    <b-button @click="showModal">Open Modal from Main Page</b-button>
     
+    <newRecipeModal ref="modalComponent" />
+  </div>
+</template>
+
+<script>
+import newRecipeModal from "@/components/NewRecipeModal.vue";
+
+export default {
+  components: {
+    newRecipeModal
+  },
+  methods: {
+    showModal() {
+      this.$refs.newRecipeModal.showModal();
+    }
+  }
+};
+</script>
+
+
+
+<!-- <template>
+  <div>
+    <button class="modal-button" @click="openModal">Create New Recipe</button>
     <div v-if="modalShow" class="modal-overlay">
       <div class="modal">
         <h2>Create New Recipe</h2>
@@ -13,9 +38,9 @@
           <div class="form-group">
             <label for="instructions">Instructions:</label>
             <textarea v-model="formData.instructions" class="form-control" id="instructions" rows="4" required></textarea>
-          </div>
+          </div> -->
           <!-- Add other form fields as needed -->
-          <div class="button-group">
+          <!-- <div class="button-group">
             <button type="submit" class="submit-button">Submit</button>
             <button @click="closeModal" class="cancel-button">Cancel</button>
           </div>
@@ -23,9 +48,9 @@
       </div>
     </div>
   </div>
-</template>
+</template> -->
 
-<script>
+<!-- <script>
 export default {
   data() {
     return {
@@ -61,8 +86,8 @@ export default {
     }
   }
 };
-</script>
-
+</script> -->
+<!-- 
 <style scoped>
 .modal-button {
   background-color: #4CAF50;
@@ -127,4 +152,4 @@ export default {
 .cancel-button {
   background-color: #f44336;
 }
-</style>
+</style> -->
