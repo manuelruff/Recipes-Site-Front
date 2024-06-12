@@ -47,3 +47,9 @@ export function mockGetRecipeFullDetails2(recipeId) {
   };
 }
 
+export function mockGetSearchResults(query,amount = 1,diet=[],cuisine=[],intolerances=[]) {
+  return {
+    status: 200,
+    data: { recipes: [recipe_preview, recipe_preview2] }
+  };
+}
