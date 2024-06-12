@@ -53,11 +53,21 @@ export default {
     }
   },
   methods: {
+    // method to clear the search state i saved in the session storage
+    clearSearchState() {
+    sessionStorage.removeItem('searchQuery');
+    sessionStorage.removeItem('searchResults');
+    sessionStorage.removeItem('resultsPerPage');
+    sessionStorage.removeItem('sortBy');
+    sessionStorage.removeItem('selectedFilters');
+    },
     Logout() {
       this.$root.store.logout();
+      this.clearSearchState(); // Clear the search state
       this.$root.toast("Logout", "User logged out successfully", "success");
       this.$router.push("/").catch(() => {
-        this.$forceUpdate();
+      this.$forceUpdate();
+
       });
     },
   }

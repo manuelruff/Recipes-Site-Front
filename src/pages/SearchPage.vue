@@ -60,7 +60,6 @@
   </div>
 </template>
 
-
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import { mockGetRecipesPreview2, mockGetSearchResults } from "../services/recipes.js";
@@ -101,7 +100,40 @@ export default {
       ],
     };
   },
+  created() {
+    this.loadState();
+  },
   methods: {
+    loadState() {
+      const searchQuery = sessionStorage.getItem('searchQuery');
+      const searchResults = sessionStorage.getItem('searchResults');
+      const resultsPerPage = sessionStorage.getItem('resultsPerPage');
+      const sortBy = sessionStorage.getItem('sortBy');
+      const selectedFilters = sessionStorage.getItem('selectedFilters');
+
+      if (searchQuery) {
+        this.query = searchQuery;
+      }
+      if (searchResults) {
+        this.results = JSON.parse(searchResults);
+      }
+      if (resultsPerPage) {
+        this.resultsPerPage = parseInt(resultsPerPage);
+      }
+      if (sortBy) {
+        this.sortBy = sortBy;
+      }
+      if (selectedFilters) {
+        this.selectedFilters = JSON.parse(selectedFilters);
+      }
+    },
+    saveState() {
+      sessionStorage.setItem('searchQuery', this.query);
+      sessionStorage.setItem('searchResults', JSON.stringify(this.results));
+      sessionStorage.setItem('resultsPerPage', this.resultsPerPage);
+      sessionStorage.setItem('sortBy', this.sortBy);
+      sessionStorage.setItem('selectedFilters', JSON.stringify(this.selectedFilters));
+    },
     onSearch() {
       try {
         const amountToFetch = this.resultsPerPage; // Set this to how many recipes you want to fetch
@@ -112,6 +144,7 @@ export default {
         this.results = recipes;
         console.log(this.results);
         this.sortResults(); // Sort the results after fetching
+        this.saveState(); // Save state after fetching and sorting
       } catch (error) {
         console.log(error);
       }
@@ -122,29 +155,18 @@ export default {
       const dietString = this.selectedFilters.diet.join(',');
       const cuisineString = this.selectedFilters.cuisine.join(',');
       const intolerancesString = this.selectedFilters.intolerances.join(',');
-      // const url = `https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=${this.resultsPerPage}&diet=${dietString}&cuisine=${cuisineString}&intolerances=${intolerancesString}&apiKey=${apiKey}&addRecipeInformation=true`;
-      // Log the URL and parameters to the console
-      // console.log("Generated URL:", url);
       console.log("Query:", this.query);
       console.log("Results Per Page:", this.resultsPerPage);
       console.log("Diet:", dietString);
       console.log("Cuisine:", cuisineString);
       console.log("Intolerances:", intolerancesString);
       console.log("searching...");
-      // mock server
-      mockGetSearchResults(this.query,amountToFetch,dietString,cuisineString,intolerancesString);
-
-      // try {
-      //   const response = await fetch(url);
-      //   const data = await response.json();
-      //   this.results = data.results;
-      // } catch (error) {
-      //   console.error('Error fetching data:', error);
-      // }
+      mockGetSearchResults(this.query, amountToFetch, dietString, cuisineString, intolerancesString);
     },
     onSortChange() {
       console.log("Sort option changed:", this.sortBy);
       this.sortResults();
+      this.saveState(); // Save state after sorting
     },
     sortResults() {
       if (this.sortBy === "likes") {
