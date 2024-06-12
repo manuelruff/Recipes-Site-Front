@@ -36,9 +36,16 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
           Search
         </button>
+        <b-form-select
+          v-model="sortBy"
+          :options="sortOptions"
+          class="form-control mr-sm-2"
+          @change="onSortChange"
+      ></b-form-select>
       </form>
     </nav>
     <div v-if="results.length" class="mt-4">
+      
       <RecipePreviewList
         ref="recipeList"
         title="Search Results"
@@ -53,9 +60,10 @@
   </div>
 </template>
 
+
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
-import { mockGetRecipesPreview2,mockGetSearchResults } from "../services/recipes.js";
+import { mockGetRecipesPreview2, mockGetSearchResults } from "../services/recipes.js";
 
 export default {
   name: "SearchPage",
@@ -67,6 +75,7 @@ export default {
       query: "",
       results: [],
       resultsPerPage: 5,
+      sortBy: "likes", // Default sorting option
       selectedFilters: {
         diet: [],
         cuisine: [],
@@ -86,52 +95,67 @@ export default {
         { value: "gluten", text: "Gluten" },
         { value: "peanut", text: "Peanut" },
       ],
+      sortOptions: [
+        { value: "likes", text: "Likes" },
+        { value: "time", text: "Time" },
+      ],
     };
   },
   methods: {
     onSearch() {
       try {
-        const amountToFetch = 8; // Set this to how many recipes you want to fetch
+        const amountToFetch = this.resultsPerPage; // Set this to how many recipes you want to fetch
         const response = mockGetRecipesPreview2(amountToFetch);
         console.log(response);
         const recipes = response.data.recipes;
         console.log(recipes);
         this.results = recipes;
         console.log(this.results);
+        this.sortResults(); // Sort the results after fetching
       } catch (error) {
         console.log(error);
       }
-      
 
+      // manu key
+      const apiKey = 'dfc0343255df402babb592636a733295';
+      // omri key
+      const dietString = this.selectedFilters.diet.join(',');
+      const cuisineString = this.selectedFilters.cuisine.join(',');
+      const intolerancesString = this.selectedFilters.intolerances.join(',');
+      // const url = `https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=${this.resultsPerPage}&diet=${dietString}&cuisine=${cuisineString}&intolerances=${intolerancesString}&apiKey=${apiKey}&addRecipeInformation=true`;
+      // Log the URL and parameters to the console
+      // console.log("Generated URL:", url);
+      console.log("Query:", this.query);
+      console.log("Results Per Page:", this.resultsPerPage);
+      console.log("Diet:", dietString);
+      console.log("Cuisine:", cuisineString);
+      console.log("Intolerances:", intolerancesString);
+      console.log("searching...");
+      // mock server
+      mockGetSearchResults(this.query,amountToFetch,dietString,cuisineString,intolerancesString);
 
-       // manu key
-    const apiKey = 'dfc0343255df402babb592636a733295';
-    // omri key
-    const dietString = this.selectedFilters.diet.join(',');
-    const cuisineString = this.selectedFilters.cuisine.join(',');
-    const intolerancesString = this.selectedFilters.intolerances.join(',');
-    // const url = `https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=${this.resultsPerPage}&diet=${dietString}&cuisine=${cuisineString}&intolerances=${intolerancesString}&apiKey=${apiKey}&addRecipeInformation=true`;
-    // Log the URL and parameters to the console
-    // console.log("Generated URL:", url);
-    console.log("Query:", this.query);
-    console.log("Results Per Page:", this.resultsPerPage);
-    console.log("Diet:", dietString);
-    console.log("Cuisine:", cuisineString);
-    console.log("Intolerances:", intolerancesString);
-    console.log("searching...");
-    // mock server
-    mockGetSearchResults(this.query,amountToFetch,dietString,cuisineString,intolerancesString)
-
-    // try {
-    //   const response = await fetch(url);
-    //   const data = await response.json();
-    //   this.results = data.results;
-    // } catch (error) {
-    //   console.error('Error fetching data:', error);
-    // }
+      // try {
+      //   const response = await fetch(url);
+      //   const data = await response.json();
+      //   this.results = data.results;
+      // } catch (error) {
+      //   console.error('Error fetching data:', error);
+      // }
+    },
+    onSortChange() {
+      console.log("Sort option changed:", this.sortBy);
+      this.sortResults();
+    },
+    sortResults() {
+      if (this.sortBy === "likes") {
+        this.results.sort((a, b) => b.aggregateLikes - a.aggregateLikes);
+      } else if (this.sortBy === "time") {
+        this.results.sort((a, b) => a.readyInMinutes - b.readyInMinutes);
+      }
     }
   }
 };
+
 </script>
 
 <style scoped>
