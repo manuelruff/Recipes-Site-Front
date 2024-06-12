@@ -47,6 +47,11 @@
 <script>
 export default {
   name: 'Navbar',
+  mounted() {
+    if (!this.$root.store.username) {
+      this.$root.toast("Hello Guest", "Welcome to Vue Recipes website!", "success");
+    }
+  },
   methods: {
     Logout() {
       this.$root.store.logout();
@@ -54,7 +59,7 @@ export default {
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
-    }
+    },
   }
 };
 </script>
