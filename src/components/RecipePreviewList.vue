@@ -33,6 +33,10 @@ export default {
     displayCount: {
       type: Number,
       default: 3
+    },
+    ranomize: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -53,7 +57,11 @@ export default {
   watch: {
     recipes: {
       handler() {
-        this.randomizeRecipes();
+        if (this.ranomize) {
+          this.randomizeRecipes();
+        } else {
+          this.randomizedRecipes = [...this.recipes];
+        }
       },
       deep: true,
       immediate: true

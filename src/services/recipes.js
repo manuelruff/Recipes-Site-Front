@@ -47,3 +47,4 @@ export function mockGetRecipeFullDetails2(recipeId) {
     data: { recipe: recipe || null }
   };
 }
+
