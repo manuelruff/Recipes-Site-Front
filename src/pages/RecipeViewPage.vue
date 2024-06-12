@@ -59,6 +59,7 @@ export default {
   },
   async created() {
     try {
+      
       let response;
 
       try {
@@ -107,6 +108,10 @@ export default {
     } catch (error) {
       console.log(error);
     }
+    // we log that the user saw that recipe
+    // mock to save something the user pressed to last viewed
+    mockAddLastViewedRecipe(this.recipe.id);
+    console.log("Added to last viewed recipes " + this.recipe.id);
   },
   methods: {
     AddLastViewedRecipe() {

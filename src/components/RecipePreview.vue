@@ -1,11 +1,11 @@
 <template>
-  <div class="recipe-preview card" style="width: 18rem;" @click="handleCardClick">
+  <div class="recipe-preview card" style="width: 18rem;">
     <div class="card-body">
       <router-link
         :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
         class="card-link hoverable"
         title="Go to recipe"
-        @click.native.stop
+        @click.native="handleCardClick"
       >
         <img
           :src="recipe.image"
@@ -54,15 +54,6 @@ export default {
     return {
       isFavorite: this.initialFavoriteState
     };
-  },
-  methods: {
-    handleCardClick() {
-      console.log("Card clicked");
-      // Your action here
-      // mock to save something the user pressed to last viewed
-      mockAddLastViewedRecipe(this.recipe.id);
-      console.log("Added to last viewed recipes");
-    }
   }
 };
 </script>
