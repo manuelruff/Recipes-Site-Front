@@ -1,16 +1,16 @@
 <template>
-  <div class="recipe-preview card" style="width: 18rem;">
+  <div class="recipe-preview card" style="width: 18rem;" @click="handleCardClick">
     <div class="card-body">
       <router-link
         :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
         class="card-link hoverable"
         title="Go to recipe"
-        >
-      <img
-        :src="recipe.image"
-        class="card-img-top"
-        alt="Recipe image"
-        title="Go to recipe"
+      >
+        <img
+          :src="recipe.image"
+          class="card-img-top"
+          alt="Recipe image"
+          title="Go to recipe"
         />
         <h5 class="card-title">{{ recipe.title }}</h5>
       </router-link>
@@ -20,21 +20,7 @@
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
           {{ recipe.aggregateLikes }} likes
-          <b-button
-            v-if="!isFavorite"
-            variant="outline-warning"
-            @click="toggleFavorite"
-          >
-            Favourite
-          </b-button>
-          <b-button
-            v-else
-            variant="success"
-            :pressed="true"
-            disabled
-          >
-            In your FAV!
-          </b-button>
+          <FavoriteButtonComponent :recipeId="recipe.id" :initialFavoriteState="isFavorite" />
         </li>
       </ul>
       <div class="logos">
@@ -47,41 +33,46 @@
 </template>
 
 <script>
+import { mockAddLastViewedRecipe } from "../services/user.js";
+import FavoriteButtonComponent from "./FavoriteButtonCompommemt.vue";
+
 export default {
+  name: "RecipePreview",
+  components: {
+    FavoriteButtonComponent
+  },
   props: {
     recipe: {
       type: Object,
       required: true
+    },
+    initialFavoriteState: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      isFavorite: false
+      isFavorite: this.initialFavoriteState
     };
   },
   methods: {
-    // need to continue
-    toggleFavorite() {
-      if (!this.isFavorite) {
-        this.isFavorite = true;
-        // Add the recipe to the favorites list (this could be a call to a Vuex store action or an API request)
-        this.$root.store.addFavorite(this.recipe);
-        console.log("Added to favorites");
-      }
-    },
-    // need to continue
-      handleCardClick() {
-        // Your action here
-        this.$root.store.addLastViwed(this.recipe);
-        console.log('Card clicked!');
-      }
+    handleCardClick() {
+      console.log("Card clicked");
+      // Your action here
+      // mock to save something the user pressed to last viewed
+      mockAddLastViewedRecipe(this.recipe.id);
+      console.log("Added to last viewed recipes");
+    }
   }
 };
 </script>
 
 <style scoped>
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
 .card-body {
-    padding: 0.5rem; 
+  padding: 0.5rem;
 }
 .recipe-preview {
   display: inline-block;
@@ -115,16 +106,4 @@ export default {
   height: 30px;
   margin: 0 5px;
 }
-.star-button {
-  border: none;
-  background: black;
-  color: #ffc107;
-}
-.star-button.active {
-  color: #ffc107;
-}
-.star-button i {
-  font-size: 1rem;
-}
 </style>
-

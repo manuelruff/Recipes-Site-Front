@@ -5,7 +5,7 @@
       <slot></slot>
     </h3>
     <b-row>
-      <b-col v-for="r in randomizedRecipes" :key="r.id">
+      <b-col v-for="r in randomizedRecipes.slice(0, displayCount)" :key="r.id">
         <RecipePreview class="recipePreview" :recipe="r" />
       </b-col>
     </b-row>
@@ -29,6 +29,10 @@ export default {
       type: Array,
       required: true,
       default: () => []
+    },
+    displayCount: {
+      type: Number,
+      default: 3
     }
   },
   data() {

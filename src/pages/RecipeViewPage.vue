@@ -33,22 +33,21 @@
           </div>
         </div>
       </div>
-      <!-- <pre>
-      {{ $route.params }}
-      {{ recipe }}
-    </pre
-      > -->
     </div>
   </div>
 </template>
 
 <script>
-import { mockGetRecipeFullDetails,mockGetRecipeFullDetails2 } from "../services/recipes.js";
+import { mockAddLastViewedRecipe, mockRemoveFavorite, mockAddFavorite } from "../services/user.js";
+import { mockGetRecipeFullDetails2 } from "../services/recipes.js";
 export default {
   data() {
     return {
       recipe: null
     };
+  },
+  mounted() {
+    
   },
   async created() {
     try {
@@ -125,7 +124,4 @@ export default {
   margin-right: auto;
   width: 50%;
 }
-/* .recipe-header{
-
-} */
 </style>

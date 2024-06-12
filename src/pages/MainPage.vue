@@ -57,7 +57,7 @@ export default {
   methods: {
     async fetchRecipes() {
       try {
-        const amountToFetch = 3; // Set this to how many recipes you want to fetch
+        const amountToFetch = 8; // Set this to how many recipes you want to fetch
         const response = mockGetRecipesPreview2(amountToFetch);
 
         console.log(response);
@@ -71,6 +71,7 @@ export default {
         const lastViewed = lastViewedResponse.data.recipes;
         this.lastViewedRecipes = lastViewed;
         this.$refs.recipeList.randomizeRecipes();
+
       } catch (error) {
         console.log(error);
       }

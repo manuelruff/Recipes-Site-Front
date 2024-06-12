@@ -22,7 +22,6 @@
   }
   
 
-
   export function mockLogout() {
     return { status: 200, response: { data: { message: "logout succeeded", success: true}} };
 
