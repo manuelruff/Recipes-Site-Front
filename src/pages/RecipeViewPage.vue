@@ -4,6 +4,8 @@
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.title }}</h1>
         <img :src="recipe.image" class="center" />
+        <RecipeLogos :recipe="recipe" />
+
       </div>
       <div class="recipe-body">
         <div class="wrapper">
@@ -12,6 +14,7 @@
               <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
               <div>Likes: {{ recipe.aggregateLikes }} likes</div>
               <div>Servings: {{ recipe.servings }}</div>
+              <FavoriteButtonComponent :recipeId="recipe.id" :initialFavoriteState="isFavorite" />
             </div>
             Ingredients:
             <ul>
@@ -40,40 +43,34 @@
 <script>
 import { mockAddLastViewedRecipe, mockRemoveFavorite, mockAddFavorite } from "../services/user.js";
 import { mockGetRecipeFullDetails2 } from "../services/recipes.js";
+import RecipeLogos from "../components/RecipeLogos.vue";
+import FavoriteButtonComponent from "../components/FavoriteButtonCompommemt.vue";
+
 export default {
+  components: {
+    RecipeLogos,
+    FavoriteButtonComponent
+  },
   data() {
     return {
-      recipe: null
+      recipe: null,
+      isFavorite: false // Assuming you have a way to get the initial favorite state
     };
-  },
-  mounted() {
-    
   },
   async created() {
     try {
       let response;
-      // response = this.$route.params.response;
 
       try {
-        // response = await this.axios.get(
-        //   this.$root.store.server_domain + "/recipes/" + this.$route.params.recipeId,
-        //   {
-        //     withCredentials: true
-        //   }
-        // );
-
         response = mockGetRecipeFullDetails2(this.$route.params.recipeId);
-
-        // console.log("response.status", response.status);
         if (response.status !== 200) this.$router.replace("/NotFound");
-      } 
-      catch (error) {
+      } catch (error) {
         console.log("error.response.status", error.response.status);
         this.$router.replace("/NotFound");
         return;
       }
 
-      let {
+      const {
         analyzedInstructions,
         instructions,
         extendedIngredients,
@@ -81,17 +78,18 @@ export default {
         readyInMinutes,
         image,
         title,
-        servings
+        servings,
+        glutenFree,
+        vegetarian,
+        vegan,
+        id // Ensure you get the recipe ID
       } = response.data.recipe;
 
-      let _instructions = analyzedInstructions
-        .map((fstep) => {
-          fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-          return fstep.steps;
-        })
-        .reduce((a, b) => [...a, ...b], []);
+      const _instructions = analyzedInstructions
+        .map(fstep => fstep.steps.map(step => ({ ...step, step: fstep.name + step.step })))
+        .flat();
 
-      let _recipe = {
+      this.recipe = {
         instructions,
         _instructions,
         analyzedInstructions,
@@ -100,12 +98,21 @@ export default {
         readyInMinutes,
         image,
         title,
-        servings
+        servings,
+        glutenFree,
+        vegetarian,
+        vegan,
+        id // Assign the recipe ID
       };
-
-      this.recipe = _recipe;
     } catch (error) {
       console.log(error);
+    }
+  },
+  methods: {
+    AddLastViewedRecipe() {
+      // mock to save something the user pressed to last viewed
+      mockAddLastViewedRecipe(this.recipe.id);
+      console.log("Added to last viewed recipes");
     }
   }
 };

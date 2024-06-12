@@ -20,14 +20,10 @@
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
           {{ recipe.aggregateLikes }} likes
-          <FavoriteButtonComponent :recipeId="recipe.id" :initialFavoriteState="isFavorite" />
+          <FavoriteButtonComponent :recipeId.="recipe.id" :initialFavoriteState="isFavorite" />
         </li>
       </ul>
-      <div class="logos">
-        <img v-if="recipe.glutenFree" src="@/assets/pictures/gluten_free.jpg" alt="Gluten Free" class="logo" />
-        <img v-if="recipe.vegetarian" src="@/assets/pictures/vegeterian.jpg" alt="Vegetarian" class="logo" />
-        <img v-if="recipe.vegan" src="@/assets/pictures/vegan.png" alt="Vegan" class="logo" />
-      </div>
+      <RecipeLogos :recipe="recipe" />
     </div>
   </div>
 </template>
@@ -35,11 +31,13 @@
 <script>
 import { mockAddLastViewedRecipe } from "../services/user.js";
 import FavoriteButtonComponent from "./FavoriteButtonCompommemt.vue";
+import RecipeLogos from "./RecipeLogos.vue";
 
 export default {
   name: "RecipePreview",
   components: {
-    FavoriteButtonComponent
+    FavoriteButtonComponent,
+    RecipeLogos
   },
   props: {
     recipe: {
@@ -95,15 +93,5 @@ export default {
 .hoverable:hover {
   cursor: pointer;
   opacity: 0.8;
-}
-.logos {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-.logo {
-  width: 30px;
-  height: 30px;
-  margin: 0 5px;
 }
 </style>
