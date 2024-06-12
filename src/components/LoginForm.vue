@@ -137,5 +137,16 @@ export default {
 <style scoped>
 .container {
   max-width: 400px;
+  background-color: rgba(0, 0, 0, 0.5); /* Black with 50% transparency */
+  padding: 40px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: white; /* Set the text color to white */
 }
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 </style>

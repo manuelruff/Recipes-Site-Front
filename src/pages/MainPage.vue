@@ -98,4 +98,5 @@ export default {
   pointer-events: none;
   cursor: default;
 }
+
 </style>

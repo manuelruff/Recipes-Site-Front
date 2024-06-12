@@ -1,64 +1,75 @@
 <template>
   <div>
-    <h1>Main Page</h1>
-    <b-button @click="showModal">Open Modal from Main Page</b-button>
-    
-    <newRecipeModal ref="modalComponent" />
+    <b-button class="modal-button" @click="openModal">Create New Recipe</b-button>
+    <b-modal v-model="modalShow" title="Create New Recipe" @ok="submitForm" @cancel="closeModal">
+      <b-form @submit.prevent="submitForm">
+        <b-form-group label="Title:" :state="validateField(formData.title)">
+          <b-form-input v-model="formData.title" required></b-form-input>
+          <b-form-invalid-feedback>Title is required.</b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group label="Image URL:" :state="validateField(formData.image)">
+          <b-form-input v-model="formData.image" required></b-form-input>
+          <b-form-invalid-feedback>Image URL is required.</b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group label="Instructions:" :state="validateField(formData.instructions)">
+          <b-form-textarea v-model="formData.instructions" rows="4" required></b-form-textarea>
+          <b-form-invalid-feedback>Instructions are required.</b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group label="Ready in Minutes:" :state="validateField(formData.readyInMinutes)">
+          <b-form-input type="number" v-model="formData.readyInMinutes" required></b-form-input>
+          <b-form-invalid-feedback>Ready in minutes are required.</b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group label="Servings:" :state="validateField(formData.servings)">
+          <b-form-input type="number" v-model="formData.servings" required></b-form-input>
+          <b-form-invalid-feedback>Servings are required.</b-form-invalid-feedback>
+        </b-form-group>
+        <!-- Add dietary preferences checkboxes -->
+        <b-form-group label="Dietary Preferences:">
+          <b-form-checkbox v-model="formData.glutenFree">Gluten-Free</b-form-checkbox>
+          <b-form-checkbox v-model="formData.vegan">Vegan</b-form-checkbox>
+          <b-form-checkbox v-model="formData.vegetarian">Vegetarian</b-form-checkbox>
+        </b-form-group>
+        <!-- Add ingredients input -->
+        <b-form-group label="Ingredients:" v-for="(ingredient, index) in formData.ingredients" :key="index">
+          <b-form-input v-model="ingredient.name" placeholder="Name" required></b-form-input>
+          <b-form-input v-model="ingredient.amount" type="number" placeholder="Amount" required></b-form-input>
+          <!-- Add more fields as needed -->
+          <b-button @click="removeIngredient(index)" variant="danger">Remove</b-button>
+        </b-form-group>
+        <b-button @click="addIngredient" variant="success">Add Ingredient</b-button>
+        <b-form-invalid-feedback v-if="!formData.ingredients.length">At least one ingredient is required.</b-form-invalid-feedback>
+      </b-form>
+    </b-modal>
   </div>
 </template>
 
 <script>
-import newRecipeModal from "@/components/NewRecipeModal.vue";
+import { BModal, BButton, BForm, BFormGroup, BFormInput, BFormTextarea, BFormInvalidFeedback, BFormCheckbox } from 'bootstrap-vue';
 
 export default {
   components: {
-    newRecipeModal
+    BModal,
+    BButton,
+    BForm,
+    BFormGroup,
+    BFormInput,
+    BFormTextarea,
+    BFormInvalidFeedback,
+    BFormCheckbox
   },
-  methods: {
-    showModal() {
-      this.$refs.newRecipeModal.showModal();
-    }
-  }
-};
-</script>
-
-
-
-<!-- <template>
-  <div>
-    <button class="modal-button" @click="openModal">Create New Recipe</button>
-    <div v-if="modalShow" class="modal-overlay">
-      <div class="modal">
-        <h2>Create New Recipe</h2>
-        <form @submit.prevent="submitForm">
-          <div class="form-group">
-            <label for="title">Title:</label>
-            <input type="text" v-model="formData.title" class="form-control" id="title" required>
-          </div>
-          <div class="form-group">
-            <label for="instructions">Instructions:</label>
-            <textarea v-model="formData.instructions" class="form-control" id="instructions" rows="4" required></textarea>
-          </div> -->
-          <!-- Add other form fields as needed -->
-          <!-- <div class="button-group">
-            <button type="submit" class="submit-button">Submit</button>
-            <button @click="closeModal" class="cancel-button">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</template> -->
-
-<!-- <script>
-export default {
   data() {
     return {
       modalShow: false,
       formData: {
         title: '',
-        instructions: ''
-        // Add other form fields here
+        image: '',
+        instructions: '',
+        readyInMinutes: '',
+        servings: '',
+        glutenFree: false,
+        vegan: false,
+        vegetarian: false,
+        ingredients: []
       }
     };
   },
@@ -68,29 +79,68 @@ export default {
     },
     closeModal() {
       this.modalShow = false;
+      // Reset form data
+      this.formData.title = '';
+      this.formData.image = '';
+      this.formData.instructions = '';
+      this.formData.readyInMinutes = '';
+      this.formData.servings = '';
+      this.formData.glutenFree = false;
+      this.formData.vegan = false;
+      this.formData.vegetarian = false;
+      this.formData.ingredients = [];
     },
     submitForm() {
+      // Validate form fields before submitting
+      if (!this.validateForm()) {
+        return;
+      }
+
       // Create new recipe with form data
       let newRecipe = {
         title: this.formData.title,
-        instructions: this.formData.instructions
+        image: this.formData.image,
+        instructions: this.formData.instructions,
+        readyInMinutes: this.formData.readyInMinutes,
+        servings: this.formData.servings,
+        glutenFree: this.formData.glutenFree,
+        vegan: this.formData.vegan,
+        vegetarian: this.formData.vegetarian,
+        ingredients: this.formData.ingredients
         // Add other form fields here
       };
       
       // Do something with the new recipe data, like sending it to an API or storing it in Vuex
       
       // Reset form data and close modal
-      this.formData.title = '';
-      this.formData.instructions = '';
-      this.modalShow = false;
+      this.closeModal();
+    },
+    validateForm() {
+      let valid = true;
+      if (!this.formData.title) valid = false;
+      if (!this.formData.image) valid = false;
+      if (!this.formData.instructions) valid = false;
+      if (!this.formData.readyInMinutes) valid = false;
+      if (!this.formData.servings) valid = false;
+      // Add validation for other fields here if needed
+      return valid;
+    },
+    validateField(field) {
+      return field ? true : false;
+    },
+    addIngredient() {
+      this.formData.ingredients.push({ name: '', amount: '' });
+    },
+    removeIngredient(index) {
+      this.formData.ingredients.splice(index, 1);
     }
   }
 };
-</script> -->
-<!-- 
+</script>
+
 <style scoped>
 .modal-button {
-  background-color: #4CAF50;
+  background-color: rgba(0, 0, 0, 0.7);
   border: none;
   color: white;
   padding: 10px 20px;
@@ -102,54 +152,32 @@ export default {
   cursor: pointer;
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.b-modal-content {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
 }
 
-.modal {
-  background-color: white;
+.b-form {
   padding: 20px;
-  border-radius: 5px;
-  width: 400px;
 }
 
-.form-group {
+.b-form-group {
   margin-bottom: 20px;
 }
 
-.form-control {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.button-group {
-  text-align: right;
-}
-
-.submit-button, .cancel-button {
-  background-color: #4CAF50;
-  border: none;
+.b-form-input,
+.b-form-textarea,
+.b-form-checkbox-group {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
   color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-left: 10px;
-  cursor: pointer;
 }
 
-.cancel-button {
-  background-color: #f44336;
+.b-form-checkbox-group label {
+  color: white;
 }
-</style> -->
+
+.b-button {
+  margin-top: 10px;
+}
+</style>

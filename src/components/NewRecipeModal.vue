@@ -1,37 +1,182 @@
 <template>
   <div>
-    <b-button id="show-btn" @click="showModal">Open Modal</b-button>
-    <b-button id="toggle-btn" @click="toggleModal">Toggle Modal</b-button>
-
-    <b-modal ref="my-modal" hide-footer title="Using Component Methods" @hidden="onModalHidden">
-      <div class="d-block text-center">
-        <h3>Hello From My Modal!</h3>
-      </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button>
-      <b-button class="mt-2" variant="outline-warning" block @click="toggleModal">Toggle Me</b-button>
+    <b-modal v-model="modalShow" title="Create New Recipe" @ok="submitForm" @cancel="closeModal">
+      <b-form @submit.prevent="submitForm">
+        <b-form-group label="Title:" :state="validateField(formData.title)">
+          <b-form-input v-model="formData.title" required></b-form-input>
+          <b-form-invalid-feedback>Title is required.</b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group label="Image URL:" :state="validateField(formData.image)">
+          <b-form-input v-model="formData.image" required></b-form-input>
+          <b-form-invalid-feedback>Image URL is required.</b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group label="Instructions:" :state="validateField(formData.instructions)">
+          <b-form-textarea v-model="formData.instructions" rows="4" required></b-form-textarea>
+          <b-form-invalid-feedback>Instructions are required.</b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group label="Ready in Minutes:" :state="validateField(formData.readyInMinutes)">
+          <b-form-input type="number" v-model="formData.readyInMinutes" required></b-form-input>
+          <b-form-invalid-feedback>Ready in minutes are required.</b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group label="Servings:" :state="validateField(formData.servings)">
+          <b-form-input type="number" v-model="formData.servings" required></b-form-input>
+          <b-form-invalid-feedback>Servings are required.</b-form-invalid-feedback>
+        </b-form-group>
+        <!-- Add dietary preferences checkboxes -->
+        <b-form-group label="Dietary Preferences:">
+          <b-form-checkbox v-model="formData.glutenFree">Gluten-Free</b-form-checkbox>
+          <b-form-checkbox v-model="formData.vegan">Vegan</b-form-checkbox>
+          <b-form-checkbox v-model="formData.vegetarian">Vegetarian</b-form-checkbox>
+        </b-form-group>
+        <!-- Add ingredients input -->
+        <b-form-group label="Ingredients:" v-for="(ingredient, index) in formData.ingredients" :key="index">
+          <b-form-input v-model="ingredient.name" placeholder="Name" required></b-form-input>
+          <b-form-input v-model="ingredient.amount" type="number" placeholder="Amount" required></b-form-input>
+          <!-- Add more fields as needed -->
+          <b-button @click="removeIngredient(index)" variant="danger">Remove</b-button>
+        </b-form-group>
+        <b-button @click="addIngredient" variant="success">Add Ingredient</b-button>
+        <b-form-invalid-feedback v-if="!formData.ingredients.length">At least one ingredient is required.</b-form-invalid-feedback>
+      </b-form>
     </b-modal>
   </div>
 </template>
 
 <script>
+import { BModal, BButton, BForm, BFormGroup, BFormInput, BFormTextarea, BFormInvalidFeedback, BFormCheckbox } from 'bootstrap-vue';
+
 export default {
-  name: 'NewRecipeModal',
-  methods: {
-    showModal() {
-      this.$refs['my-modal'].show();
-    },
-    hideModal() {
-      this.$refs['my-modal'].hide();
-    },
-    toggleModal() {
-      this.$refs['my-modal'].toggle('#toggle-btn');
-    },
-    onModalHidden() {
-      console.log('Modal hidden');
-    }
+  components: {
+    BModal,
+    BButton,
+    BForm,
+    BFormGroup,
+    BFormInput,
+    BFormTextarea,
+    BFormInvalidFeedback,
+    BFormCheckbox
   },
-  mounted() {
-    this.hideModal(); // Ensure the modal is hidden when the component is mounted
+  data() {
+    return {
+      modalShow: false,
+      formData: {
+        title: '',
+        image: '',
+        instructions: '',
+        readyInMinutes: '',
+        servings: '',
+        glutenFree: false,
+        vegan: false,
+        vegetarian: false,
+        ingredients: []
+      }
+    };
+  },
+  methods: {
+    openModal() {
+      this.modalShow = true;
+    },
+    closeModal() {
+      this.modalShow = false;
+      // Reset form data
+      this.formData.title = '';
+      this.formData.image = '';
+      this.formData.instructions = '';
+      this.formData.readyInMinutes = '';
+      this.formData.servings = '';
+      this.formData.glutenFree = false;
+      this.formData.vegan = false;
+      this.formData.vegetarian = false;
+      this.formData.ingredients = [];
+    },
+    submitForm() {
+      // Validate form fields before submitting
+      if (!this.validateForm()) {
+        return;
+      }
+
+      // Create new recipe with form data
+      let newRecipe = {
+        title: this.formData.title,
+        image: this.formData.image,
+        instructions: this.formData.instructions,
+        readyInMinutes: this.formData.readyInMinutes,
+        servings: this.formData.servings,
+        glutenFree: this.formData.glutenFree,
+        vegan: this.formData.vegan,
+        vegetarian: this.formData.vegetarian,
+        ingredients: this.formData.ingredients
+        // Add other form fields here
+      };
+      
+      // Do something with the new recipe data, like sending it to an API or storing it in Vuex
+      
+      // Reset form data and close modal
+      this.closeModal();
+    },
+    validateForm() {
+      let valid = true;
+      if (!this.formData.title) valid = false;
+      if (!this.formData.image) valid = false;
+      if (!this.formData.instructions) valid = false;
+      if (!this.formData.readyInMinutes) valid = false;
+      if (!this.formData.servings) valid = false;
+      // Add validation for other fields here if needed
+      return valid;
+    },
+    validateField(field) {
+      return field ? true : false;
+    },
+    addIngredient() {
+      this.formData.ingredients.push({ name: '', amount: '' });
+    },
+    removeIngredient(index) {
+      this.formData.ingredients.splice(index, 1);
+    }
   }
 };
 </script>
+
+<style scoped>
+.modal-button {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.b-modal-content {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+
+.b-form {
+  padding: 20px;
+}
+
+.b-form-group {
+  margin-bottom: 20px;
+}
+
+.b-form-input,
+.b-form-textarea,
+.b-form-checkbox-group {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: white;
+}
+
+.b-form-checkbox-group label {
+  color: white;
+}
+
+.b-button {
+  margin-top: 10px;
+}
+</style>

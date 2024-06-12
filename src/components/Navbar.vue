@@ -5,6 +5,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Left side of the navbar -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link class="nav-link" :to="{ name: 'main' }">Home</router-link>
@@ -15,61 +16,63 @@
         <li class="nav-item">
           <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
         </li>
-        <li>
-          <b-nav-item-dropdown text="Personal" v-if="$root.store.username">
+        <!-- Dropdown for personal actions -->
+        <li v-if="$root.store.username" class="nav-item dropdown">
+          <b-nav-item-dropdown text="Personal">
             <router-link :to="{ name: 'favorite' }" class="dropdown-item">Favorites</router-link>
             <router-link :to="{ name: 'myRecipe' }" class="dropdown-item">My recipes</router-link>
             <router-link :to="{ name: 'myFamily' }" class="dropdown-item">Family recipes</router-link>
           </b-nav-item-dropdown>
         </li>
-
-        <li class="nav-item" v-if="$root.store.username">
-          <router-link class="nav-link" :to="{ name: 'new_rec' }">New Recipe</router-link>
+        <!-- New Recipe link -->
+        <li v-if="$root.store.username" class="nav-item">
+          <a class="nav-link" href="#" @click.prevent="openCreateRecipeModal">New Recipe</a>
         </li>
       </ul>
+      
+      <!-- Right side of the navbar -->
       <ul class="navbar-nav">
-        <li class="nav-item" v-if="!$root.store.username">
+        <!-- Guest actions -->
+        <li v-if="!$root.store.username" class="nav-item">
           <span class="navbar-text text-light">Guest:</span>
           <router-link class="nav-link" :to="{ name: 'register' }">Register</router-link>
-        </li>
-        <li class="nav-item" v-if="!$root.store.username">
           <router-link class="nav-link" :to="{ name: 'login' }">Login</router-link>
         </li>
-        <li class="nav-item" v-else>
+        <!-- Logged in user actions -->
+        <li v-if="$root.store.username" class="nav-item">
           <span class="navbar-text text-light">{{ $root.store.username }}:</span>
-          <button class="nav-link btn btn-link text-light" @click="Logout">Logout</button>
+          <button class="nav-link btn btn-link text-light" @click="logout">Logout</button>
         </li>
       </ul>
     </div>
+
+    <!-- Include CreateRecipeModal component -->
+    <CreateRecipeModal ref="createRecipeModal" @recipe-created="handleRecipeCreated" />
   </nav>
 </template>
 
 <script>
+import CreateRecipeModal from './NewRecipeModal.vue';
+
 export default {
   name: 'Navbar',
-  mounted() {
-    if (!this.$root.store.username) {
-      this.$root.toast("Hello Guest", "Welcome to Vue Recipes website!", "success");
-    }
+  components: {
+    CreateRecipeModal
   },
   methods: {
-    // method to clear the search state i saved in the session storage
-    clearSearchState() {
-    sessionStorage.removeItem('searchQuery');
-    sessionStorage.removeItem('searchResults');
-    sessionStorage.removeItem('resultsPerPage');
-    sessionStorage.removeItem('sortBy');
-    sessionStorage.removeItem('selectedFilters');
+    openCreateRecipeModal() {
+      this.$refs.createRecipeModal.openModal();
     },
-    Logout() {
+    logout() {
       this.$root.store.logout();
-      this.clearSearchState(); // Clear the search state
+      this.$router.push({ name: 'main' });
       this.$root.toast("Logout", "User logged out successfully", "success");
-      this.$router.push("/").catch(() => {
-      this.$forceUpdate();
-
-      });
     },
+    handleRecipeCreated() {
+      // Optionally handle actions after a recipe is successfully created
+      this.$router.push({ name: 'main' }); // Redirect or refresh as needed
+      this.$root.toast("Success", "Recipe created successfully", "success");
+    }
   }
 };
 </script>
@@ -77,8 +80,5 @@ export default {
 <style scoped>
 .navbar {
   margin-bottom: 20px;
-}
-.dropdown-item {
-  color: black; /* Change to your desired text color */
 }
 </style>
