@@ -34,7 +34,7 @@ export default {
       type: Number,
       default: 3
     },
-    ranomize: {
+    randomize: {
       type: Boolean,
       default: false
     }

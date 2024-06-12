@@ -5,6 +5,7 @@
         :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
         class="card-link hoverable"
         title="Go to recipe"
+        @click.native.stop
       >
         <img
           :src="recipe.image"
@@ -20,7 +21,7 @@
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
           {{ recipe.aggregateLikes }} likes
-          <FavoriteButtonComponent :recipeId.="recipe.id" :initialFavoriteState="isFavorite" />
+          <FavoriteButtonComponent :recipeId="recipe.id" :initialFavoriteState="isFavorite" @click.stop />
         </li>
       </ul>
       <RecipeLogos :recipe="recipe" />
@@ -30,7 +31,7 @@
 
 <script>
 import { mockAddLastViewedRecipe } from "../services/user.js";
-import FavoriteButtonComponent from "./FavoriteButtonCompommemt.vue";
+import FavoriteButtonComponent from "./FavoriteButtonComponent.vue";
 import RecipeLogos from "./RecipeLogos.vue";
 
 export default {

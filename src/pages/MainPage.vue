@@ -7,8 +7,8 @@
         <RecipePreviewList
           ref="recipeList"
           title="Explore these recipes"
-          displayCount="3"
-          ranomize="true"
+          :displayCount="3"
+          :randomize="true"
           class="RandomRecipes center"
           :recipes="recipes"
         />
@@ -19,7 +19,7 @@
           <RecipePreviewList
             ref="recipeList_lastViewed"
             title="Last Viewed Recipes"
-            displayCount="3"
+            :displayCount="3"
             :class="{
               RandomRecipes: true,
               blur: !$root.store.username,
