@@ -23,7 +23,6 @@ export function mockGetRecipeFullDetails(recipeId) {
   };
 }
   
-
 export function mockGetRecipesPreview2(amount = 1) {
   let recipes = [];
   for (let i = 0; i < amount; i++) {
