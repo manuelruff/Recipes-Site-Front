@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import { mockAddLastViewedRecipe } from "../services/user.js";
 import FavoriteButtonComponent from "./FavoriteButtonComponent.vue";
 import RecipeLogos from "./RecipeLogos.vue";
 

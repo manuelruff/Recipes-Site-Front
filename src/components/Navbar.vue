@@ -40,9 +40,12 @@
         </li>
         <!-- Logged in user actions -->
         <li v-if="$root.store.username" class="nav-item">
-          <span class="navbar-text text-light">{{ $root.store.username }}:</span>
-          <button class="nav-link btn btn-link text-light" @click="logout">Logout</button>
-        </li>
+    <div class="nav-content">
+        <span class="navbar-text text-light">{{ $root.store.username }}:</span>
+        <button class="nav-link btn btn-link text-light" @click="logout">Logout</button>
+    </div>
+</li>
+
       </ul>
     </div>
 
@@ -63,10 +66,21 @@ export default {
     openCreateRecipeModal() {
       this.$refs.createRecipeModal.openModal();
     },
+    clearSearchState() {
+    sessionStorage.removeItem('searchQuery');
+    sessionStorage.removeItem('searchResults');
+    sessionStorage.removeItem('resultsPerPage');
+    sessionStorage.removeItem('sortBy');
+    sessionStorage.removeItem('selectedFilters');
+    },
     logout() {
       this.$root.store.logout();
-      this.$router.push({ name: 'main' });
+      this.clearSearchState(); // Clear the search state
       this.$root.toast("Logout", "User logged out successfully", "success");
+      this.$router.push("/").catch(() => {
+      this.$forceUpdate();
+
+      })
     },
     handleRecipeCreated() {
       // Optionally handle actions after a recipe is successfully created
@@ -81,4 +95,18 @@ export default {
 .navbar {
   margin-bottom: 20px;
 }
+.nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.nav-content {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-text {
+    margin-right: 10px; /* Adjust as needed */
+}
+
 </style>
