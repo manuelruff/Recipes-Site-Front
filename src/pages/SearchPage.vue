@@ -110,6 +110,7 @@ export default {
       const resultsPerPage = sessionStorage.getItem('resultsPerPage');
       const sortBy = sessionStorage.getItem('sortBy');
       const selectedFilters = sessionStorage.getItem('selectedFilters');
+
       if (searchQuery) {
         this.query = searchQuery;
       }
@@ -132,6 +133,36 @@ export default {
       sessionStorage.setItem('resultsPerPage', this.resultsPerPage);
       sessionStorage.setItem('sortBy', this.sortBy);
       sessionStorage.setItem('selectedFilters', JSON.stringify(this.selectedFilters));
+    },
+    onSearch() {
+      try {
+        const amountToFetch = this.resultsPerPage; // Set this to how many recipes you want to fetch
+        const response = mockGetRecipesPreview2(amountToFetch);
+        console.log(response);
+        const recipes = response.data.recipes;
+        console.log(recipes);
+        this.results = recipes;
+        console.log(this.results);
+        this.sortResults(); // Sort the results after fetching
+        this.saveState(); // Save state after fetching and sorting
+      } catch (error) {
+        console.log(error);
+      }
+
+      // manu key
+      const apiKey = 'dfc0343255df402babb592636a733295';
+      // omri key
+      const dietString = this.selectedFilters.diet.join(',');
+      const cuisineString = this.selectedFilters.cuisine.join(',');
+      const intolerancesString = this.selectedFilters.intolerances.join(',');
+      console.log("Query:", this.query);
+      console.log("Results Per Page:", this.resultsPerPage);
+      console.log("Diet:", dietString);
+      console.log("Cuisine:", cuisineString);
+      console.log("Intolerances:", intolerancesString);
+      console.log("searching...");
+      // its not doing anything, just for mock
+      mockGetSearchResults(this.query, amountToFetch, dietString, cuisineString, intolerancesString);
     },
     // this is the api, its working! 80% done, ignore for now
     async onSearch2() {
@@ -166,45 +197,6 @@ export default {
       console.error('Error fetching data:', error);
     }
   },
-  onSearch() {
-      try {
-        const amountToFetch = this.resultsPerPage; // Set this to how many recipes you want to fetch
-        const response = mockGetRecipesPreview2(amountToFetch);
-        console.log(response);
-        const recipes = response.data.recipes;
-        console.log(recipes);
-        this.results = recipes;
-        console.log(this.results);
-        this.sortResults(); // Sort the results after fetching
-        this.saveState(); // Save state after fetching and sorting
-      } catch (error) {
-        console.log(error);
-      }
-
-      // manu key
-      const apiKey = 'dfc0343255df402babb592636a733295';
-      // omri key
-      // const url = `https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=${this.resultsPerPage}&diet=${dietString}&cuisine=${cuisineString}&intolerances=${intolerancesString}&apiKey=${apiKey}&addRecipeInformation=true`;
-      // Log the URL and parameters to the console
-      // console.log("Generated URL:", url);
-      // try {
-      //   const response = await fetch(url);
-      //   const data = await response.json();
-      //   this.results = data.results;
-      // } catch (error) {
-      //   console.error('Error fetching data:', error);
-      // }
-      const dietString = this.selectedFilters.diet.join(',');
-      const cuisineString = this.selectedFilters.cuisine.join(',');
-      const intolerancesString = this.selectedFilters.intolerances.join(',');
-      console.log("Query:", this.query);
-      console.log("Results Per Page:", this.resultsPerPage);
-      console.log("Diet:", dietString);
-      console.log("Cuisine:", cuisineString);
-      console.log("Intolerances:", intolerancesString);
-      console.log("searching...");
-      mockGetSearchResults(this.query, amountToFetch, dietString, cuisineString, intolerancesString);
-    },
     onSortChange() {
       console.log("Sort option changed:", this.sortBy);
       this.sortResults();
@@ -217,7 +209,7 @@ export default {
         this.results.sort((a, b) => a.readyInMinutes - b.readyInMinutes);
       }
     }
-  },
+  }
 };
 
 </script>
@@ -235,3 +227,11 @@ export default {
   margin-top: 20px;
 }
 </style>
+
+
+
+
+
+
+
+

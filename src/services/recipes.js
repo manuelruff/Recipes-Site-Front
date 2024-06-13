@@ -24,6 +24,10 @@ export function mockGetRecipeFullDetails(recipeId) {
 }
   
 export function mockGetRecipesPreview2(amount = 1) {
+  // that is because that is our maximum amount of recipes for now in the mock
+  if (amount > 8) {
+    amount=8;
+  }
   let recipes = [];
   for (let i = 0; i < amount; i++) {
     recipes.push(recipe_preview2[i]);
@@ -48,6 +52,7 @@ export function mockGetRecipeFullDetails2(recipeId) {
 }
 
 export function mockGetSearchResults(query,amount = 1,diet=[],cuisine=[],intolerances=[]) {
+  // that is because that is our maximum amount of recipes for now in the mock
   return {
     status: 200,
     data: { recipes: [recipe_preview, recipe_preview2] }
