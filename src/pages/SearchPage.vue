@@ -111,6 +111,8 @@ export default {
       const sortBy = sessionStorage.getItem('sortBy');
       const selectedFilters = sessionStorage.getItem('selectedFilters');
 
+      
+
       if (searchQuery) {
         this.query = searchQuery;
       }
@@ -152,6 +154,16 @@ export default {
       // manu key
       const apiKey = 'dfc0343255df402babb592636a733295';
       // omri key
+      // const url = `https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=${this.resultsPerPage}&diet=${dietString}&cuisine=${cuisineString}&intolerances=${intolerancesString}&apiKey=${apiKey}&addRecipeInformation=true`;
+      // Log the URL and parameters to the console
+      // console.log("Generated URL:", url);
+      // try {
+      //   const response = await fetch(url);
+      //   const data = await response.json();
+      //   this.results = data.results;
+      // } catch (error) {
+      //   console.error('Error fetching data:', error);
+      // }
       const dietString = this.selectedFilters.diet.join(',');
       const cuisineString = this.selectedFilters.cuisine.join(',');
       const intolerancesString = this.selectedFilters.intolerances.join(',');

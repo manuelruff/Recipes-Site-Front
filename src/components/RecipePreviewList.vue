@@ -57,7 +57,7 @@ export default {
   watch: {
     recipes: {
       handler() {
-        if (this.ranomize) {
+        if (this.randomize) {
           this.randomizeRecipes();
         } else {
           this.randomizedRecipes = [...this.recipes];

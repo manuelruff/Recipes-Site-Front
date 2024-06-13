@@ -6,7 +6,7 @@
         <RecipePreviewList
           ref="recipeList"
           title="Favorite recipes"
-          displayCount=2
+          :displayCount=2
           class="RandomRecipes center"
           :recipes="recipes"
         />

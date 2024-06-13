@@ -7,7 +7,7 @@
       <RecipePreviewList
         ref="recipeList"
         title="My recipes"
-        displayCount=2
+        :displayCount=2
         class="RandomRecipes center"
         :recipes="recipes"
       />
