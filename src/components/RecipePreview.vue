@@ -5,7 +5,6 @@
         :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
         class="card-link hoverable"
         title="Go to recipe"
-        @click.native="handleCardClick"
       >
         <img
           :src="recipe.image"
