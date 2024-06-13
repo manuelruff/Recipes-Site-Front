@@ -110,9 +110,6 @@ export default {
       const resultsPerPage = sessionStorage.getItem('resultsPerPage');
       const sortBy = sessionStorage.getItem('sortBy');
       const selectedFilters = sessionStorage.getItem('selectedFilters');
-
-      
-
       if (searchQuery) {
         this.query = searchQuery;
       }
@@ -136,7 +133,40 @@ export default {
       sessionStorage.setItem('sortBy', this.sortBy);
       sessionStorage.setItem('selectedFilters', JSON.stringify(this.selectedFilters));
     },
-    onSearch() {
+    // this is the api, its working! 80% done, ignore for now
+    async onSearch2() {
+    // manu key
+    const apiKey = 'dfc0343255df402babb592636a733295';
+    // omri key
+    const dietString = this.selectedFilters.diet.join(',');
+    const cuisineString = this.selectedFilters.cuisine.join(',');
+    const intolerancesString = this.selectedFilters.intolerances.join(',');
+    const url = `https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=${this.resultsPerPage}&diet=${dietString}&cuisine=${cuisineString}&intolerances=${intolerancesString}&apiKey=${apiKey}&information=true`;
+    // Log the URL and parameters to the console
+    console.log("Generated URL:", url);
+    console.log("Query:", this.query);
+    console.log("Results Per Page:", this.resultsPerPage);
+    console.log("Diet:", dietString);
+    console.log("Cuisine:", cuisineString);
+    console.log("Intolerances:", intolerancesString);
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      this.results = data.results;
+      // Loop through each recipe in the results
+      this.results.forEach(recipe => {
+      // Loop through each variable of the recipe
+      for (const key in recipe) {
+          if (recipe.hasOwnProperty(key)) {
+              console.log(`${key}:`, recipe[key]);
+          }
+      }
+    });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  },
+  onSearch() {
       try {
         const amountToFetch = this.resultsPerPage; // Set this to how many recipes you want to fetch
         const response = mockGetRecipesPreview2(amountToFetch);
@@ -187,7 +217,7 @@ export default {
         this.results.sort((a, b) => a.readyInMinutes - b.readyInMinutes);
       }
     }
-  }
+  },
 };
 
 </script>
