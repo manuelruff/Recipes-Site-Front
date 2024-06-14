@@ -23,6 +23,8 @@
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
   .logo {
     width: 30px;

@@ -4,6 +4,11 @@
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.title }}</h1>
         <img :src="recipe.image" class="center recipe-image" />
+        <div class="story-wrapper" >
+            <h3>Story:</h3>
+            <li>{{ recipe.story }}</li>
+        </div>
+        
         <RecipeLogos :recipe="recipe" />
       </div>
       <div class="recipe-body">
@@ -45,13 +50,12 @@ export default {
   data() {
     return {
       recipe: null,
-      isFavorite: false // Assuming you have a way to get the initial favorite state
+      isFavorite: false, // Assuming you have a way to get the initial favorite state
     };
   },
   async created() {
     try {
       let response;
-
       try {
         response = mockGetFamilyRecipeById(this.$route.params.recipeId);
         if (response.status !== 200) this.$router.replace("/NotFound");
@@ -72,9 +76,10 @@ export default {
         glutenFree,
         vegetarian,
         vegan,
-        id // Ensure you get the recipe ID
+        id,
+        story 
       } = response.data.recipe;
-
+      console.log("*********************************"+response.data.recipe.story);
       const _instructions = analyzedInstructions
         .map(fstep => fstep.steps.map(step => ({ ...step, step: fstep.name + step.step })))
         .flat();
@@ -91,27 +96,15 @@ export default {
         glutenFree,
         vegetarian,
         vegan,
-        id // Assign the recipe ID
-      };
+        id,
+        story
+        };
     } catch (error) {
       console.log(error);
     }
-    // ****************not sure if i want that to be added to last viewed recipes****************
-    // we log that the user saw that recipe
-    // mock to save something the user pressed to last viewed
-    // mockAddLastViewedRecipe(this.recipe.id);
-    // console.log("Added to last viewed recipes " + this.recipe.id);
   },
-  // methods: {
-  //   AddLastViewedRecipe() {
-  //     // mock to save something the user pressed to last viewed
-  //     mockAddLastViewedRecipe(this.recipe.id);
-  //     console.log("Added to last viewed recipes");
-  //   }
-  // }
 };
 </script>
-
 <style scoped>
 .recipe-container {
   border: 1px solid #ddd;
@@ -122,6 +115,9 @@ export default {
   margin-bottom: 16px;
 }
 .recipe-header {
+  text-align: center;
+}
+.story-wrapper {
   text-align: center;
 }
 .recipe-image {
@@ -170,8 +166,5 @@ li::before {
   left: 0;
   font-weight: bold;
   color: #ff6347;
-}
-h3 {
-  margin-top: 16px;
 }
 </style>
