@@ -33,40 +33,42 @@
     <div class="main-content">
       <div class="row results">
         <div v-if="results.length" class="col-12 mt-4">
-          <div class="row">
-            <div class="col-md-6 mb-4 d-flex align-items-stretch" v-for="recipe in results" :key="recipe.id">
-              <RecipePreviewList :recipes="[recipe]" />
-            </div>
-          </div>
+          <RecipePreviewList
+            ref="recipeList"
+            title="Search Results"
+            :displayCount="resultsPerPage"
+            :recipes="results"
+            class="RandomRecipes center"
+          />
         </div>
         <div v-else class="col-12 mt-4">
           <p>No results found</p>
         </div>
       </div>
       <div class="filters">
-        <b-button v-b-toggle.diet-collapse variant="link">Diet</b-button>
+        <b-button v-b-toggle.diet-collapse variant="link" class="text-custom">Diet</b-button>
         <b-collapse id="diet-collapse">
           <div class="form-check" v-for="option in dietOptions" :key="option.value">
             <input class="form-check-input" type="checkbox" :value="option.value" v-model="selectedFilters.diet" :id="'diet-' + option.value">
-            <label class="form-check-label" :for="'diet-' + option.value">{{ option.text }}</label>
+            <label class="form-check-label text-custom" :for="'diet-' + option.value">{{ option.text }}</label>
           </div>
         </b-collapse>
         <div class="dropdown-divider"></div>
         
-        <b-button v-b-toggle.cuisine-collapse variant="link">Cuisine</b-button>
+        <b-button v-b-toggle.cuisine-collapse variant="link" class="text-custom">Cuisine</b-button>
         <b-collapse id="cuisine-collapse">
           <div class="form-check" v-for="option in cuisineOptions" :key="option.value">
             <input class="form-check-input" type="checkbox" :value="option.value" v-model="selectedFilters.cuisine" :id="'cuisine-' + option.value">
-            <label class="form-check-label" :for="'cuisine-' + option.value">{{ option.text }}</label>
+            <label class="form-check-label text-custom" :for="'cuisine-' + option.value">{{ option.text }}</label>
           </div>
         </b-collapse>
         <div class="dropdown-divider"></div>
         
-        <b-button v-b-toggle.intolerances-collapse variant="link">Intolerances</b-button>
+        <b-button v-b-toggle.intolerances-collapse variant="link" class="text-custom">Intolerances</b-button>
         <b-collapse id="intolerances-collapse">
           <div class="form-check" v-for="option in intolerancesOptions" :key="option.value">
             <input class="form-check-input" type="checkbox" :value="option.value" v-model="selectedFilters.intolerances" :id="'intolerance-' + option.value">
-            <label class="form-check-label" :for="'intolerance-' + option.value">{{ option.text }}</label>
+            <label class="form-check-label text-custom" :for="'intolerance-' + option.value">{{ option.text }}</label>
           </div>
         </b-collapse>
       </div>
@@ -256,5 +258,11 @@ export default {
 }
 .d-flex .form-control:not(:last-child) {
   margin-right: 10px;
+}
+.text-custom {
+  color: #efaf6b; /* Custom color for filter text */
+}
+.recipePreview {
+  margin-bottom: 20px;
 }
 </style>

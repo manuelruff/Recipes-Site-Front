@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg custom-navbar">
     <router-link class="navbar-brand" :to="{ name: 'main' }">Vue Recipes</router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -18,10 +18,12 @@
         </li>
         <!-- Dropdown for personal actions -->
         <li v-if="$root.store.username" class="nav-item dropdown">
-          <b-nav-item-dropdown text="Personal">
-            <router-link :to="{ name: 'favorite' }" class="dropdown-item">Favorites</router-link>
-            <router-link :to="{ name: 'myRecipe' }" class="dropdown-item">My recipes</router-link>
-            <router-link :to="{ name: 'myFamily' }" class="dropdown-item">Family recipes</router-link>
+          <b-nav-item-dropdown text="Personal" right>
+            <template v-slot:default>
+              <router-link :to="{ name: 'favorite' }" class="dropdown-item">Favorites</router-link>
+              <router-link :to="{ name: 'myRecipe' }" class="dropdown-item">My recipes</router-link>
+              <router-link :to="{ name: 'myFamily' }" class="dropdown-item">Family recipes</router-link>
+            </template>
           </b-nav-item-dropdown>
         </li>
         <!-- New Recipe link -->
@@ -40,12 +42,11 @@
         </li>
         <!-- Logged in user actions -->
         <li v-if="$root.store.username" class="nav-item">
-    <div class="nav-content">
-        <span class="navbar-text text-light">{{ $root.store.username }}:</span>
-        <button class="nav-link btn btn-link text-light" @click="logout">Logout</button>
-    </div>
-</li>
-
+          <div class="nav-content">
+              <span class="navbar-text text-light">{{ $root.store.username }}:</span>
+              <button class="nav-link btn btn-link text-light" @click="logout">Logout</button>
+          </div>
+        </li>
       </ul>
     </div>
 
@@ -72,19 +73,18 @@ export default {
       this.$refs.createRecipeModal.openModal();
     },
     clearSearchState() {
-    sessionStorage.removeItem('searchQuery');
-    sessionStorage.removeItem('searchResults');
-    sessionStorage.removeItem('resultsPerPage');
-    sessionStorage.removeItem('sortBy');
-    sessionStorage.removeItem('selectedFilters');
+      sessionStorage.removeItem('searchQuery');
+      sessionStorage.removeItem('searchResults');
+      sessionStorage.removeItem('resultsPerPage');
+      sessionStorage.removeItem('sortBy');
+      sessionStorage.removeItem('selectedFilters');
     },
     logout() {
       this.$root.store.logout();
       this.clearSearchState(); // Clear the search state
       this.$root.toast("Logout", "User logged out successfully", "success");
       this.$router.push("/").catch(() => {
-      this.$forceUpdate();
-
+        this.$forceUpdate();
       })
     },
     handleRecipeCreated() {
@@ -97,21 +97,41 @@ export default {
 </script>
 
 <style scoped>
-.navbar {
-  margin-bottom: 20px;
-}
-.nav-item {
-    display: flex;
-    align-items: center;
+.custom-navbar {
+  background-color: rgba(0, 0, 0, 0.8); /* 50% transparent background */
 }
 
-.nav-content {
-    display: flex;
-    align-items: center;
+.navbar-brand,
+.navbar-nav .nav-link,
+.navbar-nav .dropdown-item {
+  color: orange !important; /* Set text color to orange */
+}
+
+.navbar-brand:hover,
+.navbar-nav .nav-link:hover,
+.navbar-nav .dropdown-item:hover {
+  color: yellow !important; /* Optional: Change text color on hover */
 }
 
 .navbar-text {
-    margin-right: 10px; /* Adjust as needed */
+  color: white !important; /* Set the text color of the navbar text to white */
 }
 
+.navbar {
+  margin-bottom: 20px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-text {
+  margin-right: 10px; /* Adjust as needed */
+}
 </style>

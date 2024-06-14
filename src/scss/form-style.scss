@@ -7,5 +7,17 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh;
+    /* Additional styles for specific elements if needed */
+h1, h2, h3, h4, h5, h6 {
+  color: #efaf6b; /* Example: Change heading text color */
+}
+
+p {
+  color: #ffffff; /* Example: Change paragraph text color */
+}
+
+.label-custom {
+  color: #efaf6b; /* Example: Custom class for specific labels */
+}
   }
   
