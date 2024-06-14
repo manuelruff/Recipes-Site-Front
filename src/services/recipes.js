@@ -87,9 +87,7 @@ export function mockGetAllFamilyRecipes() {
   return { data: { recipes } };
 }
 
-
-
-export function mockGetRecipeById(recipeId) {
+export function mockGetFamilyRecipeById(recipeId) {
   const recipe = family_full_recipes.find(r => r.id === recipeId);
   return {
     status: recipe ? 200 : 404,
