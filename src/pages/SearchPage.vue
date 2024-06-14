@@ -260,7 +260,7 @@ export default {
   margin-right: 10px;
 }
 .text-custom {
-  color: #efaf6b; /* Custom color for filter text */
+  color: #fc5400; /* Custom color for filter text */
 }
 .recipePreview {
   margin-bottom: 20px;

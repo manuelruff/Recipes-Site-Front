@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <!-- <h1 class="title">Main Page</h1> -->
     <div class="row">
-      <!-- Left side for random recipes -->
         <RecipePreviewList
           ref="recipeList"
           title="Favorite recipes"
@@ -16,7 +14,7 @@
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
-import { mockGetRecipesPreview2 } from "../services/recipes.js";
+import { mockGetRecipesPreview2,mockGetFavoriteRecipes } from "../services/recipes.js";
 
 export default {
   name: "FavoritePage",
@@ -36,6 +34,9 @@ export default {
     async fetchRecipes() {
       try {
         const amountToFetch = 8; // Set this to how many recipes you want to fetch
+        // lets say mockGetRecipesPreview2 is mock for get favorite
+        // mockGetFavoriteRecipes(amountToFetch,$root.store.username);
+        // then actually reading defult recipes
         const response = mockGetRecipesPreview2(amountToFetch);
         console.log(response);
         const recipes = response.data.recipes;
