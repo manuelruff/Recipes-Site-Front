@@ -156,14 +156,6 @@ export default {
   color: white;
 }
 
-.b-form {
-  padding: 20px;
-}
-
-.b-form-group {
-  margin-bottom: 20px;
-}
-
 .b-form-input,
 .b-form-textarea,
 .b-form-checkbox-group {
@@ -172,11 +164,5 @@ export default {
   color: white;
 }
 
-.b-form-checkbox-group label {
-  color: white;
-}
 
-.b-button {
-  margin-top: 10px;
-}
 </style>

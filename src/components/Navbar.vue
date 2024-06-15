@@ -17,7 +17,7 @@
           <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
         </li>
         <!-- Dropdown for personal actions -->
-        <li v-if="$root.store.username" class="nav-item dropdown">
+        <li v-if="$root.store.username" class="nav-item-dropdown">
           <b-nav-item-dropdown text="Personal" right>
             <template v-slot:default>
               <router-link :to="{ name: 'favorite' }" class="dropdown-item">Favorites</router-link>
@@ -104,26 +104,13 @@ export default {
 .navbar-brand,
 .navbar-nav .nav-link,
 .navbar-nav .dropdown-item {
-  color: orange !important; /* Set text color to orange */
+  color: orange !important; 
 }
 
 .navbar-brand:hover,
 .navbar-nav .nav-link:hover,
 .navbar-nav .dropdown-item:hover {
-  color: yellow !important; /* Optional: Change text color on hover */
-}
-
-.navbar-text {
-  color: white !important; /* Set the text color of the navbar text to white */
-}
-
-.navbar {
-  margin-bottom: 20px;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
+  color: yellow !important;
 }
 
 .nav-content {
@@ -132,6 +119,6 @@ export default {
 }
 
 .navbar-text {
-  margin-right: 10px; /* Adjust as needed */
+  margin-right: 10px; 
 }
 </style>

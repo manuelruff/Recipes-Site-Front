@@ -58,7 +58,7 @@
   }
   .heart-button i {
     color: red;
-    font-size: 1.5rem; /* Adjust the size as needed */
+    font-size: 1.5rem;
   }
   </style>
   

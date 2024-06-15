@@ -90,15 +90,10 @@ export default {
 .recipe-preview .list-group-item {
   font-size: 0.9rem;
 }
-.card-link {
-  text-decoration: none;
-  color: inherit;
-}
-.card-link:hover {
-  text-decoration: none;
-}
+
 .hoverable:hover {
   cursor: pointer;
   opacity: 0.8;
 }
+
 </style>
