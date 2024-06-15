@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mockAddLastViewedRecipe, mockRemoveFavorite, mockAddFavorite } from "../services/user.js";
+import { mockAddLastViewedRecipe,  } from "../services/user.js";
 import { mockGetRecipeFullDetails2 } from "../services/recipes.js";
 import RecipeLogos from "../components/RecipeLogos.vue";
 import FavoriteButtonComponent from "../components/FavoriteButtonComponent.vue";

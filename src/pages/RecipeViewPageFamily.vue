@@ -17,6 +17,7 @@
             <div class="mb-3">
               <div><strong>Ready in:</strong> {{ recipe.readyInMinutes }} minutes</div>
               <div><strong>Servings:</strong> {{ recipe.servings }}</div>
+              <FavoriteButtonComponent :recipeId="recipe.id" :initialFavoriteState="isFavorite" />
             </div>
             <h3>Ingredients:</h3>
             <ul>
@@ -42,10 +43,13 @@
 <script>
 import { mockGetFamilyRecipeById } from "../services/recipes.js";
 import RecipeLogos from "../components/RecipeLogos.vue";
+import FavoriteButtonComponent from "../components/FavoriteButtonComponent.vue";
+import { mockAddLastViewedRecipe,  } from "../services/user.js";
 
 export default {
   components: {
     RecipeLogos,
+    FavoriteButtonComponent,
   },
   data() {
     return {
@@ -102,6 +106,8 @@ export default {
     } catch (error) {
       console.log(error);
     }
+    mockAddLastViewedRecipe(this.recipe.id);
+    console.log("Added to last viewed recipes " + this.recipe.id);
   },
 };
 </script>
