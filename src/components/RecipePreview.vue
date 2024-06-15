@@ -1,6 +1,22 @@
 <template>
   <div class="recipe-preview card" style="width: 18rem;">
     <div class="card-body">
+    <div v-if="recipe.family">
+      <router-link
+        :to="{ name: 'RecipeViewPageFamily', params: { recipeId: recipe.id } }"
+        class="card-link hoverable"
+        title="Go to recipe"
+      >
+        <img
+          :src="recipe.image"
+          class="card-img-top"
+          alt="Recipe image"
+          title="Go to recipe"
+        />
+        <h5 class="card-title">{{ recipe.title }}</h5>
+      </router-link>
+    </div>
+    <div v-else>
       <router-link
         :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
         class="card-link hoverable"
@@ -14,17 +30,18 @@
         />
         <h5 class="card-title">{{ recipe.title }}</h5>
       </router-link>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          {{ recipe.readyInMinutes }} minutes
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          {{ recipe.aggregateLikes }} likes
-          <FavoriteButtonComponent :recipeId="recipe.id" :initialFavoriteState="isFavorite" @click.stop />
-        </li>
-      </ul>
-      <RecipeLogos :recipe="recipe" />
     </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        {{ recipe.readyInMinutes }} minutes
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ recipe.aggregateLikes }} likes
+        <FavoriteButtonComponent :recipeId="recipe.id" :initialFavoriteState="isFavorite" @click.stop />
+      </li>
+    </ul>
+    <RecipeLogos :recipe="recipe" />
+  </div>
   </div>
 </template>
 

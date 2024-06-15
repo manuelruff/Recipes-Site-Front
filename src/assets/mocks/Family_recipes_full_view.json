@@ -8,6 +8,7 @@
         "vegetarian": true,
         "vegan": true,
         "glutenFree": false,
+        "family": true,
         "summary": "Kuskus is a traditional North African dish made from steamed semolina wheat. It is a staple food in many countries including Morocco, Algeria, and Tunisia.",
         "story": "This dish has been passed down through generations in my family, and it always brings back memories of family gatherings.",
         "analyzedInstructions": [
@@ -100,6 +101,7 @@
         "vegetarian": false,
         "vegan": false,
         "glutenFree": true,
+        "family": true,
         "summary": "Pkaila is a traditional Tunisian dish made from slow-cooked spinach or chard, often mixed with beans or meat, and seasoned with spices.",
         "story": "This dish reminds me of the flavors of Tunisian cuisine I grew up with.",
         "analyzedInstructions": [
@@ -192,6 +194,7 @@
         "vegetarian": true,
         "vegan": false,
         "glutenFree": true,
+        "family": true,
         "summary": "Pavlova is a meringue-based dessert named after the Russian ballerina Anna Pavlova. It has a crisp crust and soft, light inside, usually topped with fruit and whipped cream.",
         "story": "This dessert is a celebration of delicate flavors and textures.",
         "analyzedInstructions": [
