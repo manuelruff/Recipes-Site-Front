@@ -113,6 +113,15 @@ export default {
   color: yellow !important;
 }
 
+.navbar {
+  margin-bottom: 20px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
 .nav-content {
   display: flex;
   align-items: center;
