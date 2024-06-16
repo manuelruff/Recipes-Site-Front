@@ -2,7 +2,12 @@
     {
         "id": 111111,
         "image": "https://kipa.co.il/wp-content/uploads/2017/04/1-89201524544.jpg",
+        "image1": "https://www.pascalpr.co.il/wp-content/uploads/%D7%A7%D7%95%D7%A1%D7%A7%D7%95%D7%A1-3.jpg",
+        "image2": "https://www.yehudit-aviv.co.il/wp-content/uploads/DSC_0013-%D7%A2%D7%A8%D7%95%D7%9A-1-1024x682.jpg",
+        "image3": "https://www.meteg.co.il/wp-content/uploads/2023/10/%D7%A2%D7%99%D7%A6%D7%95%D7%91-%D7%9C%D7%9C%D7%90-%D7%A9%D7%9D-87-600x399.jpg",
+        "image4": "https://scontent.ftlv1-1.fna.fbcdn.net/v/t39.30808-6/448533611_10219690663975533_258470941627403264_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=6dC3KJkNPAMQ7kNvgGFI8di&_nc_ht=scontent.ftlv1-1.fna&oh=00_AYDpmtQ6yKiOjFyTC0OUPIkDlwDCqDki3hNa5SMvArm8wQ&oe=6674532E",
         "title": "Kuskus",
+        "owner":"Disya maimon - manuel's grandma",
         "readyInMinutes": 60,
         "aggregateLikes": 150,
         "vegetarian": true,
@@ -10,7 +15,7 @@
         "glutenFree": false,
         "family": true,
         "summary": "Kuskus is a traditional North African dish made from steamed semolina wheat. It is a staple food in many countries including Morocco, Algeria, and Tunisia.",
-        "story": "This dish has been passed down through generations in my family, and it always brings back memories of family gatherings.",
+        "story": "This dish has been passed down through generations in my family, and it always brings back memories of family gatherings. we make this recipe every friday night.", 
         "analyzedInstructions": [
             {
                 "name": "",
@@ -95,7 +100,12 @@
     {
         "id": 222222,
         "image": "https://www.thekitchencoach.co.il/wp-content/uploads/2019/04/%D7%A4%D7%A7%D7%99%D7%99%D7%9C%D7%94-%D7%98%D7%95%D7%A0%D7%99%D7%A1%D7%90%D7%99%D7%AA-%D7%90%D7%9E%D7%99%D7%AA%D7%99%D7%AA.-%D7%A6%D7%99%D7%9C%D7%95%D7%9D-%D7%A2%D7%96-%D7%AA%D7%9C%D7%9D.jpg",
+        "image1": "https://www.thekitchencoach.co.il/wp-content/uploads/2019/04/%D7%A9%D7%95%D7%98%D7%A4%D7%99%D7%9D-%D7%9E%D7%99%D7%99%D7%91%D7%A9%D7%99%D7%9D-%D7%95%D7%A7%D7%95%D7%A6%D7%A6%D7%99%D7%9D-%D7%92%D7%A1-%D7%90%D7%AA-%D7%94%D7%A2%D7%9C%D7%99%D7%9D-%D7%95%D7%9E%D7%A2%D7%91%D7%99%D7%A8%D7%99%D7%9D-%D7%9C%D7%A1%D7%99%D7%A8-%D7%94%D7%9B%D7%99-%D7%92%D7%93%D7%95%D7%9C-%D7%91%D7%91%D7%99%D7%AA.-%D7%A6%D7%99%D7%9C%D7%95%D7%9D-%D7%A2%D7%96-%D7%AA%D7%9C%D7%9D.jpg",
+        "image2": "https://www.thekitchencoach.co.il/wp-content/uploads/2019/04/%D7%90%D7%97%D7%A8%D7%99-45-60-%D7%93%D7%A7%D7%95%D7%AA-%D7%91%D7%99%D7%A9%D7%95%D7%9C-%D7%96%D7%94-%D7%9E%D7%94-%D7%A9%D7%A0%D7%A9%D7%90%D7%A8-%D7%9E%D7%94%D7%9E%D7%A0%D7%92%D7%95%D7%9C%D7%93-%D7%A6%D7%A8%D7%99%D7%9A-%D7%9C%D7%A9%D7%9E%D7%95%D7%A2-%D7%A7%D7%95%D7%9C%D7%95%D7%AA-%D7%98%D7%99%D7%92%D7%95%D7%9F-%D7%A2%D7%93%D7%99%D7%A0%D7%99%D7%9D-%D7%A4%D7%A6%D7%A4%D7%A6-%D7%95%D7%96%D7%94-%D7%A1%D7%99%D7%9E%D7%9F-%D7%A9%D7%94%D7%95%D7%90-%D7%9E%D7%95%D7%9B%D7%9F.-%D7%A6%D7%99%D7%9C%D7%95%D7%9D-%D7%A2%D7%96-%D7%AA%D7%9C%D7%9D.jpg",
+        "image3":"https://www.thekitchencoach.co.il/wp-content/uploads/2019/04/%D7%9E%D7%95%D7%A1%D7%99%D7%A4%D7%99%D7%9D-%D7%9B%D7%95%D7%A1-%D7%9C%D7%95%D7%91%D7%99%D7%94-%D7%9E%D7%95%D7%A9%D7%A8%D7%99%D7%AA-%D7%95%D7%90%D7%AA-%D7%94%D7%9E%D7%99%D7%9D-%D7%A9%D7%94%D7%95%D7%A6%D7%90%D7%A0%D7%95-%D7%9E%D7%91%D7%99%D7%A9%D7%95%D7%9C-%D7%94%D7%9E%D7%A0%D7%92%D7%95%D7%9C%D7%93-%D7%95%D7%A2%D7%95%D7%93-%D7%A7%D7%A6%D7%AA-%D7%90%D7%9D-%D7%A6%D7%A8%D7%99%D7%9A.-%D7%A6%D7%99%D7%9C%D7%95%D7%9D-%D7%A2%D7%96-%D7%AA%D7%9C%D7%9D.jpg",
+        "image4":"https://www.thekitchencoach.co.il/wp-content/uploads/2019/04/%D7%AA%D7%91%D7%A9%D7%99%D7%9C-%D7%91%D7%98%D7%A2%D7%9D-%D7%A2%D7%A9%D7%99%D7%A8-%D7%95%D7%9E%D7%99%D7%95%D7%97%D7%93.-%D7%A6%D7%99%D7%9C%D7%95%D7%9D-%D7%A2%D7%96-%D7%AA%D7%9C%D7%9D.jpg",
         "title": "Pkaila/Bkaïla",
+        "owner":"Disya maimon - manuel's grandma",
         "readyInMinutes": 180,
         "aggregateLikes": 100,
         "vegetarian": false,
@@ -103,7 +113,7 @@
         "glutenFree": true,
         "family": true,
         "summary": "Pkaila is a traditional Tunisian dish made from slow-cooked spinach or chard, often mixed with beans or meat, and seasoned with spices.",
-        "story": "This dish reminds me of the flavors of Tunisian cuisine I grew up with.",
+        "story": "This reminds me of my grandfather who came from Tunisia and used to love this dish. We would eat it every Friday night at grandma's house with some couscous.",
         "analyzedInstructions": [
             {
                 "name": "",
@@ -187,8 +197,13 @@
     },
     {
         "id": 333333,
-        "image": "https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/sites/5/2022/02/20142443/WhatsApp-Image-2022-02-16-at-11.55.05.jpeg",
+        "image": "https://scontent.ftlv1-1.fna.fbcdn.net/v/t1.18169-9/10369728_10153001539708749_508997398298571402_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=RgUTC2LtXwsQ7kNvgFzmQ4U&_nc_ht=scontent.ftlv1-1.fna&oh=00_AYBuGyjAGUfInvWZmtisvcICdUkZlfoNFBoO7L5Rbkamxg&oe=66960747",
+        "image1": "https://farm8.staticflickr.com/7183/6901845818_84c4ddea34_z.jpg",
+        "image2": "https://farm8.staticflickr.com/7112/7047941479_d86e6ffa43_z.jpg",
+        "image3": "https://scontent.ftlv1-1.fna.fbcdn.net/v/t1.18169-9/10931363_10153001538858749_4948971520448472632_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=-M7TRqN59zkQ7kNvgHIBY9Y&_nc_ht=scontent.ftlv1-1.fna&oh=00_AYAdAwH8J8DiaCJWLpfNbqD7dhSBScBTPNlFt3cY5JcoKQ&oe=66961EFB",
+        "image4": "https://scontent.ftlv1-1.fna.fbcdn.net/v/t1.18169-9/10357456_10153001539568749_5686781722985623510_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=eEJTW_ugvTkQ7kNvgGPK3MJ&_nc_ht=scontent.ftlv1-1.fna&oh=00_AYCnM3E7wWYloV6-vRXzRsGlwMhFEdLV7pKS1yXGxfH5Lw&oe=6696107E",
         "title": "Pavlova",
+        "owner":"Manuel - the owner of this site",
         "readyInMinutes": 90,
         "aggregateLikes": 200,
         "vegetarian": true,
@@ -196,7 +211,7 @@
         "glutenFree": true,
         "family": true,
         "summary": "Pavlova is a meringue-based dessert named after the Russian ballerina Anna Pavlova. It has a crisp crust and soft, light inside, usually topped with fruit and whipped cream.",
-        "story": "This dessert is a celebration of delicate flavors and textures.",
+        "story": "This dessert is my favorite cake, i make it every time i want something sweet that will last for a few days",
         "analyzedInstructions": [
             {
                 "name": "",

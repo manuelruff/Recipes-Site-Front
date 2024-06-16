@@ -3,7 +3,14 @@
     <div v-if="recipe" class="recipe-container">
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.title }}</h1>
+        <h3><span>Owner:</span> {{ recipe.owner }}</h3>
         <img :src="recipe.image" class="center recipe-image" />
+        <div class="image-container">
+        <img :src="recipe.image1" alt="Image 1">
+        <img :src="recipe.image2" alt="Image 2">
+        <img :src="recipe.image3" alt="Image 3">
+        <img :src="recipe.image4" alt="Image 4">
+        </div>
         <div class="story-wrapper" >
             <h3>Story:</h3>
             <li>{{ recipe.story }}</li>
@@ -75,6 +82,11 @@ export default {
         extendedIngredients,
         readyInMinutes,
         image,
+        image1,
+        image2,
+        image3,
+        image4,
+        owner,
         title,
         servings,
         glutenFree,
@@ -95,6 +107,11 @@ export default {
         extendedIngredients,
         readyInMinutes,
         image,
+        image1,
+        image2,
+        image3,
+        image4,
+        owner,
         title,
         servings,
         glutenFree,
@@ -173,4 +190,18 @@ li::before {
   font-weight: bold;
   color: #ff6347;
 }
+.image-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust width of each image */
+  gap: 10px; /* Adjust gap between images */
+}
+
+.image-container img {
+  width: 100%; /* Ensure images fill their container */
+  height: 200px; /* Fixed height for all images */
+  object-fit: cover; /* Ensures images maintain aspect ratio and cover the allocated space */
+  border-radius: 8px; /* Adds rounded corners to images */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow to images */
+}
+
 </style>
