@@ -111,6 +111,7 @@ export default {
   methods: {
     AddLastViewedRecipe() {
       // mock to save something the user pressed to last viewed
+      // we will keep a list of last viewed recipes in the server
       mockAddLastViewedRecipe(this.recipe.id);
       console.log("Added to last viewed recipes");
     }

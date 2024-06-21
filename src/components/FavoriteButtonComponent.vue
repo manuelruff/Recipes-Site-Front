@@ -1,18 +1,18 @@
 <template>
-    <button @click.stop="toggleFavorite" class="heart-button">
-      <i :class="iconClass"></i>
-    </button>
-  </template>
-  
-  <script>
-  import { mockAddFavorite, mockRemoveFavorite } from "../services/user.js";
-  
-  export default {
-    name: "FavoriteButtonComponent",
-    props: {
-      recipeId: {
-        type: Number,
-        required: true
+  <button @click.stop="toggleFavorite" class="favorite-button">
+    <i :class="iconClass"></i>
+  </button>
+</template>
+
+<script>
+import { mockAddFavorite, mockRemoveFavorite } from "../services/user.js";
+
+export default {
+  name: "FavoriteButtonComponent",
+  props: {
+    recipeId: {
+      type: Number,
+      required: true
       },
       initialFavoriteState: {
         type: Boolean,
@@ -26,7 +26,7 @@
     },
     computed: {
       iconClass() {
-        return this.isFavorite ? "fas fa-heart" : "far fa-heart";
+        return this.isFavorite ? "fas fa-star" : "far fa-star";
       }
     },
     methods: {
@@ -44,21 +44,21 @@
         }
       }
     }
-  };
-  </script>
-  
-  <style scoped>
-  @import "~@fortawesome/fontawesome-free/css/all.css";
-  
-  .heart-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  .heart-button i {
-    color: red;
-    font-size: 1.5rem;
-  }
-  </style>
-  
+};
+</script>
+
+<style scoped>
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+.favorite-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.favorite-button i {
+  color: gold;
+  font-size: 1.5rem;
+}
+</style>
