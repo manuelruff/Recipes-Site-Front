@@ -123,6 +123,11 @@
           Password must be at least 5 characters long
         </b-form-invalid-feedback>
         <b-form-invalid-feedback
+          v-if="$v.form.password.required && !$v.form.password.maxLength"
+        >
+          Password must be at most 10 characters long
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback
           v-if="$v.form.password.required && !$v.form.password.containsNumber"
         >
           Password must contain at least one number
@@ -156,14 +161,11 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-button type="reset" variant="danger">Reset</b-button>
-      <b-button
-        type="submit"
-        variant="primary"
-        style="width:250px;"
-        class="ml-5 w-75"
-        >Register</b-button
-      >
+      <div class="button-group">
+        <b-button type="reset" variant="danger" class="mr-3">Reset</b-button>
+        <b-button type="submit" variant="primary">Register</b-button>
+      </div>
+
       <div class="mt-2">
         You have an account already?
         <router-link to="login"> Log in here</router-link>
@@ -241,6 +243,7 @@ export default {
       password: {
         required,
         minLength: minLength(5),
+        maxLength: maxLength(10),
         containsNumber,
         containsSpecialChar
       },
@@ -306,5 +309,9 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: white; /* Set the text color to white */
+}
+.button-group {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
