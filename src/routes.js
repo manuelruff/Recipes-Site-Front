@@ -22,10 +22,16 @@ const routes = [
     name: "search",
     component: () => import("./pages/SearchPage"),
   },
+  // {
+  //   path: "   ",
+  //   name: "recipe",
+  //   component: () => import("./pages/RecipeViewPage"),
+  // },
   {
-    path: "   ",
+    path: "/recipe/:recipeId",
     name: "recipe",
     component: () => import("./pages/RecipeViewPage"),
+    props: true,
   },
   {
     path: "*",
@@ -58,9 +64,22 @@ const routes = [
     component: () => import("./pages/MyRecipePage"),
   },
   {
-    path: "/RecipeViewPageFamily",
+    path: "/RecipeViewPageFamily/:recipeId",
     name: "RecipeViewPageFamily",
     component: () => import("./pages/RecipeViewPageFamily"),
+    props: true,
+  },
+  {
+    path: "/prepare/:recipeId",
+    name: "PreparePage",
+    component: () => import("./pages/PreparePage"),
+    props: true,
+  },
+  {
+    path: "/meal/:recipeId",
+    name: "MealPage",
+    component: () => import("./pages/MealPage"),
+    props: true,
   },
 ];
 

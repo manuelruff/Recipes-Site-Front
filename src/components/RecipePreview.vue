@@ -3,7 +3,7 @@
     <div class="card-body">
       <div v-if="recipe.family">
         <a
-          :href="`/recipe-family/${recipe.id}`"
+          href="#"
           class="card-link hoverable"
           title="Go to recipe"
           @click="handleClick($event, 'RecipeViewPageFamily')"
@@ -19,7 +19,7 @@
       </div>
       <div v-else>
         <a
-          :href="`/recipe/${recipe.id}`"
+          href="#"
           class="card-link hoverable"
           title="Go to recipe"
           @click="handleClick($event, 'recipe')"

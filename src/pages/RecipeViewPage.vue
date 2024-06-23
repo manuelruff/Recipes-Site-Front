@@ -16,7 +16,7 @@
               <FavoriteButtonComponent :recipeId="recipe.id" :initialFavoriteState="isFavorite" />
             </div>
             <h3>Ingredients:</h3>
-            <ul>
+            <ul class="ingredients-list">
               <li v-for="(r, index) in recipe.extendedIngredients" :key="index + '_' + r.id">
                 {{ r.original }}
               </li>
@@ -25,27 +25,32 @@
           <div class="wrapped">
             <h3>Instructions:</h3>
             <ol class="instructions-list">
-              <li v-for="s in recipe._instructions" :key="s.number">
-                {{ s.step }}
+              <li v-for="(s, index) in recipe._instructions" :key="index">
+                <div>
+                  <span class="step-number">{{ index + 1 }}.</span> {{ s.step }}
+                </div>
               </li>
             </ol>
           </div>
         </div>
       </div>
     </div>
+    <PrepareAndMealButtons/>
   </div>
 </template>
 
 <script>
-import { mockAddLastViewedRecipe,  } from "../services/user.js";
+import { mockAddLastViewedRecipe } from "../services/user.js";
 import { mockGetRecipeFullDetails2 } from "../services/recipes.js";
 import RecipeLogos from "../components/RecipeLogos.vue";
 import FavoriteButtonComponent from "../components/FavoriteButtonComponent.vue";
+import PrepareAndMealButtons from '../components/PrepareAndMealButtons.vue';
 
 export default {
   components: {
     RecipeLogos,
-    FavoriteButtonComponent
+    FavoriteButtonComponent,
+    PrepareAndMealButtons
   },
   data() {
     return {
@@ -120,22 +125,9 @@ export default {
 </script>
 
 <style scoped>
-.recipe-container {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  background-color: #f9f9f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 16px;
-}
+
 .recipe-header {
   text-align: center;
-}
-.recipe-image {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 16px;
-  border-radius: 8px;
 }
 .wrapper {
   display: flex;
@@ -153,30 +145,6 @@ export default {
 ul {
   list-style-type: none;
   padding: 0;
-}
-li::before {
-  content: '•';
-  color: #ff6347;
-  display: inline-block;
-  width: 1em;
-  margin-left: -1em;
-}
-.instructions-list {
-  counter-reset: item;
-  list-style-type: none;
-  padding: 0;
-}
-.instructions-list li {
-  margin-bottom: 10px;
-  counter-increment: item;
-  position: relative;
-}
-.instructions-list li::before {
-  content: counter(item) ".";
-  position: absolute;
-  left: 0;
-  font-weight: bold;
-  color: #ff6347;
 }
 h3 {
   margin-top: 16px;

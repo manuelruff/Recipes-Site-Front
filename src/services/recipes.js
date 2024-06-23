@@ -3,6 +3,8 @@ import recipe_preview from "../assets/mocks/recipe_preview.json";
 import recipe_full_view2 from "../assets/mocks/recipe_full_view2.json";
 import recipe_preview2 from "../assets/mocks/recipe_preview2.json";
 import family_full_recipes from "../assets/mocks/Family_recipes_full_view.json";
+import analyzedInstructions324694 from "../assets/mocks/analyzedInstructions324694.json";
+import recipeInformation324694 from "../assets/mocks/GetRecipeInformation324694.json";
 
 export function mockGetRecipesPreview(amount = 1) {
   let recipes = [];
@@ -92,5 +94,19 @@ export function mockGetFamilyRecipeById(recipeId) {
   return {
     status: recipe ? 200 : 404,
     data: { recipe: recipe || null }
+  };
+}
+
+export function mockGetAnalyzedInstructionsID324694() {
+  return {
+    status: 200,
+    data: analyzedInstructions324694
+  };
+}
+
+export function mockGetRecipeInformationID324694() {
+  return {
+    status: 200,
+    data: recipeInformation324694
   };
 }

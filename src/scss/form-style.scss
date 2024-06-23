@@ -19,5 +19,59 @@ p {
 .label-custom {
   color: #efaf6b; /* Example: Custom class for specific labels */
 }
-  }
+.recipe-container {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+ul.ingredients-list {
+  list-style-type: disc;
+  list-style-position: inside;
+  padding-left: 0;
+}
+ul.ingredients-list li {
+  color: black; /* Keep the text color black */
+}
+ul.ingredients-list li::marker {
+  color: #ff6347; /* Orange color for the dots */
+}
+.instructions-list {
+  list-style-type: none; /* Remove default list styling */
+  padding: 0;
+}
+
+.instructions-list li {
+  margin-bottom: 10px;
+  position: relative;
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+}
+
+.instructions-list li div {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  flex-grow: 1; /* Allow the div to take up remaining space */
+}
+
+.instructions-list li input[type="checkbox"] {
+  margin-right: 8px;
+  margin-top: 5px; /* Align the checkbox with the text vertically */
+}
+
+.step-number {
+  color: #ff6347;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.recipe-image {
+  max-width: 100%; 
+  max-height: 400px; 
+  width: auto; 
+  height: auto; 
+}
+}
   

@@ -79,13 +79,19 @@ export default {
       sessionStorage.removeItem('sortBy');
       sessionStorage.removeItem('selectedFilters');
     },
+    clearSessionStorage() {
+      console.log("Clearing session storage...");
+      sessionStorage.clear();
+      console.log("Session storage cleared.");
+    },
     logout() {
       this.$root.store.logout();
       this.clearSearchState(); // Clear the search state
+      this.clearSessionStorage(); // Clear all session storage
       this.$root.toast("Logout", "User logged out successfully", "success");
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
-      })
+      });
     },
     handleRecipeCreated() {
       // Optionally handle actions after a recipe is successfully created
@@ -95,6 +101,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .custom-navbar {
