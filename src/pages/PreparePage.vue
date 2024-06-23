@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import { mockAddLastViewedRecipe } from "../services/user.js";
 import { mockGetRecipeInformationID324694, mockGetAnalyzedInstructionsID324694 } from "../services/recipes.js";
 import RecipeLogos from "../components/RecipeLogos.vue";
 

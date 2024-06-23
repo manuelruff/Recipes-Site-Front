@@ -1,17 +1,24 @@
 <template>
   <div v-if="$root.store.username" class="bottom-right-links">
     <router-link :to="{ name: 'PreparePage', params: { recipeId } }">Prepare</router-link>
-    <router-link :to="{ name: 'MealPage', params: { recipeId } }">Add to Meal</router-link>
+    <a href="#" @click.prevent="addToMeal">Add to Meal</a>
   </div>
 </template>
 
-
 <script>
+import { mockAddToMeal } from "../services/user.js";
+
 export default {
   name: 'PrepareAndMealButtons',
   computed: {
     recipeId() {
       return this.$route.params.recipeId;
+    }
+  },
+  methods: {
+    addToMeal() {
+      console.log('Adding recipe to meal:', this.recipeId); // Debug log
+      mockAddToMeal(this.recipeId);
     }
   }
 };

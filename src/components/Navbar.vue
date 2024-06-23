@@ -42,6 +42,11 @@
         </li>
         <!-- Logged in user actions -->
         <li v-if="$root.store.username" class="nav-item">
+          <div>
+            <router-link class="nav-link" :to="{ name: 'MealPage' }">
+            MealPage 
+          </router-link>
+          </div>
           <div class="nav-content">
               <span class="navbar-text text-light">{{ $root.store.username }}:</span>
               <button class="nav-link btn btn-link text-light" @click="logout">Logout</button>
@@ -63,12 +68,26 @@ export default {
   components: {
     CreateRecipeModal
   },
+  data() {
+    return {
+      mealCount: 0
+    };
+  },
   mounted() {
+    this.updateMealCount();
+    this.$root.$on('meal-updated', this.updateMealCount);
     if (!this.$root.store.username) {
       this.$root.toast("Hello Guest", "Welcome to Vue Recipes website!", "success");
     }
   },
+  beforeDestroy() {
+    this.$root.$off('meal-updated', this.updateMealCount);
+  },
   methods: {
+    updateMealCount() {
+      this.mealCount = parseInt(sessionStorage.getItem('mealCount')) || 0;
+      console.log('Meal count updated:', this.mealCount); // Debug log
+    },
     openCreateRecipeModal() {
       this.$refs.createRecipeModal.openModal();
     },
@@ -101,7 +120,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .custom-navbar {
@@ -136,5 +154,9 @@ export default {
 
 .navbar-text {
   margin-right: 10px; 
+}
+
+.badge {
+  background-color: #ff6347;
 }
 </style>
