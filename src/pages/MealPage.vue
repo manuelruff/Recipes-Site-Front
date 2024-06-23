@@ -1,47 +1,59 @@
 <template>
-    <div class="container">
-      <div class="row">
-        <RecipePreviewListBonus
-          ref="recipeList"
-          title="My Meal"
-          :displayCount="8"
-          class="RandomRecipes center"
-          :recipes="recipes"
-        />
-      </div>
+  <div class="container">
+    <div class="row">
+      <RecipePreviewListBonus
+        ref="recipeList"
+        title="My Meal"
+        :displayCount="8"
+        class="RandomRecipes center"
+        :recipes="recipes"
+      />
     </div>
-  </template>
-  
-  <script>
-  import RecipePreviewListBonus from "../components/RecipePreviewListBonus";
-  import { mockGetMealRecipesPreview } from "../services/recipes.js";
-  
-  export default {
-    name: "FamilyRecipesPage",
-    components: {
-        RecipePreviewListBonus,
+    <div class="row justify-content-center mt-3">
+      <button v-if="recipes.length" @click="clearRecipes" class="btn btn-danger">Clear All Recipes</button>
+    </div>
+  </div>
+</template>
+
+<script>
+import RecipePreviewListBonus from "../components/RecipePreviewListBonus";
+import { mockGetMealRecipesPreview } from "../services/recipes.js";
+
+export default {
+  name: "FamilyRecipesPage",
+  components: {
+    RecipePreviewListBonus,
+  },
+  data() {
+    return {
+      recipes: [],
+      lastViewedRecipes: [],
+    };
+  },
+  mounted() {
+    this.fetchRecipes();
+  },
+  methods: {
+    async fetchRecipes() {
+      try {
+        const response = mockGetMealRecipesPreview();
+        console.log(response);
+        const recipes = response.data.recipes;
+        console.log(recipes);
+        this.recipes = recipes;
+      } catch (error) {
+        console.log(error);
+      }
     },
-    data() {
-      return {
-        recipes: [],
-        lastViewedRecipes: []
-      };
+    clearRecipes() {
+      this.recipes = [];
     },
-    mounted() {
-      this.fetchRecipes();
-    },
-    methods: {
-      async fetchRecipes() {
-        try {
-          const response = mockGetMealRecipesPreview();
-          console.log(response);
-          const recipes = response.data.recipes;
-          console.log(recipes);
-          this.recipes = recipes;
-        } catch (error) {
-          console.log(error);
-        }
-      },
-    }
-  };
-  </script>
+  },
+};
+</script>
+
+<style scoped>
+.btn {
+  margin-top: -40px; /* Adjust this value to move the button closer to the RecipePreviewListBonus component */
+}
+</style>

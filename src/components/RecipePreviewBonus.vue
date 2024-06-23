@@ -32,18 +32,23 @@
       </ul>
       <button @click="removeRecipe" class="remove-button">X</button>
       <div class="index-number">{{ index + 1 }}</div>
+      <div class="progress-bar-container mt-4">
+        <b-progress :value="progressValue" variant="success" striped animated></b-progress>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import RecipeLogos from "./RecipeLogos.vue";
+import { BProgress } from 'bootstrap-vue';
 import { mockRemoveFromMeal } from "../services/user.js";
 
 export default {
   name: "RecipePreviewBonus",
   components: {
-    RecipeLogos
+    RecipeLogos,
+    BProgress
   },
   props: {
     recipe: {
@@ -57,6 +62,10 @@ export default {
     initialFavoriteState: {
       type: Boolean,
       default: false
+    },
+    progressValue: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -165,5 +174,10 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 14px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  text-align: center;
 }
 </style>

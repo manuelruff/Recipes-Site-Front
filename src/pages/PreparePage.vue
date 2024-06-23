@@ -31,7 +31,7 @@
               <ol class="instructions-list">
                 <li v-for="(s, stepIndex) in section.steps" :key="sectionIndex + '_' + stepIndex">
                   <div>
-                    <input type="checkbox" v-model="completedSteps[sectionIndex * section.steps.length + stepIndex]" @change="saveCheckboxState" />
+                    <input type="checkbox" v-model="completedSteps[getCheckboxIndex(sectionIndex, stepIndex)]" @change="saveCheckboxState" />
                     <span class="step-number">{{ stepIndex + 1 }}.</span> {{ s.step }}
                   </div>
                 </li>
@@ -40,17 +40,22 @@
           </div>
         </div>
       </div>
+      <div class="progress-bar-container mt-4">
+        <b-progress :value="progressValue" variant="success" striped animated></b-progress>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { BProgress } from 'bootstrap-vue';
 import { mockGetRecipeInformationID324694, mockGetAnalyzedInstructionsID324694 } from "../services/recipes.js";
 import RecipeLogos from "../components/RecipeLogos.vue";
 
 export default {
   components: {
     RecipeLogos,
+    BProgress
   },
   data() {
     return {
@@ -121,6 +126,13 @@ export default {
       this.adjustQuantities();
     }
   },
+  computed: {
+    progressValue() {
+      const totalSteps = this.completedSteps.length;
+      const completedSteps = this.completedSteps.filter(step => step).length;
+      return totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
+    }
+  },
   methods: {
     adjustQuantities() {
       if (!this.recipe) return;
@@ -135,17 +147,18 @@ export default {
       sessionStorage.setItem(`completedSteps_${this.recipe.id}`, JSON.stringify(this.completedSteps));
       // save how many checked box we checked
       sessionStorage.setItem(`checkedSteps_${this.recipe.id}`, JSON.stringify(this.completedSteps.filter(Boolean).length));
-
     },
     getSavedCheckboxState(recipeId, stepsCount) {
       const savedState = sessionStorage.getItem(`completedSteps_${recipeId}`);
       return savedState ? JSON.parse(savedState) : new Array(stepsCount).fill(false);
+    },
+    getCheckboxIndex(sectionIndex, stepIndex) {
+      const stepsBefore = this.recipe.analyzedInstructions.slice(0, sectionIndex).reduce((acc, section) => acc + section.steps.length, 0);
+      return stepsBefore + stepIndex;
     }
   }
 };
 </script>
-
-
 
 <style scoped>
 .recipe-header {
@@ -171,5 +184,9 @@ h3 {
   width: 60px;
   margin-left: 8px;
   padding: 4px;
+}
+.progress-bar-container {
+  width: 100%;
+  text-align: center;
 }
 </style>
