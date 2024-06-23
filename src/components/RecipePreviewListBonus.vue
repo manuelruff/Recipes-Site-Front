@@ -5,7 +5,7 @@
       <slot></slot>
     </h3>
     <draggable v-model="recipes" @end="updateOrder" tag="b-row">
-      <b-col v-for="(r, index) in recipes" :key="r.id">
+      <b-col v-for="(r, index) in recipes" :key="r.id" cols="4">
         <RecipePreviewBonus class="recipePreview" :recipe="r" :index="index" @remove-recipe="removeRecipe" />
       </b-col>
     </draggable>
