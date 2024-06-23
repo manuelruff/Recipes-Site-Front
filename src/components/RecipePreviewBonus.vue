@@ -77,6 +77,7 @@ export default {
     },
     removeRecipe() {
       mockRemoveFromMeal(this.recipeId);
+      console.log('Removing recipe from meal:', this.recipeId); // Debug log
       this.$emit('remove-recipe', this.recipe.id);
     }
   }
