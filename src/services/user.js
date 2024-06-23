@@ -23,11 +23,11 @@ import recipe_preview from "../assets/mocks/recipe_preview.json";
 
     
   export function mockAddToMeal(recipeId) {
-    return { status: 200, response: { data: { message: "The Recipe successfully added to Last viewed Recipes", success: true}} };
+    return { status: 200, response: { data: { message: "The Recipe successfully added to meal", success: true}} };
 
   }
   export function mockRemoveFromMeal(recipeId) {
-    return { status: 200, response: { data: { message: "The Recipe successfully added to Last viewed Recipes", success: true}} };
+    return { status: 200, response: { data: { message: "The Recipe successfully removed from meal", success: true}} };
 
   }
   
