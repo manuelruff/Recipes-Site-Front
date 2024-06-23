@@ -131,7 +131,11 @@ export default {
       });
     },
     saveCheckboxState() {
+      // save the checkboxes state in sessionStorage
       sessionStorage.setItem(`completedSteps_${this.recipe.id}`, JSON.stringify(this.completedSteps));
+      // save how many checked box we checked
+      sessionStorage.setItem(`checkedSteps_${this.recipe.id}`, JSON.stringify(this.completedSteps.filter(Boolean).length));
+
     },
     getSavedCheckboxState(recipeId, stepsCount) {
       const savedState = sessionStorage.getItem(`completedSteps_${recipeId}`);

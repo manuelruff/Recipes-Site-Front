@@ -1,9 +1,9 @@
 <template>
     <div class="container">
       <div class="row">
-        <RecipePreviewList
+        <RecipePreviewListBonus
           ref="recipeList"
-          title="Family Recipes"
+          title="My Meal"
           :displayCount="8"
           class="RandomRecipes center"
           :recipes="recipes"
@@ -13,13 +13,13 @@
   </template>
   
   <script>
-  import RecipePreviewList from "../components/RecipePreviewList";
+  import RecipePreviewListBonus from "../components/RecipePreviewListBonus";
   import { mockGetMealRecipesPreview } from "../services/recipes.js";
   
   export default {
     name: "FamilyRecipesPage",
     components: {
-      RecipePreviewList,
+        RecipePreviewListBonus,
     },
     data() {
       return {
