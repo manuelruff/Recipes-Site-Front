@@ -44,12 +44,13 @@
         <li v-if="$root.store.username" class="nav-item">
           <div>
             <router-link class="nav-link" :to="{ name: 'MealPage' }">
-            MealPage 
-          </router-link>
+              MealPage
+              <span class="meal-count">{{ mealCount }}</span>
+            </router-link>
           </div>
           <div class="nav-content">
-              <span class="navbar-text text-light">{{ $root.store.username }}:</span>
-              <button class="nav-link btn btn-link text-light" @click="logout">Logout</button>
+            <span class="navbar-text text-light">{{ $root.store.username }}:</span>
+            <button class="nav-link btn btn-link text-light" @click="logout">Logout</button>
           </div>
         </li>
       </ul>
@@ -74,19 +75,19 @@ export default {
     };
   },
   mounted() {
-    this.updateMealCount();
-    this.$root.$on('meal-updated', this.updateMealCount);
+    console.log('Navbar mounted'); // Debug statement
+    this.$root.$on('update-meal-count', this.updateMealCount); // Listen for the event
     if (!this.$root.store.username) {
       this.$root.toast("Hello Guest", "Welcome to Vue Recipes website!", "success");
     }
   },
   beforeDestroy() {
-    this.$root.$off('meal-updated', this.updateMealCount);
+    this.$root.$off('update-meal-count', this.updateMealCount); // Clean up the event listener
   },
   methods: {
-    updateMealCount() {
-      this.mealCount = parseInt(sessionStorage.getItem('mealCount')) || 0;
-      console.log('Meal count updated:', this.mealCount); // Debug log
+    updateMealCount(count) {
+      console.log('Meal count updated:', count); // Debug statement
+      this.mealCount = count;
     },
     openCreateRecipeModal() {
       this.$refs.createRecipeModal.openModal();
@@ -158,5 +159,18 @@ export default {
 
 .badge {
   background-color: #ff6347;
+}
+
+.meal-count {
+  display: inline-block;
+  background-color: orange;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  margin-left: 5px;
+  font-size: 14px;
 }
 </style>
