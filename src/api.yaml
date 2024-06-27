@@ -49,8 +49,8 @@ paths:
                 example: recipes not found
     post:
       tags:
-        -user
-      summery: log in information
+        - user
+      summary: log in information
       operationId: logInMainPage
       description: |
         you can log in from the main page
@@ -184,15 +184,15 @@ paths:
                 type: string
                 example: register successful
         '409':
-        description: Username already exists
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                message:
-                  type: string
-                  example: Username already exists
+          description: Username already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Username already exists
   
   /search:
     get:
@@ -291,46 +291,45 @@ paths:
               schema:
                 type: string
                 example: recipe information not found
-
     post:
-    tags:
-      - recipe
-    summary: Add recipe to user's favorites or meal plan, based on the button clicked
-    operationId: addRecipeAction
-    description: Add a recipe to user's favorites or meal plan.
-    parameters:
-      - in: path
-        name: recipeId
-        description: ID of recipe to add to favorites or meal plan
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - in: query
-        name: action
-        description: Action to perform (favorite or meal)
-        required: true
-        schema:
-          type: string
-          enum:
-            - favorite
-            - meal
-      - in: query
-        name: username
-        description: Username of user to add recipe to their favorites or meal plan
-        required: true
-        schema:
-          type: string
-    responses:
-      '200':
-        description: Recipe successfully added to favorites or meal plan
-      '404':
-        description: Recipe or user not found
-        content:
-          application/json:
-            schema:
-              type: string
-              example: Recipe or user not found
+      tags:
+        - recipe
+      summary: Add recipe to user's favorites or meal plan, based on the button clicked
+      operationId: addRecipeAction
+      description: Add a recipe to user's favorites or meal plan.
+      parameters:
+        - in: path
+          name: recipeId
+          description: ID of recipe to add to favorites or meal plan
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: action
+          description: Action to perform (favorite or meal)
+          required: true
+          schema:
+            type: string
+            enum:
+              - favorite
+              - meal
+        - in: query
+          name: username
+          description: Username of user to add recipe to their favorites or meal plan
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recipe successfully added to favorites or meal plan
+        '404':
+          description: Recipe or user not found
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Recipe or user not found
     delete:
       tags:
         - recipe
@@ -475,21 +474,19 @@ paths:
                         type: integer
                       step:
                         type: string
-
+                        
         - in: query
           name: readyInMinutes
           description: time to make the recipe
           required: true
           schema:
             type: integer
-            schema: int32
         - in: query
           name: servings
           description: number of servings
           required: true
           schema:
             type: integer
-            schema: int32
         - in: query
           name: vegetarian
           description: is the recipe vegetarian
@@ -521,7 +518,6 @@ paths:
                   type: string
                 amount:
                   type: integer
-                  schema: int32
       responses:      
         '200':
           description: recipe added successfully
@@ -538,6 +534,30 @@ paths:
                 type: string
                 example: recipe not added
   
+  /myFamily:
+    get:
+        tags:
+          - recipe
+        summary: get user's family recipes - in our case the site owner family recipes
+        operationId: getFamilyRecipes
+        description: |
+          get user's family recipes
+        responses:
+          '200':
+            description: user's family recipes
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/recipe_family_view'
+          '404':
+            description: user not found
+            content:
+              application/json:
+                schema:
+                  type: string
+                  example: user not found
 
     
 components:
