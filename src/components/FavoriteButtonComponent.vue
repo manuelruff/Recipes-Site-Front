@@ -1,5 +1,5 @@
 <template>
-  <button @click.stop="toggleFavorite" class="favorite-button">
+  <button  v-if="$root.store.username" @click.stop="toggleFavorite" class="favorite-button">
     <i :class="iconClass"></i>
   </button>
 </template>
