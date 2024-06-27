@@ -47,6 +47,10 @@ export default {
     },
     clearRecipes() {
       this.recipes = [];
+      // Reset the meal count in sessionStorage to 0
+      sessionStorage.setItem('mealsPrepared', 0);
+      // Emit event to update meal count
+      this.$root.$emit('update-meal-count', 0);
     },
   },
 };

@@ -42,7 +42,7 @@
         </li>
         <!-- Logged in user actions -->
         <li v-if="$root.store.username" class="nav-item">
-          <div>
+          <div style="position: relative;">
             <router-link class="nav-link" :to="{ name: 'MealPage' }">
               MealPage
               <span class="meal-count">{{ mealCount }}</span>
@@ -77,6 +77,13 @@ export default {
   mounted() {
     console.log('Navbar mounted'); // Debug statement
     this.$root.$on('update-meal-count', this.updateMealCount); // Listen for the event
+
+    // Initialize mealCount from sessionStorage
+    const storedMealCount = sessionStorage.getItem('mealsPrepared');
+    if (storedMealCount) {
+      this.mealCount = parseInt(storedMealCount);
+    }
+
     if (!this.$root.store.username) {
       this.$root.toast("Hello Guest", "Welcome to Vue Recipes website!", "success");
     }

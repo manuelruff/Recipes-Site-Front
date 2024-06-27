@@ -17,8 +17,26 @@ export default {
   },
   methods: {
     addToMeal() {
+      
       console.log('Adding recipe to meal:', this.recipeId); // Debug log
       mockAddToMeal(this.recipeId);
+      // Retrieve the current meal count from sessionStorage
+      let mealsPrepared = sessionStorage.getItem('mealsPrepared');
+
+      if (!mealsPrepared) {
+        // If no count is found, initialize it to 1
+        mealsPrepared = 1;
+      } else {
+        // If a count is found, increment it
+        mealsPrepared = parseInt(mealsPrepared) + 1;
+      }
+
+      // Save the updated count back to sessionStorage
+      sessionStorage.setItem('mealsPrepared', mealsPrepared);
+
+      // Emit event to update meal count
+      this.$root.$emit('update-meal-count', mealsPrepared);
+      
     }
   }
 };

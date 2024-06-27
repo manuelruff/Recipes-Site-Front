@@ -37,15 +37,6 @@ export default {
       default: false
     }
   },
-  watch: {
-    recipes: {
-      handler(newVal) {
-        console.log('Recipes updated, new length:', newVal.length); // Debug statement
-        this.$emit('update-meal-count', newVal.length); // Emit event with the updated count
-      },
-      deep: true
-    }
-  },
   methods: {
     removeRecipe(recipeId) {
       this.recipes = this.recipes.filter(recipe => recipe.id !== recipeId);

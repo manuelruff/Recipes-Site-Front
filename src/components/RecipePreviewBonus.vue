@@ -33,7 +33,7 @@
       <button @click="removeRecipe" class="remove-button">X</button>
       <div class="index-number">{{ index + 1 }}</div>
       <div class="progress-bar-container mt-4">
-        <b-progress :value="progressValue" variant="success" striped animated></b-progress>
+        <b-progress :value="progressValue" :max="maxValue" variant="success" striped animated></b-progress>
       </div>
     </div>
   </div>
@@ -62,18 +62,32 @@ export default {
     initialFavoriteState: {
       type: Boolean,
       default: false
-    },
-    progressValue: {
-      type: Number,
-      default: 0
     }
   },
   data() {
     return {
-      isFavorite: this.initialFavoriteState
+      isFavorite: this.initialFavoriteState,
+      progressValue: 0,
+      maxValue: 0
     };
   },
+  mounted() {
+    this.setProgressValue();
+  },
   methods: {
+    setProgressValue() {
+      const storedValue = sessionStorage.getItem(`checkedSteps_${this.recipe.id}`);
+      const storedMaxValue = sessionStorage.getItem(`instructionsLength_${this.recipe.id}`);
+      if (storedValue) {
+        this.progressValue = JSON.parse(storedValue);
+      }
+      if (storedMaxValue) {
+        this.maxValue = JSON.parse(storedMaxValue);
+      } else {
+        // Fallback in case the length is not set in sessionStorage
+        this.maxValue = this.recipe.analyzedInstructions.reduce((acc, section) => acc + section.steps.length, 0);
+      }
+    },
     handleClick(event, routeName) {
       this.markAsViewed();
 
@@ -85,9 +99,18 @@ export default {
       this.$router.push({ name: routeName, params: { recipeId: this.recipe.id } });
     },
     removeRecipe() {
-      mockRemoveFromMeal(this.recipeId);
-      console.log('Removing recipe from meal:', this.recipeId); // Debug log
+      mockRemoveFromMeal(this.recipe.id);
+      console.log('Removing recipe from meal:', this.recipe.id); // Debug log
       this.$emit('remove-recipe', this.recipe.id);
+       // Retrieve the current meal count from sessionStorage
+      let mealsPrepared = sessionStorage.getItem('mealsPrepared');
+      // Decrease the meal count by one
+      mealsPrepared = parseInt(mealsPrepared) - 1;
+      // Save the updated count back to sessionStorage
+      sessionStorage.setItem('mealsPrepared', mealsPrepared);
+      // Emit event to update meal count
+      this.$root.$emit('update-meal-count', mealsPrepared);
+      
     }
   }
 };

@@ -147,7 +147,11 @@ export default {
       sessionStorage.setItem(`completedSteps_${this.recipe.id}`, JSON.stringify(this.completedSteps));
       // save how many checked box we checked
       sessionStorage.setItem(`checkedSteps_${this.recipe.id}`, JSON.stringify(this.completedSteps.filter(Boolean).length));
-    },
+      // Calculate and save the total number of steps in analyzedInstructions
+      const totalSteps = this.recipe.analyzedInstructions.reduce((acc, section) => acc + section.steps.length, 0);
+      console.log("totalSteps " + totalSteps);
+      sessionStorage.setItem(`instructionsLength_${this.recipe.id}`, JSON.stringify(totalSteps));
+},
     getSavedCheckboxState(recipeId, stepsCount) {
       const savedState = sessionStorage.getItem(`completedSteps_${recipeId}`);
       return savedState ? JSON.parse(savedState) : new Array(stepsCount).fill(false);
