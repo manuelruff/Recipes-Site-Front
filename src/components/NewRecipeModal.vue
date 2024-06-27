@@ -10,10 +10,13 @@
           <b-form-input v-model="formData.image" required></b-form-input>
           <b-form-invalid-feedback>Image URL is required.</b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group label="Instructions:" :state="validateField(formData.instructions)">
-          <b-form-textarea v-model="formData.instructions" rows="4" required></b-form-textarea>
-          <b-form-invalid-feedback>Instructions are required.</b-form-invalid-feedback>
+        <!-- Add instructions input -->
+        <b-form-group v-for="(instruction, index) in formData.instructions" :key="index" :label="'Instruction ' + (index + 1)">
+          <b-form-input v-model="instruction.text" required></b-form-input>
+          <b-button @click="removeInstruction(index)" variant="danger">Remove</b-button>
         </b-form-group>
+        <b-button @click="addInstruction" variant="success">Add Instruction</b-button>
+        <b-form-invalid-feedback v-if="!formData.instructions.length">At least one instruction is required.</b-form-invalid-feedback>
         <b-form-group label="Ready in Minutes:" :state="validateField(formData.readyInMinutes)">
           <b-form-input type="number" v-model="formData.readyInMinutes" required></b-form-input>
           <b-form-invalid-feedback>Ready in minutes are required.</b-form-invalid-feedback>
@@ -29,10 +32,9 @@
           <b-form-checkbox v-model="formData.vegetarian">Vegetarian</b-form-checkbox>
         </b-form-group>
         <!-- Add ingredients input -->
-        <b-form-group label="Ingredients:" v-for="(ingredient, index) in formData.ingredients" :key="index">
+        <b-form-group v-for="(ingredient, index) in formData.ingredients" :key="index" label="Ingredients:">
           <b-form-input v-model="ingredient.name" placeholder="Name" required></b-form-input>
           <b-form-input v-model="ingredient.amount" type="number" placeholder="Amount" required></b-form-input>
-          <!-- Add more fields as needed -->
           <b-button @click="removeIngredient(index)" variant="danger">Remove</b-button>
         </b-form-group>
         <b-button @click="addIngredient" variant="success">Add Ingredient</b-button>
@@ -62,7 +64,7 @@ export default {
       formData: {
         title: '',
         image: '',
-        instructions: '',
+        instructions: [],
         readyInMinutes: '',
         servings: '',
         glutenFree: false,
@@ -81,7 +83,7 @@ export default {
       // Reset form data
       this.formData.title = '';
       this.formData.image = '';
-      this.formData.instructions = '';
+      this.formData.instructions = [];
       this.formData.readyInMinutes = '';
       this.formData.servings = '';
       this.formData.glutenFree = false;
@@ -99,7 +101,7 @@ export default {
       let newRecipe = {
         title: this.formData.title,
         image: this.formData.image,
-        instructions: this.formData.instructions,
+        instructions: this.formData.instructions.map(instr => instr.text),
         readyInMinutes: this.formData.readyInMinutes,
         servings: this.formData.servings,
         glutenFree: this.formData.glutenFree,
@@ -118,7 +120,7 @@ export default {
       let valid = true;
       if (!this.formData.title) valid = false;
       if (!this.formData.image) valid = false;
-      if (!this.formData.instructions) valid = false;
+      if (!this.formData.instructions.length) valid = false;
       if (!this.formData.readyInMinutes) valid = false;
       if (!this.formData.servings) valid = false;
       // Add validation for other fields here if needed
@@ -126,6 +128,12 @@ export default {
     },
     validateField(field) {
       return field ? true : false;
+    },
+    addInstruction() {
+      this.formData.instructions.push({ text: '' });
+    },
+    removeInstruction(index) {
+      this.formData.instructions.splice(index, 1);
     },
     addIngredient() {
       this.formData.ingredients.push({ name: '', amount: '' });
@@ -163,6 +171,4 @@ export default {
   border-color: rgba(255, 255, 255, 0.5);
   color: white;
 }
-
-
 </style>
