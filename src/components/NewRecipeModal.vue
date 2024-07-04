@@ -2,43 +2,54 @@
   <div>
     <b-modal v-model="modalShow" title="Create New Recipe" @ok="submitForm" @cancel="closeModal">
       <b-form @submit.prevent="submitForm">
+        <!-- Title -->
         <b-form-group label="Title:" :state="validateField(formData.title)">
           <b-form-input v-model="formData.title" required></b-form-input>
           <b-form-invalid-feedback>Title is required.</b-form-invalid-feedback>
         </b-form-group>
+
+        <!-- Image URL -->
         <b-form-group label="Image URL:" :state="validateField(formData.image)">
           <b-form-input v-model="formData.image" required></b-form-input>
           <b-form-invalid-feedback>Image URL is required.</b-form-invalid-feedback>
         </b-form-group>
-        <!-- Add instructions input -->
-        <b-form-group v-for="(instruction, index) in formData.instructions" :key="index" :label="'Instruction ' + (index + 1)">
+
+        <!-- Instructions -->
+        <b-form-group v-for="(instruction, index) in formData.instructions" :key="'instruction-' + index" :label="'Instruction ' + (index + 1)">
           <b-form-input v-model="instruction.text" required></b-form-input>
           <b-button @click="removeInstruction(index)" variant="danger">Remove</b-button>
         </b-form-group>
         <b-button @click="addInstruction" variant="success">Add Instruction</b-button>
         <b-form-invalid-feedback v-if="!formData.instructions.length">At least one instruction is required.</b-form-invalid-feedback>
+
+        <!-- Ready in Minutes -->
         <b-form-group label="Ready in Minutes:" :state="validateField(formData.readyInMinutes)">
           <b-form-input type="number" v-model="formData.readyInMinutes" required :min="0"></b-form-input>
           <b-form-invalid-feedback>Ready in minutes is required and cannot be less than 0.</b-form-invalid-feedback>
         </b-form-group>
+
+        <!-- Servings -->
         <b-form-group label="Servings:" :state="validateField(formData.servings)">
           <b-form-input type="number" v-model="formData.servings" required :min="0"></b-form-input>
           <b-form-invalid-feedback>Servings is required and cannot be less than 0.</b-form-invalid-feedback>
         </b-form-group>
-        <!-- Add dietary preferences checkboxes -->
+
+        <!-- Dietary Preferences -->
         <b-form-group label="Dietary Preferences:">
           <b-form-checkbox v-model="formData.glutenFree">Gluten-Free</b-form-checkbox>
           <b-form-checkbox v-model="formData.vegan">Vegan</b-form-checkbox>
           <b-form-checkbox v-model="formData.vegetarian">Vegetarian</b-form-checkbox>
         </b-form-group>
-        <!-- Add ingredients input -->
-        <b-form-group v-for="(ingredient, index) in formData.ingredients" :key="index" label="Ingredients:">
+
+        <!-- Ingredients -->
+        <b-form-group v-for="(ingredient, index) in formData.ingredients" :key="'ingredient-' + index">
           <b-form-input v-model="ingredient.name" placeholder="Name" required></b-form-input>
           <b-form-input v-model="ingredient.amount" type="text" placeholder="Amount" required></b-form-input>
           <b-button @click="removeIngredient(index)" variant="danger">Remove</b-button>
         </b-form-group>
         <b-button @click="addIngredient" variant="success">Add Ingredient</b-button>
         <b-form-invalid-feedback v-if="!formData.ingredients.length">At least one ingredient is required.</b-form-invalid-feedback>
+
       </b-form>
     </b-modal>
   </div>
@@ -46,6 +57,7 @@
 
 <script>
 import { BModal, BButton, BForm, BFormGroup, BFormInput, BFormInvalidFeedback, BFormCheckbox } from 'bootstrap-vue';
+import axios from 'axios';
 
 export default {
   components: {
@@ -79,7 +91,6 @@ export default {
     },
     closeModal() {
       this.modalShow = false;
-      // Reset form data
       this.resetForm();
     },
     resetForm() {
@@ -93,30 +104,31 @@ export default {
       this.formData.vegetarian = false;
       this.formData.ingredients = [];
     },
-    submitForm() {
-      // Validate form fields before submitting
+    async submitForm() {
       if (!this.validateForm()) {
         return;
       }
 
-      // Create new recipe with form data
+      // Prepare data for submission
       let newRecipe = {
         title: this.formData.title,
         image: this.formData.image,
-        instructions: this.formData.instructions.map(instr => instr.text),
-        readyInMinutes: this.formData.readyInMinutes,
-        servings: this.formData.servings,
+        instructions: this.formData.instructions.map(instr => ({ text: instr.text })),
+        readyInMinutes: parseInt(this.formData.readyInMinutes),
+        servings: parseInt(this.formData.servings),
         glutenFree: this.formData.glutenFree,
         vegan: this.formData.vegan,
         vegetarian: this.formData.vegetarian,
-        ingredients: this.formData.ingredients
-        // Add other form fields here
+        ingredients: this.formData.ingredients.map(ingr => ({ name: ingr.name, amount: ingr.amount }))
       };
-      
-      // Do something with the new recipe data, like sending it to an API or storing it in Vuex
-      
-      // Reset form data and close modal
-      this.closeModal();
+
+      try {
+        const response = await axios.post('http://localhost:80/users/myrecipes', newRecipe);
+        console.log('Recipe added successfully:', response.data);
+        this.closeModal();
+      } catch (error) {
+        console.error('Error adding recipe:', error);
+      }
     },
     validateForm() {
       let valid = true;
@@ -125,11 +137,10 @@ export default {
       if (!this.formData.instructions.length) valid = false;
       if (!this.formData.readyInMinutes || this.formData.readyInMinutes < 0) valid = false;
       if (!this.formData.servings || this.formData.servings < 0) valid = false;
-      // Add validation for other fields here if needed
       return valid;
     },
     validateField(field) {
-      return field ? true : false;
+      return !!field;
     },
     addInstruction() {
       this.formData.instructions.push({ text: '' });
@@ -148,29 +159,5 @@ export default {
 </script>
 
 <style scoped>
-.modal-button {
-  background-color: rgba(0, 0, 0, 0.7);
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.b-modal-content {
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-}
-
-.b-form-input,
-.b-form-textarea,
-.b-form-checkbox-group {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
-  color: white;
-}
+/* Add your scoped styles here */
 </style>
