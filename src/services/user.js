@@ -1,20 +1,23 @@
 // src/services/user.js
-import axios from "axios";
 
 
+import axios from 'axios';
+
+// Create an Axios instance with specific options
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:80', // Replace with your API base URL
+  withCredentials: true, // Ensure cookies are sent with requests if needed
+});
+
+// Function to fetch last viewed recipes
 export async function getLastViewed() {
   try {
-    const response = await axios.get('http://localhost:80/users/lastview');
+    const response = await axiosInstance.get('/users/lastview');
     let recipes = response.data;
 
     // Log success message
     console.log('Successfully fetched last viewed recipes:', recipes);
-    // Check if recipes array is empty
-    if (recipes.length === 0) {
-      console.log('No recipes found in last viewed');
-      return { data: { recipes } };
-    }
-    
+
     return { data: { recipes } };
   } catch (error) {
     // Log the error and rethrow it for further handling
@@ -22,6 +25,7 @@ export async function getLastViewed() {
     throw error;
   }
 }
+
 
 
   export function mockAddFavorite(recipeId) {

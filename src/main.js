@@ -39,6 +39,11 @@ import {
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
+// Axios configuration
+axios.defaults.baseURL = 'http://localhost:80'; // Adjust this to your server URL
+axios.defaults.withCredentials = true; // Make sure this is set
+
+
 axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent

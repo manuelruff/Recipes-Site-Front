@@ -63,19 +63,18 @@ export default {
       try {
         const amountToFetch = 3; // Set this to how many recipes you want to fetch
         const response = mockGetRecipesPreview2(amountToFetch);
+        // const response = await getRandom(amountToFetch);
 
         console.log(response);
-        const recipes = response.data.recipes;
-        console.log(recipes);
-        this.recipes = recipes;
+        this.recipes = response.data.recipes;;
 
-        // Assuming you fetch last viewed recipes similarly
-        const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
-        console.log(lastViewedResponse);
-        const lastViewed = lastViewedResponse.data.recipes;
-        this.lastViewedRecipes = lastViewed;
+        // const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
+        const lastViewedResponse = await getLastViewed();
+
+        console.log("last viewed recipes "+lastViewedResponse);
+        this.lastViewedRecipes =  lastViewedResponse.data.recipes;
+
         this.$refs.recipeList.randomizeRecipes();
-
       } catch (error) {
         console.log(error);
       }
