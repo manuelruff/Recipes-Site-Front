@@ -58,7 +58,7 @@
 <script>
 import { BModal, BButton, BForm, BFormGroup, BFormInput, BFormInvalidFeedback, BFormCheckbox } from 'bootstrap-vue';
 import axios from 'axios';
-import { PostMyRecipe} from "../services/auth.js";
+import {PostMyRecipe} from "../services/user.js";
 
 
 export default {

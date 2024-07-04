@@ -1,6 +1,32 @@
 // src/services/user.js
 import axios from "axios";
 
+export async function PostMyRecipe(newRecipe) {
+  console.log(newRecipe);
+  try {
+    const response = await axios.post('http://localhost:80/users/myrecipes', {
+      title: newRecipe.title,
+      image: newRecipe.image,
+      instructions: newRecipe.instructions,
+      readyInMinutes: newRecipe.readyInMinutes,
+      servings: newRecipe.servings,
+      glutenFree: newRecipe.glutenFree,
+      vegan: newRecipe.vegan,
+      vegetarian: newRecipe.vegetarian,
+      ingredients: newRecipe.ingredients,
+    });
+
+    if (response.status === 201) {
+      return { message: "Recipe added successfully", success: true };
+    } else {
+      throw new Error('Failed to add recipe');
+    }
+  } catch (error) {
+    console.error('Error adding new recipe:', error);
+    throw error;
+  }
+}
+
 
 export async function getLastViewed() {
   try {
