@@ -35,7 +35,26 @@ export async function PostRegister(userDetails) {
   }
 }
 
-
+export async function PostMyRecipe(newRecipe) {
+  console.log(newRecipe)
+  try {
+    const response = await axios.post('http://localhost:80/users/myrecipes', {
+      title: newRecipe.title,
+      image :newRecipe.image,
+      instructions : newRecipe.instructions,
+      readyInMinutes : newRecipe.readyInMinutes,
+      servings : newRecipe.servings,
+      glutenFree : newRecipe.glutenFree,
+      vegan : newRecipe.vegan,
+      vegetarian : newRecipe.vegetarian,
+      ingredients : newRecipe.ingredients,
+    });
+    return response.data; 
+  } catch (error) {
+    console.error('Error adding new recipe for user:', error);
+    throw error;
+  }
+}
 
 
 export function mockLogin(userName,password, success = true) {

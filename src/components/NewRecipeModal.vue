@@ -58,6 +58,8 @@
 <script>
 import { BModal, BButton, BForm, BFormGroup, BFormInput, BFormInvalidFeedback, BFormCheckbox } from 'bootstrap-vue';
 import axios from 'axios';
+import { PostMyRecipe} from "../services/auth.js";
+
 
 export default {
   components: {
@@ -123,7 +125,7 @@ export default {
       };
 
       try {
-        const response = await axios.post('http://localhost:80/users/myrecipes', newRecipe);
+        const response = await PostMyRecipe(newRecipe);
         console.log('Recipe added successfully:', response.data);
         this.closeModal();
       } catch (error) {
@@ -159,5 +161,4 @@ export default {
 </script>
 
 <style scoped>
-/* Add your scoped styles here */
 </style>
