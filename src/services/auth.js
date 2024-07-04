@@ -41,32 +41,21 @@ export async function PostRegister(userDetails) {
       confirmedPassword: userDetails.confirmedPassword
     });
 
-    // Assuming the backend returns a success message upon successful registration
     if (response.status === 201) {
       return { message: "User created", success: true };
     } else {
-      // Handle unexpected responses here
-      throw { status: response.status, message: "Unexpected response from server" };
+      throw new Error('Failed to login');
     }
   } catch (error) {
-    // Handle errors from Axios or the backend
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // Check for specific error messages or status codes from the server
       if (error.response.status === 409) {
-        throw { status: 409, message: "Username taken", success: false };
+        throw { status: 409, response: { data: { message: "Username taken", success: false } } };
       } else {
         console.error('Error registering user:', error.response.data);
         throw { status: error.response.status, message: error.response.data };
       }
     } 
-    else {
-      // Something happened in setting up the request that triggered an error
-      console.error('Error:', error.message);
-      throw { status: 500, message: "Request setup error" };
-    }
   }
-}
+
 
 
 export function mockLogin(userName,password, success = true) {
