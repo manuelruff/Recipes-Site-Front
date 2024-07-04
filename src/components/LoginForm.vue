@@ -95,20 +95,11 @@ export default {
     },
     async Login() {
       try {
-        
-        // const response = await this.axios.post(
-        //   this.$root.store.server_domain +"/Login",
 
+        // const success = false; // Modify this to test the error handling
+        // const response = mockLogin(this.form.username, this.form.password, success);
+        const response = await PostLogin(this.form.username, this.form.password);
 
-        //   {
-        //     username: this.form.username,
-        //     password: this.form.password
-        //   }
-        // );
-
-        //const success = true; // Modify this to test the error handling
-        //const response = mockLogin(this.form.username, this.form.password, success);
-        const response = PostLogin(this.form.username, this.form.password);
         console.log(response);
         // this.$root.loggedIn = true;
 

@@ -3,19 +3,31 @@
 import axios from "axios";
 
 
-export async function PostLogin(username,password) {
+
+export async function PostLogin(username, password) {
   try {
     const response = await axios.post('http://localhost/auth/Login', {
       username: username,
       password: password,
     });
-    return response.data; // Assuming response.data contains the registered user data
+    // Check response status
+    if (response.status === 200) {
+      
+      return response.data; // Assuming response.data contains the registered user data or success message
+      
+    } else {
+      throw new Error('Failed to login');
+    }
+
   } catch (error) {
-    console.error('Error registering user:', error);
-    throw error;
+    // Check if error is from axios or server response
+    if (error.response.status === 401) {
+      throw { status: 401, response: { data: { message: "incorrect username or password", success: false } } };
+    } else {
+      throw { status: 500, response: { data: { message: "Failed to login", success: false } } };
+    }
   }
 }
-
 
 export async function PostRegister(userDetails) {
   try {
@@ -28,33 +40,22 @@ export async function PostRegister(userDetails) {
       email: userDetails.email,
       confirmedPassword: userDetails.confirmedPassword
     });
-    return response.data; // Assuming response.data contains the registered user data
-  } catch (error) {
-    console.error('Error registering user:', error);
-    throw error;
-  }
-}
 
-export async function PostMyRecipe(newRecipe) {
-  console.log(newRecipe)
-  try {
-    const response = await axios.post('http://localhost:80/users/myrecipes', {
-      title: newRecipe.title,
-      image :newRecipe.image,
-      instructions : newRecipe.instructions,
-      readyInMinutes : newRecipe.readyInMinutes,
-      servings : newRecipe.servings,
-      glutenFree : newRecipe.glutenFree,
-      vegan : newRecipe.vegan,
-      vegetarian : newRecipe.vegetarian,
-      ingredients : newRecipe.ingredients,
-    });
-    return response.data; 
+    if (response.status === 201) {
+      return { message: "User created", success: true };
+    } else {
+      throw new Error('Failed to login');
+    }
   } catch (error) {
-    console.error('Error adding new recipe for user:', error);
-    throw error;
+      if (error.response.status === 409) {
+        throw { status: 409, response: { data: { message: "Username taken", success: false } } };
+      } else {
+        console.error('Error registering user:', error.response.data);
+        throw { status: error.response.status, message: error.response.data };
+      }
+    } 
   }
-}
+
 
 
 export function mockLogin(userName,password, success = true) {
