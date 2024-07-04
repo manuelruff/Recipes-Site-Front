@@ -1,7 +1,7 @@
 <template>
   <div v-if="$root.store.username" class="bottom-right-links">
-    <router-link :to="{ name: 'PreparePage', params: { recipeId } }">Prepare</router-link>
-    <a href="#" @click.prevent="addToMeal">Add to Meal</a>
+    <button @click="prepareAndAddToMeal" class="action-button">Prepare</button>
+    <button @click="addToMeal" class="action-button">Add to Meal</button>
   </div>
 </template>
 
@@ -17,26 +17,22 @@ export default {
   },
   methods: {
     addToMeal() {
-      
       console.log('Adding recipe to meal:', this.recipeId); // Debug log
       mockAddToMeal(this.recipeId);
-      // Retrieve the current meal count from sessionStorage
       let mealsPrepared = sessionStorage.getItem('mealsPrepared');
 
       if (!mealsPrepared) {
-        // If no count is found, initialize it to 1
         mealsPrepared = 1;
       } else {
-        // If a count is found, increment it
         mealsPrepared = parseInt(mealsPrepared) + 1;
       }
 
-      // Save the updated count back to sessionStorage
       sessionStorage.setItem('mealsPrepared', mealsPrepared);
-
-      // Emit event to update meal count
       this.$root.$emit('update-meal-count', mealsPrepared);
-      
+    },
+    prepareAndAddToMeal() {
+      this.addToMeal(); // First add to meal
+      this.$router.push({ name: 'PreparePage', params: { recipeId: this.recipeId } }); // Then navigate to Prepare page
     }
   }
 };
@@ -50,7 +46,7 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.bottom-right-links a {
+.action-button {
   margin: 4px 0;
   padding: 8px 12px;
   background-color: #ff6347;
@@ -59,7 +55,7 @@ export default {
   border-radius: 4px;
   text-align: center;
 }
-.bottom-right-links a:hover {
-  background-color: #ff6347;
+.action-button:hover {
+  background-color: #e55347; /* Slightly darker for hover effect */
 }
 </style>
