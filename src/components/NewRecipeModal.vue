@@ -18,12 +18,12 @@
         <b-button @click="addInstruction" variant="success">Add Instruction</b-button>
         <b-form-invalid-feedback v-if="!formData.instructions.length">At least one instruction is required.</b-form-invalid-feedback>
         <b-form-group label="Ready in Minutes:" :state="validateField(formData.readyInMinutes)">
-          <b-form-input type="number" v-model="formData.readyInMinutes" required></b-form-input>
-          <b-form-invalid-feedback>Ready in minutes are required.</b-form-invalid-feedback>
+          <b-form-input type="number" v-model="formData.readyInMinutes" required :min="0"></b-form-input>
+          <b-form-invalid-feedback>Ready in minutes is required and cannot be less than 0.</b-form-invalid-feedback>
         </b-form-group>
         <b-form-group label="Servings:" :state="validateField(formData.servings)">
-          <b-form-input type="number" v-model="formData.servings" required></b-form-input>
-          <b-form-invalid-feedback>Servings are required.</b-form-invalid-feedback>
+          <b-form-input type="number" v-model="formData.servings" required :min="0"></b-form-input>
+          <b-form-invalid-feedback>Servings is required and cannot be less than 0.</b-form-invalid-feedback>
         </b-form-group>
         <!-- Add dietary preferences checkboxes -->
         <b-form-group label="Dietary Preferences:">
@@ -34,7 +34,7 @@
         <!-- Add ingredients input -->
         <b-form-group v-for="(ingredient, index) in formData.ingredients" :key="index" label="Ingredients:">
           <b-form-input v-model="ingredient.name" placeholder="Name" required></b-form-input>
-          <b-form-input v-model="ingredient.amount" type="number" placeholder="Amount" required></b-form-input>
+          <b-form-input v-model="ingredient.amount" type="text" placeholder="Amount" required></b-form-input>
           <b-button @click="removeIngredient(index)" variant="danger">Remove</b-button>
         </b-form-group>
         <b-button @click="addIngredient" variant="success">Add Ingredient</b-button>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { BModal, BButton, BForm, BFormGroup, BFormInput, BFormTextarea, BFormInvalidFeedback, BFormCheckbox } from 'bootstrap-vue';
+import { BModal, BButton, BForm, BFormGroup, BFormInput, BFormInvalidFeedback, BFormCheckbox } from 'bootstrap-vue';
 
 export default {
   components: {
@@ -54,7 +54,6 @@ export default {
     BForm,
     BFormGroup,
     BFormInput,
-    BFormTextarea,
     BFormInvalidFeedback,
     BFormCheckbox
   },
@@ -81,6 +80,9 @@ export default {
     closeModal() {
       this.modalShow = false;
       // Reset form data
+      this.resetForm();
+    },
+    resetForm() {
       this.formData.title = '';
       this.formData.image = '';
       this.formData.instructions = [];
@@ -121,8 +123,8 @@ export default {
       if (!this.formData.title) valid = false;
       if (!this.formData.image) valid = false;
       if (!this.formData.instructions.length) valid = false;
-      if (!this.formData.readyInMinutes) valid = false;
-      if (!this.formData.servings) valid = false;
+      if (!this.formData.readyInMinutes || this.formData.readyInMinutes < 0) valid = false;
+      if (!this.formData.servings || this.formData.servings < 0) valid = false;
       // Add validation for other fields here if needed
       return valid;
     },
