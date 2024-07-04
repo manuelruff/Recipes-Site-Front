@@ -2,6 +2,21 @@
 
 import axios from "axios";
 
+
+export async function PostLogin(username,password) {
+  try {
+    const response = await axios.post('http://localhost/auth/Login', {
+      username: username,
+      password: password,
+    });
+    return response.data; // Assuming response.data contains the registered user data
+  } catch (error) {
+    console.error('Error registering user:', error);
+    throw error;
+  }
+}
+
+
 export async function PostRegister(userDetails) {
   try {
     const response = await axios.post('http://localhost:80/auth/Register', {
