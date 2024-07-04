@@ -55,31 +55,30 @@ export default {
       lastViewedRecipes: []
     };
   },
-  async mounted() {
-    await this.fetchRecipes();
+  mounted() {
+    this.fetchRecipes();
   },
   methods: {
     async fetchRecipes() {
       try {
         const amountToFetch = 3; // Set this to how many recipes you want to fetch
-
         const response = mockGetRecipesPreview2(amountToFetch);
-        // const response = await getRandom(amountToFetch); 
 
-        this.recipes = response.data.recipes;
+        console.log(response);
+        const recipes = response.data.recipes;
+        console.log(recipes);
         this.recipes = recipes;
 
+        // Assuming you fetch last viewed recipes similarly
         const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
-        // const lastViewedResponse = await getLastViewed(); 
-
         console.log(lastViewedResponse);
         const lastViewed = lastViewedResponse.data.recipes;
         this.lastViewedRecipes = lastViewed;
         this.$refs.recipeList.randomizeRecipes();
-    } catch (error) {
-        console.error('Error fetching random recipes:', error);
-    }
 
+      } catch (error) {
+        console.log(error);
+      }
     },
     randomizeRecipes() {
       this.$refs.recipeList.randomizeRecipes();

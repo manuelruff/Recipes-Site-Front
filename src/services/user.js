@@ -6,12 +6,23 @@ export async function getLastViewed() {
   try {
     const response = await axios.get('http://localhost:80/users/lastview');
     let recipes = response.data;
+
+    // Log success message
+    console.log('Successfully fetched last viewed recipes:', recipes);
+    // Check if recipes array is empty
+    if (recipes.length === 0) {
+      console.log('No recipes found in last viewed');
+      return { data: { recipes } };
+    }
+    
     return { data: { recipes } };
   } catch (error) {
-    console.error('Error fetching random recipes:', error);
+    // Log the error and rethrow it for further handling
+    console.error('Error fetching last viewed recipes:', error);
     throw error;
   }
 }
+
 
   export function mockAddFavorite(recipeId) {
     return { status: 200, response: { data: { message: "The Recipe successfully saved as favorite", success: true}} };
