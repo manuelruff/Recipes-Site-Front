@@ -7,6 +7,26 @@ import analyzedInstructions324694 from "../assets/mocks/analyzedInstructions3246
 import recipeInformation324694 from "../assets/mocks/GetRecipeInformation324694.json";
 import recipe_prepare_full from "../assets/mocks/recipe_prepare_full.json";
 
+import axios from 'axios';
+
+export async function getRandom(amount = 3) {
+  console.log('Fetching random recipes with amount:', amount);
+  try {
+    const response = await axios.get('http://localhost:80/recipes/random', {
+      params: {
+        number: amount
+      }
+    });
+    let recipes = response.data;
+    return { data: { recipes } };
+  } catch (error) {
+    console.error('Error fetching random recipes:', error);
+    throw error;
+  }
+}
+
+
+
 export function mockGetRecipesPreview(amount = 1) {
   let recipes = [];
   for (let i = 0; i < amount; i++) {

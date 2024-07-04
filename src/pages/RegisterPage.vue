@@ -194,7 +194,7 @@ import {
   email,
   helpers
 } from "vuelidate/lib/validators";
-import { mockRegister } from "../services/auth.js";
+import { mockRegister ,PostRegister} from "../services/auth.js";
 
 const containsNumber = helpers.regex('containsNumber', /\d/);
 const containsSpecialChar = helpers.regex('containsSpecialChar', /[!@#$%^&*(),.?":{}|<>]/);
@@ -265,10 +265,16 @@ export default {
       try {
         const userDetails = {
           username: this.form.username,
-          password: this.form.password
+          password: this.form.password,
+          email: this.form.email,
+          firstName: this.form.firstName,
+          lastName: this.form.lastName,
+          country: this.form.country,
+          confirmedPassword: this.form.confirmedPassword
         };
 
-        const response = await mockRegister(userDetails);
+        // const response = await mockRegister(userDetails);
+        const response = await PostRegister(userDetails);
 
         this.$router.push("/login");
       } catch (err) {

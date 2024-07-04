@@ -40,7 +40,8 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import LoginForm from "../components/LoginForm";
-import { mockGetRecipesPreview2 } from "../services/recipes.js";
+import { mockGetRecipesPreview2,getRandom } from "../services/recipes.js";
+import { getLastViewed } from "../services/user.js";
 
 export default {
   name: "MainPage",
@@ -54,30 +55,31 @@ export default {
       lastViewedRecipes: []
     };
   },
-  mounted() {
-    this.fetchRecipes();
+  async mounted() {
+    await this.fetchRecipes();
   },
   methods: {
     async fetchRecipes() {
       try {
-        const amountToFetch = 8; // Set this to how many recipes you want to fetch
-        const response = mockGetRecipesPreview2(amountToFetch);
+        const amountToFetch = 3; // Set this to how many recipes you want to fetch
 
-        console.log(response);
-        const recipes = response.data.recipes;
-        console.log(recipes);
+        const response = mockGetRecipesPreview2(amountToFetch);
+        // const response = await getRandom(amountToFetch); 
+
+        this.recipes = response.data.recipes;
         this.recipes = recipes;
 
-        // Assuming you fetch last viewed recipes similarly
         const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
+        // const lastViewedResponse = await getLastViewed(); 
+
         console.log(lastViewedResponse);
         const lastViewed = lastViewedResponse.data.recipes;
         this.lastViewedRecipes = lastViewed;
         this.$refs.recipeList.randomizeRecipes();
+    } catch (error) {
+        console.error('Error fetching random recipes:', error);
+    }
 
-      } catch (error) {
-        console.log(error);
-      }
     },
     randomizeRecipes() {
       this.$refs.recipeList.randomizeRecipes();

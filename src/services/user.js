@@ -1,7 +1,17 @@
 // src/services/user.js
-import recipe_full_view from "../assets/mocks/recipe_full_view.json";
-import recipe_preview from "../assets/mocks/recipe_preview.json";
+import axios from "axios";
 
+
+export async function getLastViewed() {
+  try {
+    const response = await axios.get('http://localhost:80/users/lastview');
+    let recipes = response.data;
+    return { data: { recipes } };
+  } catch (error) {
+    console.error('Error fetching random recipes:', error);
+    throw error;
+  }
+}
 
   export function mockAddFavorite(recipeId) {
     return { status: 200, response: { data: { message: "The Recipe successfully saved as favorite", success: true}} };
