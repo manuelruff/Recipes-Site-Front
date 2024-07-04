@@ -41,7 +41,20 @@ export async function getLastViewed() {
     throw error;
   }
 }
-
+// Function to fetch last viewed recipes
+export async function PostLastViewed(recipeId) {
+  try {
+    const response = await axios.post('http://localhost:80/users/lastview', {
+      recipeId: recipeId
+    });
+    let recipes = response.data;
+    return { data: { recipes } };
+  } catch (error) {
+    // Log the error and rethrow it for further handling
+    console.error('Error fetching last viewed recipes:', error);
+    throw error;
+  }
+}
 
 
   export function mockAddFavorite(recipeId) {

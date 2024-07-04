@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mockAddLastViewedRecipe } from "../services/user.js";
+import { mockAddLastViewedRecipe ,PostLastViewed} from "../services/user.js";
 import { mockGetRecipeFullDetails2 } from "../services/recipes.js";
 import RecipeLogos from "../components/RecipeLogos.vue";
 import FavoriteButtonComponent from "../components/FavoriteButtonComponent.vue";
@@ -110,17 +110,10 @@ export default {
     }
     // we log that the user saw that recipe
     // mock to save something the user pressed to last viewed
-    mockAddLastViewedRecipe(this.recipe.id);
+    // mockAddLastViewedRecipe(this.recipe.id);
+    PostLastViewed(this.recipe.id);
     console.log("Added to last viewed recipes " + this.recipe.id);
   },
-  methods: {
-    AddLastViewedRecipe() {
-      // mock to save something the user pressed to last viewed
-      // we will keep a list of last viewed recipes in the server
-      mockAddLastViewedRecipe(this.recipe.id);
-      console.log("Added to last viewed recipes");
-    }
-  }
 };
 </script>
 
