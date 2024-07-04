@@ -15,8 +15,8 @@ export async function PostMyRecipe(newRecipe) {
       ingredients: newRecipe.ingredients,
     });
 
-    if (response.status === 201) {
-      return { message: "Recipe added successfully", success: true };
+    if (response.status === 200) {
+      return { message: "Recipe added successfully" };
     } else {
       throw new Error('Failed to add recipe');
     }
