@@ -1,4 +1,5 @@
 // src/services/user.js
+import axios from 'axios';
 
 export async function PostMyRecipe(newRecipe) {
   console.log(newRecipe);
@@ -27,23 +28,12 @@ export async function PostMyRecipe(newRecipe) {
 }
 
 
-import axios from 'axios';
-
-// Create an Axios instance with specific options
-const axiosInstance = axios.create({
-  baseURL: 'http://localhost:80', // Replace with your API base URL
-  withCredentials: true, // Ensure cookies are sent with requests if needed
-});
 
 // Function to fetch last viewed recipes
 export async function getLastViewed() {
   try {
-    const response = await axiosInstance.get('/users/lastview');
+    const response = await axios.get('http://localhost:80/users/lastview');
     let recipes = response.data;
-
-    // Log success message
-    console.log('Successfully fetched last viewed recipes:', recipes);
-
     return { data: { recipes } };
   } catch (error) {
     // Log the error and rethrow it for further handling
