@@ -66,10 +66,10 @@ export default {
         // const response = await getRandom(amountToFetch);
 
         console.log(response);
-        this.recipes = response.data.recipes;;
+        this.recipes = response.data.recipes;
 
-        // const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
-        const lastViewedResponse = await getLastViewed();
+        const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
+        // const lastViewedResponse = await getLastViewed();
 
         console.log("last viewed recipes "+lastViewedResponse);
         this.lastViewedRecipes =  lastViewedResponse.data.recipes;
@@ -79,8 +79,15 @@ export default {
         console.log(error);
       }
     },
-    randomizeRecipes() {
+    async randomizeRecipes() {
+      // with api 
+      // const amountToFetch = 3; // Set this to how many recipes you want to fetch
+      // const response = await getRandom(amountToFetch);
+      // this.recipes = response.data.recipes;
+
+      // just thos withou api
       this.$refs.recipeList.randomizeRecipes();
+
     }
   }
 };
