@@ -27,6 +27,18 @@ export async function PostMyRecipe(newRecipe) {
   }
 }
 
+// Function to fetch my recipes
+export async function getMyRecipe() {
+  try {
+    const response = await axios.get('http://localhost:80/users/myrecipes');
+    let recipes = response.data;
+    return { data: { recipes } };
+  } catch (error) {
+    // Log the error and rethrow it for further handling
+    console.error('Error fetching my recipes:', error);
+    throw error;
+  }
+}
 
 
 // Function to fetch last viewed recipes

@@ -7,9 +7,9 @@
       <RecipePreviewList
         ref="recipeList"
         title="My recipes"
-        :displayCount=2
         class="RandomRecipes center"
         :recipes="recipes"
+        :displayCount="recipes.length"
       />
     </div>
   </div>
@@ -18,6 +18,7 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import { mockGetRecipesPreview2 } from "../services/recipes.js";
+import {getMyRecipe} from "../services/user.js";
 
 export default {
   name: "BasicPage",
@@ -35,9 +36,11 @@ export default {
   methods: {
     async fetchRecipes() {
       try {
-        const amountToFetch = 8; // Adjust number of recipes to fetch as needed
-        const response = mockGetRecipesPreview2(amountToFetch);
+        //const amountToFetch = 8; // Adjust number of recipes to fetch as needed
+        //const response = mockGetRecipesPreview2(amountToFetch);
+        const response = await getMyRecipe();
         this.recipes = response.data.recipes;
+        console.log("this is recipes: ", this.recipes)
       } catch (error) {
         console.error("Error fetching recipes:", error);
       }

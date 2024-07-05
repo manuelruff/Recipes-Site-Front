@@ -17,6 +17,22 @@
           <h5 class="card-title">{{ recipe.title }}</h5>
         </a>
       </div>
+      <div v-else-if="recipe.myrecipe">
+        <a
+          href="#"
+          class="card-link hoverable"
+          title="Go to recipe"
+          @click="handleClick($event, 'recipe')"
+        >
+          <img
+            :src="recipe.image"
+            class="card-img-top fixed-size"
+            alt="Recipe image"
+            title="Go to recipe"
+          />
+          <h5 class="card-title">{{ recipe.title }}</h5>
+        </a>
+      </div>
       <div v-else>
         <a
           href="#"
