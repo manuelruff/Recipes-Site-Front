@@ -41,7 +41,7 @@
 
 <script>
 import { mockAddLastViewedRecipe ,PostLastViewed} from "../services/user.js";
-import { mockGetRecipeFullDetails2 } from "../services/recipes.js";
+import { mockGetRecipeFullDetails2, getFullView } from "../services/recipes.js";
 import RecipeLogos from "../components/RecipeLogos.vue";
 import FavoriteButtonComponent from "../components/FavoriteButtonComponent.vue";
 import PrepareAndMealButtons from '../components/PrepareAndMealButtons.vue';
@@ -61,9 +61,9 @@ export default {
   async created() {
     try {
       let response;
-
       try {
-        response = mockGetRecipeFullDetails2(this.$route.params.recipeId);
+        // response = mockGetRecipeFullDetails2(this.$route.params.recipeId);
+        response= await getFullView(this.$route.params.recipeId);
         if (response.status !== 200) this.$router.replace("/NotFound");
       } catch (error) {
         console.log("error.response.status", error.response.status);
@@ -103,7 +103,7 @@ export default {
         glutenFree,
         vegetarian,
         vegan,
-        id // Assign the recipe ID
+        id 
       };
     } catch (error) {
       console.log(error);
@@ -111,8 +111,16 @@ export default {
     // we log that the user saw that recipe
     // mock to save something the user pressed to last viewed
     // mockAddLastViewedRecipe(this.recipe.id);
-    PostLastViewed(this.recipe.id);
-    console.log("Added to last viewed recipes " + this.recipe.id);
+    try{
+      await PostLastViewed(this.recipe.id);
+      console.log("Added to last viewed recipes " + this.recipe.id);
+    }
+    catch(error){
+      // if not loged in we dont care its not posting
+      if(error.status!=401){
+        console.log("Error adding to last viewed recipes " + this.recipe.id);
+      }
+    }
   },
 };
 </script>

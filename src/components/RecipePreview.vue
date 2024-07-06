@@ -96,23 +96,13 @@ export default {
     };
   },
   methods: {
-    markAsViewed() {
+    handleClick(event, routeName) {
+      // Mark the recipe as viewed for all types of clicks
       if (!this.recipe.isViewed) {
         this.recipe.isViewed = true;
         console.log(`Recipe ${this.recipe.title} marked as viewed`);
         // Here you can add code to update the viewed state in your backend or store
       }
-    },
-    handleClick(event, routeName) {
-      // Mark the recipe as viewed for all types of clicks
-      this.markAsViewed();
-
-      // Check if the event is a middle-click or if Ctrl/Meta key is pressed (for opening in a new tab)
-      if (event.button === 1 || event.ctrlKey || event.metaKey) {
-        // Allow the default action to proceed
-        return;
-      }
-      
       // Prevent default for left-click to handle navigation programmatically
       event.preventDefault();
       this.$router.push({ name: routeName, params: { recipeId: this.recipe.id } });

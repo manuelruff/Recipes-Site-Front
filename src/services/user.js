@@ -59,12 +59,18 @@ export async function PostLastViewed(recipeId) {
     const response = await axios.post('http://localhost:80/users/lastview', {
       recipeId: recipeId
     });
-    let recipes = response.data;
-    return { data: { recipes } };
-  } catch (error) {
-    // Log the error and rethrow it for further handling
-    console.error('Error fetching last viewed recipes:', error);
-    throw error;
+    if (response.status === 200) {
+      return { message: "Recipe added successfully to last viewed" };
+    } 
+  }
+   catch (error) {
+    if (response.status === 401){
+      throw { status: 401, response: { data: { message: "incorrect username or password", success: false } } };    }
+    else {
+      // Log the error and rethrow it for further handling
+      console.error('Error fetching last viewed recipes:', error);
+      throw error;
+    }
   }
 }
 
