@@ -68,10 +68,9 @@ export default {
         console.log(response);
         this.recipes = response.data.recipes;
 
-        const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
-        // const lastViewedResponse = await getLastViewed();
+        // const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
+        const lastViewedResponse = await getLastViewed();
 
-        console.log("last viewed recipes "+lastViewedResponse);
         this.lastViewedRecipes =  lastViewedResponse.data.recipes;
 
         this.$refs.recipeList.randomizeRecipes();
@@ -87,7 +86,6 @@ export default {
 
       // just thos withou api
       this.$refs.recipeList.randomizeRecipes();
-
     }
   }
 };

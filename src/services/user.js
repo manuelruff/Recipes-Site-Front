@@ -45,7 +45,7 @@ export async function getMyRecipe() {
 export async function getLastViewed() {
   try {
     const response = await axios.get('http://localhost:80/users/lastview');
-    let recipes = response.data;
+    let recipes = response.data; // Assuming response.data directly contains the array of recipes
     return { data: { recipes } };
   } catch (error) {
     // Log the error and rethrow it for further handling
@@ -53,6 +53,7 @@ export async function getLastViewed() {
     throw error;
   }
 }
+
 // Function to post last viewed recipes
 export async function PostLastViewed(recipeId) {
   try {
