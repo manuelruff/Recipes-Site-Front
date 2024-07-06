@@ -24,6 +24,7 @@ export async function getRandom(amount = 3) {
     throw error;
   }
 }
+
 export async function getFullView(recipeID) {
   console.log('Fetching recipe with ID:', recipeID);
   try {
@@ -42,6 +43,23 @@ export async function getFullView(recipeID) {
   }
 }
 
+export async function getFullViewMyRecipe(recipeID) {
+  console.log('Fetching recipe with ID:', recipeID);
+  try {
+    const response = await axios.get(`http://localhost:80/users/myrecipes/${recipeID}`);
+    let recipe = response.data;
+    return {
+      status: response.status,
+      data: { recipe }
+    };
+  } catch (error) {
+    console.error('Error fetching recipe:', error);
+    return {
+      status: error.response.status || 500, // Use 500 if no status code available
+      data: null
+    };
+  }
+}
 
 export function mockGetRecipesPreview(amount = 1) {
   let recipes = [];

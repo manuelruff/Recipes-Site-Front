@@ -65,6 +65,12 @@ const routes = [
     props: true,
   },
   {
+    path: "/RecipeViewMyRecipe/:recipeId",
+    name: "RecipeViewMyRecipe",
+    component: () => import("./pages/RecipeViewMyRecipe"),
+    props: true,
+  },
+  {
     path: "/prepare/:recipeId",
     name: "PreparePage",
     component: () => import("./pages/PreparePage"),

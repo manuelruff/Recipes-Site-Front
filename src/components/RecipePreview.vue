@@ -22,7 +22,7 @@
           href="#"
           class="card-link hoverable"
           title="Go to recipe"
-          @click="handleClick($event, 'recipe')"
+          @click="handleClick($event, 'RecipeViewMyRecipe')"
         >
           <img
             :src="recipe.image"
