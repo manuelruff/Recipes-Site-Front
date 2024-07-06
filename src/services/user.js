@@ -53,7 +53,7 @@ export async function getLastViewed() {
     throw error;
   }
 }
-// Function to fetch last viewed recipes
+// Function to post last viewed recipes
 export async function PostLastViewed(recipeId) {
   try {
     const response = await axios.post('http://localhost:80/users/lastview', {
@@ -65,10 +65,67 @@ export async function PostLastViewed(recipeId) {
   }
    catch (error) {
     if (response.status === 401){
-      throw { status: 401, response: { data: { message: "incorrect username or password", success: false } } };    }
+      throw { status: 401, response: { data: { message: "you need to log in first", success: false } } };    }
     else {
       // Log the error and rethrow it for further handling
       console.error('Error fetching last viewed recipes:', error);
+      throw error;
+    }
+  }
+}
+
+// Function to fetch favorite recipes
+export async function getFavorites() {
+  try {
+    const response = await axios.get('http://localhost:80/users/favorites');
+    let recipes = response.data;
+    return { data: { recipes } };
+  } catch (error) {
+    // Log the error and rethrow it for further handling
+    console.error('Error fetching last viewed recipes:', error);
+    throw error;
+  }
+}
+// Function to post favorite recipes
+export async function PostFavorite(recipeId) {
+  try {
+    const response = await axios.post('http://localhost:80/users/favorites', {
+      recipeId: recipeId
+    });
+    if (response.status === 200) {
+      return { message: "Recipe added successfully to favorite" };
+    } 
+  }
+   catch (error) {
+    if (response.status === 401){
+      throw { status: 401, response: { data: { message: "you need to log in first", success: false } } };    }
+    else {
+      // Log the error and rethrow it for further handling
+      console.error('Error fetching last viewed recipes:', error);
+      throw error;
+    }
+  }
+}
+// Function to delete a favorite recipe
+export async function DeleteFavorite(recipeId) {
+  try {
+    const response = await axios.delete('http://localhost:80/users/favorites', {
+      data: { recipeId: recipeId } // Corrected: Use 'data' instead of directly passing recipeId
+    });
+
+    if (response.status === 200) {
+      return { message: "Recipe deleted successfully from favorites" };
+    } else {
+      // Handle other status codes if needed
+      console.error('Unexpected status code:', response.status);
+      throw new Error(`Unexpected status code: ${response.status}`);
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      throw { status: 401, response: { data: { message: "You need to log in first", success: false } } };
+    } else {
+      // Log the error and rethrow it for further handling
+      console.error('Error deleting favorite recipe:', error);
       throw error;
     }
   }

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mockAddFavorite, mockRemoveFavorite } from "../services/user.js";
+import { mockAddFavorite, mockRemoveFavorite,PostFavorite,DeleteFavorite } from "../services/user.js";
 
 export default {
   name: "FavoriteButtonComponent",
@@ -30,16 +30,18 @@ export default {
       }
     },
     methods: {
-      toggleFavorite() {
+      async toggleFavorite() {
         if (!this.isFavorite) {
           this.isFavorite = true;
           // Add the recipe to the favorites list
-          mockAddFavorite(this.recipeId);
+          // mockAddFavorite(this.recipeId);
+          await PostFavorite(this.recipeId);
           console.log("Added to favorites");
         } else {
           this.isFavorite = false;
           // Remove the recipe from the favorites list
-          mockRemoveFavorite(this.recipeId);
+          // mockRemoveFavorite(this.recipeId);
+          await DeleteFavorite(this.recipeId);
           console.log("Removed from favorites");
         }
       }

@@ -14,7 +14,7 @@
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
-import { mockGetRecipesPreview2,mockGetFavoriteRecipes } from "../services/recipes.js";
+import { mockGetRecipesPreview2,mockGetFavoriteRecipes,getFavorites } from "../services/recipes.js";
 
 export default {
   name: "FavoritePage",
@@ -37,7 +37,8 @@ export default {
         // lets say mockGetRecipesPreview2 is mock for get favorite
         // mockGetFavoriteRecipes(amountToFetch,$root.store.username);
         // then actually reading defult recipes
-        const response = mockGetRecipesPreview2(amountToFetch);
+        // const response = mockGetRecipesPreview2(amountToFetch);
+        const response =await getFavorites(amountToFetch); 
         console.log(response);
         const recipes = response.data.recipes;
         console.log(recipes);
