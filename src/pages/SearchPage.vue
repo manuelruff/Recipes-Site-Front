@@ -78,7 +78,7 @@
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
-import { mockGetRecipesPreview2, mockGetSearchResults } from "../services/recipes.js";
+import { mockGetRecipesPreview2, mockGetSearchResults ,getSearch} from "../services/recipes.js";
 import { cuisines, diets, intolerances } from '../assets/filterOptions';
 
 export default {
@@ -144,60 +144,33 @@ export default {
     onSearch() {
       try {
         const amountToFetch = this.resultsPerPage; // Set this to how many recipes you want to fetch
-        const response = mockGetRecipesPreview2(amountToFetch);
-        console.log(response);
-        const recipes = response.data.recipes;
-        console.log(recipes);
+        const dietString = this.selectedFilters.diet.join(',');
+        const cuisineString = this.selectedFilters.cuisine.join(',');
+        const intolerancesString = this.selectedFilters.intolerances.join(',');
+        console.log("Query:", this.query);
+        console.log("Results Per Page:", this.resultsPerPage);
+        console.log("Diet:", dietString);
+        console.log("Cuisine:", cuisineString);
+        console.log("Intolerances:", intolerancesString);
+        console.log("searching...");
+
+        // Calling the real getSearch function
+        getSearch(this.query, amountToFetch, dietString, cuisineString, intolerancesString)
+      .then(recipes => {
+        console.log("Fetched recipes:", recipes);
         this.results = recipes;
         console.log(this.results);
         this.sortResults(); // Sort the results after fetching
         this.saveState(); // Save state after fetching and sorting
-      } catch (error) {
-        console.log(error);
-      }
-
-      // API keys
-      const apiKey = 'dfc0343255df402babb592636a733295';
-      const dietString = this.selectedFilters.diet.join(',');
-      const cuisineString = this.selectedFilters.cuisine.join(',');
-      const intolerancesString = this.selectedFilters.intolerances.join(',');
-      console.log("Query:", this.query);
-      console.log("Results Per Page:", this.resultsPerPage);
-      console.log("Diet:", dietString);
-      console.log("Cuisine:", cuisineString);
-      console.log("Intolerances:", intolerancesString);
-      console.log("searching...");
-      // mockGetSearchResults is a placeholder for the actual API call
-      mockGetSearchResults(this.query, amountToFetch, dietString, cuisineString, intolerancesString);
-    },
-    // this is the actual API call
-    async onSearch2() {
-      const apiKey = 'dfc0343255df402babb592636a733295';
-      const dietString = this.selectedFilters.diet.join(',');
-      const cuisineString = this.selectedFilters.cuisine.join(',');
-      const intolerancesString = this.selectedFilters.intolerances.join(',');
-      const url = `https://api.spoonacular.com/recipes/complexSearch?query=${this.query}&number=${this.resultsPerPage}&diet=${dietString}&cuisine=${cuisineString}&intolerances=${intolerancesString}&apiKey=${apiKey}&information=true`;
-      console.log("Generated URL:", url);
-      console.log("Query:", this.query);
-      console.log("Results Per Page:", this.resultsPerPage);
-      console.log("Diet:", dietString);
-      console.log("Cuisine:", cuisineString);
-      console.log("Intolerances:", intolerancesString);
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        this.results = data.results;
-        // Log each recipe's properties
-        this.results.forEach(recipe => {
-          for (const key in recipe) {
-            if (recipe.hasOwnProperty(key)) {
-              console.log(`${key}:`, recipe[key]);
-            }
-          }
-        });
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+      })
+    .catch(error => {
+      console.error("Error fetching recipes:", error);
+    });
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    }
+    // mockGetSearchResults(this.query, amountToFetch, dietString, cuisineString, intolerancesString);
+    // const response = mockGetRecipesPreview2(amountToFetch);
     },
     onSortChange() {
       console.log("Sort option changed:", this.sortBy);

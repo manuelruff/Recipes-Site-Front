@@ -68,8 +68,8 @@ export default {
         console.log(response);
         this.recipes = response.data.recipes;
 
-        // const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
-        const lastViewedResponse = await getLastViewed();
+        const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
+        // const lastViewedResponse = await getLastViewed();
 
         this.lastViewedRecipes =  lastViewedResponse.data.recipes;
 

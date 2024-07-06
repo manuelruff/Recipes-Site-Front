@@ -41,6 +41,23 @@ export async function getMyRecipe() {
 }
 
 
+export async function getFullViewMyRecipe(recipeID) {
+  console.log('Fetching recipe with ID:', recipeID);
+  try {
+    const response = await axios.get(`http://localhost:80/users/myrecipes/${recipeID}`);
+    let recipe = response.data;
+    return {
+      status: response.status,
+      data: { recipe }
+    };
+  } catch (error) {
+    console.error('Error fetching recipe:', error);
+    return {
+      status: error.response.status || 500, // Use 500 if no status code available
+      data: null
+    };
+  }
+}
 // Function to fetch last viewed recipes
 export async function getLastViewed() {
   try {

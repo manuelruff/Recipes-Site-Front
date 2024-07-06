@@ -14,7 +14,8 @@
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
-import { mockGetRecipesPreview2,mockGetFavoriteRecipes,getFavorites } from "../services/recipes.js";
+import {getFavorites} from "../services/user.js";
+// import { mockGetRecipesPreview2,mockGetFavoriteRecipes,getFavorites } from "../services/recipes.js";
 
 export default {
   name: "FavoritePage",

@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import { mockAddLastViewedRecipe ,PostLastViewed} from "../services/user.js";
-import { mockGetRecipeFullDetails2, getFullView,getFullViewMyRecipe } from "../services/recipes.js";
+import { mockAddLastViewedRecipe ,PostLastViewed,getFullViewMyRecipe} from "../services/user.js";
+import { mockGetRecipeFullDetails2, getFullView } from "../services/recipes.js";
 import RecipeLogos from "../components/RecipeLogos.vue";
 import FavoriteButtonComponent from "../components/FavoriteButtonComponent.vue";
 import PrepareAndMealButtons from '../components/PrepareAndMealButtons.vue';

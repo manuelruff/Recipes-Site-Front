@@ -43,23 +43,32 @@ export async function getFullView(recipeID) {
   }
 }
 
-export async function getFullViewMyRecipe(recipeID) {
-  console.log('Fetching recipe with ID:', recipeID);
+export async function getSearch(query, amountToFetch, dietString, cuisineString, intolerancesString) {
   try {
-    const response = await axios.get(`http://localhost:80/users/myrecipes/${recipeID}`);
-    let recipe = response.data;
-    return {
-      status: response.status,
-      data: { recipe }
-    };
+    const response = await axios.get(`http://localhost:80/recipes/search`, {
+      params: {
+        recipeName: query,
+        number: amountToFetch,
+        diet: dietString,
+        cuisine: cuisineString,
+        intolerance: intolerancesString
+      }
+    });
+    
+    if (response.status === 200) {
+      // Successfully fetched the data
+      return response.data; // Directly returning the data if status is 200
+    } else {
+      // Throw an error if the response status is not 200
+      throw new Error(`Failed to fetch recipes: Server responded with status ${response.status}`);
+    }
   } catch (error) {
-    console.error('Error fetching recipe:', error);
-    return {
-      status: error.response.status || 500, // Use 500 if no status code available
-      data: null
-    };
+    console.error('Error fetching recipes:', error.message);
+    throw error; // Re-throwing the error to be handled by the caller
   }
 }
+
+
 
 export function mockGetRecipesPreview(amount = 1) {
   let recipes = [];
