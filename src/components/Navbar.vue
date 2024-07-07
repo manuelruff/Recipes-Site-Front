@@ -98,7 +98,7 @@ export default {
   methods: {
     updateMealCount(count) {
       console.log('Meal count updated:', count); // Debug statement
-      this.mealCount = count;
+      this.mealCount = count || 0; // Update the meal count
     },
     openCreateRecipeModal() {
       this.$refs.createRecipeModal.openModal();

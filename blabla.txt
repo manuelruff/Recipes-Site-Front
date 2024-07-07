@@ -12,5 +12,3 @@ also not showing last view...
 
 
 button in meal is not plcaed good
-
-meal count not working good!

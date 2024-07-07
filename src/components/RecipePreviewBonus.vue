@@ -86,11 +86,26 @@ export default {
       // mockRemoveFromMeal(this.recipe.id);
       const response = await DeleteMeal(this.recipe.id);
       if (response.status === 200) {
+        // Emit event to remove recipe from UI
         this.$emit('remove-recipe', this.recipe.id);
-        let mealsPrepared = sessionStorage.getItem('mealsPrepared');
-        mealsPrepared = parseInt(mealsPrepared) - 1;
-        sessionStorage.setItem('mealsPrepared', mealsPrepared);
+        // Retrieve username from the root store
+        const username = this.$root.store.username;
+        // Build a unique sessionStorage key with the username for meals prepared
+        const mealsKey = `${username}_mealsPrepared`;
+        // Retrieve and decrement the meal count from sessionStorage
+        let mealsPrepared = parseInt(sessionStorage.getItem(mealsKey)) || 0;
+        mealsPrepared = Math.max(mealsPrepared - 1, 0); // Prevent negative counts
+        sessionStorage.setItem(mealsKey, mealsPrepared);
+        // Clearing progress data for the specific recipe
+        const completedStepsKey = `completedSteps_${this.recipe.id}`;
+        const totalStepsKey = `totalSteps_${this.recipe.id}`;
+        sessionStorage.removeItem(completedStepsKey);
+        sessionStorage.removeItem(totalStepsKey);
+        // Emit event to update meal count across components
         this.$root.$emit('update-meal-count', mealsPrepared);
+
+        console.log(`Recipe ${this.recipe.id} and its progress data removed successfully.`);
+    
       }
       else{
         console.error("Error in removing recipe from meal:", response.message);
