@@ -160,8 +160,8 @@ export async function PostMeal(recipeId) {
     } 
   }
    catch (error) {
-    if (response.status === 401){
-      throw { status: 401, response: { data: { message: "you need to log in first", success: false } } };    }
+    if (response.status === 409){
+      throw { status: 409, response: { data: { message: "alrady in", success: false } } };    }
     else {
       // Log the error and rethrow it for further handling
       console.error('Error fetching meals recipes:', error);
@@ -169,6 +169,7 @@ export async function PostMeal(recipeId) {
     }
   }
 }
+
 // Function to fetch favorite recipes
 export async function getMeals() {
   try {
@@ -183,14 +184,21 @@ export async function getMeals() {
 }
 
 // Function to delete a favorite recipe
-export async function DeleteMeal(recipeId) {
+export async function DeleteMeal(recipeId=null) {
   try {
-    const response = await axios.delete('http://localhost:80/users/meals', {
-      data: { recipeId: recipeId } // Corrected: Use 'data' instead of directly passing recipeId
-    });
-
+    let response;
+    if (!recipeId) {
+      // Remove all meals for the user
+      response=await axios.delete('http://localhost:80/users/meals');
+    }
+    else{
+      // Remove a specific meal
+      response = await axios.delete('http://localhost:80/users/meals', {
+        data: { recipeId: recipeId } // Corrected: Use 'data' instead of directly passing recipeId
+      });
+    }
     if (response.status === 200) {
-      return { message: "Recipe deleted successfully from meals" };
+      return { message: "Recipe deleted successfully from meals", status: 200};
     } else {
       // Handle other status codes if needed
       console.error('Unexpected status code:', response.status);

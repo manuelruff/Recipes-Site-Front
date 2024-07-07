@@ -42,7 +42,7 @@
 <script>
 import RecipeLogos from "./RecipeLogos.vue";
 import { BProgress } from 'bootstrap-vue';
-import { mockRemoveFromMeal } from "../services/user.js";
+import { mockRemoveFromMeal,DeleteMeal } from "../services/user.js";
 
 export default {
   name: "RecipePreviewBonus",
@@ -76,41 +76,23 @@ export default {
   },
   methods: {
     setProgressValue() {
-      const storedValue = sessionStorage.getItem(`checkedSteps_${this.recipe.id}`);
-      const storedMaxValue = sessionStorage.getItem(`instructionsLength_${this.recipe.id}`);
-      if (storedValue) {
-        this.progressValue = JSON.parse(storedValue);
-      }
-      if (storedMaxValue) {
-        this.maxValue = JSON.parse(storedMaxValue);
-      } else {
-        // Fallback in case the length is not set in sessionStorage
-        this.maxValue = this.recipe.analyzedInstructions.reduce((acc, section) => acc + section.steps.length, 0);
-      }
-    },
-    handleClick(event, routeName) {
-      this.markAsViewed();
+        const completedSteps = sessionStorage.getItem(`completedSteps_${this.recipe.id}`);
+        const totalSteps = sessionStorage.getItem(`totalSteps_${this.recipe.id}`);
 
-      if (event.button === 1 || event.ctrlKey || event.metaKey) {
-        return;
-      }
-
-      event.preventDefault();
-      this.$router.push({ name: routeName, params: { recipeId: this.recipe.id } });
+        this.progressValue = completedSteps ? parseInt(completedSteps) : 0;
+        this.maxValue = totalSteps ? parseInt(totalSteps) : 0;
     },
-    removeRecipe() {
-      mockRemoveFromMeal(this.recipe.id);
-      console.log('Removing recipe from meal:', this.recipe.id); // Debug log
-      this.$emit('remove-recipe', this.recipe.id);
-       // Retrieve the current meal count from sessionStorage
-      let mealsPrepared = sessionStorage.getItem('mealsPrepared');
-      // Decrease the meal count by one
-      mealsPrepared = parseInt(mealsPrepared) - 1;
-      // Save the updated count back to sessionStorage
-      sessionStorage.setItem('mealsPrepared', mealsPrepared);
-      // Emit event to update meal count
-      this.$root.$emit('update-meal-count', mealsPrepared);
-      
+    async removeRecipe() {
+      // mockRemoveFromMeal(this.recipe.id);
+      const response = await DeleteMeal(this.recipe.id);
+      console.log(response);
+      if (response.status === 200) {
+        this.$emit('remove-recipe', this.recipe.id);
+        let mealsPrepared = sessionStorage.getItem('mealsPrepared');
+        mealsPrepared = parseInt(mealsPrepared) - 1;
+        sessionStorage.setItem('mealsPrepared', mealsPrepared);
+        this.$root.$emit('update-meal-count', mealsPrepared);
+      }
     }
   }
 };

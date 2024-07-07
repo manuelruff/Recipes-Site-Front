@@ -3,6 +3,5 @@ fix modal full view - myrecipes
 
 
 manu
-add meal functionality
 check api and responses from db
 recipepreviewbonus, check the mark as viewed, do i need to add from there?

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mockAddToMeal } from "../services/user.js";
+import { mockAddToMeal ,PostMeal} from "../services/user.js";
 
 export default {
   name: 'PrepareAndMealButtons',
@@ -16,20 +16,29 @@ export default {
     }
   },
   methods: {
-    addToMeal() {
-      console.log('Adding recipe to meal:', this.recipeId); // Debug log
-      mockAddToMeal(this.recipeId);
-      let mealsPrepared = sessionStorage.getItem('mealsPrepared');
+    async addToMeal() {
+    console.log('Adding recipe to meal:', this.recipeId); // Debug log
+    const response = await PostMeal(this.recipeId);
+    if (response.status === 200) {
+        // Retrieve username from the root store
+        const username = this.$root.store.username;
 
-      if (!mealsPrepared) {
-        mealsPrepared = 1;
-      } else {
-        mealsPrepared = parseInt(mealsPrepared) + 1;
-      }
+        // Build a unique sessionStorage key with the username
+        const mealsKey = `${username}_mealsPrepared`;
 
-      sessionStorage.setItem('mealsPrepared', mealsPrepared);
-      this.$root.$emit('update-meal-count', mealsPrepared);
-    },
+        let mealsPrepared = sessionStorage.getItem(mealsKey);
+        if (!mealsPrepared) {
+            mealsPrepared = 1;
+        } else {
+            mealsPrepared = parseInt(mealsPrepared) + 1;
+        }
+
+        sessionStorage.setItem(mealsKey, mealsPrepared);
+        this.$root.$emit('update-meal-count', mealsPrepared);
+    } else {
+        console.error("Error in adding recipe to meal:", response.message);
+    }
+  },
     prepareAndAddToMeal() {
       this.addToMeal(); // First add to meal
       this.$router.push({ name: 'PreparePage', params: { recipeId: this.recipeId } }); // Then navigate to Prepare page

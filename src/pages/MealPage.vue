@@ -18,6 +18,7 @@
 <script>
 import RecipePreviewListBonus from "../components/RecipePreviewListBonus";
 import { mockGetMealRecipesPreview } from "../services/recipes.js";
+import { getMeals,DeleteMeal } from "../services/user.js";
 
 export default {
   name: "FamilyRecipesPage",
@@ -36,16 +37,15 @@ export default {
   methods: {
     async fetchRecipes() {
       try {
-        const response = mockGetMealRecipesPreview();
-        console.log(response);
-        const recipes = response.data.recipes;
-        console.log(recipes);
-        this.recipes = recipes;
+        // const response = mockGetMealRecipesPreview();
+        const response = await getMeals();
+        this.recipes = response.data.recipes;
       } catch (error) {
         console.log(error);
       }
     },
     clearRecipes() {
+      DeleteMeal();
       this.recipes = [];
       // Reset the meal count in sessionStorage to 0
       sessionStorage.setItem('mealsPrepared', 0);

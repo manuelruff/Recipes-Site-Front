@@ -77,7 +77,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/meal/:recipeId",
+    path: "/meal",
     name: "MealPage",
     component: () => import("./pages/MealPage"),
     props: true,
