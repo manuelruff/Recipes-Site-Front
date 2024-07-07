@@ -73,6 +73,7 @@
 <script>
 import FavoriteButtonComponent from "./FavoriteButtonComponent.vue";
 import RecipeLogos from "./RecipeLogos.vue";
+import { PostLastViewed } from "../services/user.js";
 
 export default {
   name: "RecipePreview",
@@ -96,13 +97,15 @@ export default {
     };
   },
   methods: {
-    handleClick(event, routeName) {
-      // Mark the recipe as viewed for all types of clicks
-      if (!this.recipe.isViewed) {
+    async handleClick(event, routeName) {
         this.recipe.isViewed = true;
-        console.log(`Recipe ${this.recipe.title} marked as viewed`);
-        // Here you can add code to update the viewed state in your backend or store
-      }
+        const response= await PostLastViewed(this.recipe.id);
+        if (response.status == 200){
+          console.log("Added to last viewed recipes " + this.recipe.id);
+        }
+        else{
+          console.log("Error adding to last viewed recipes " + this.recipe.id);
+        }
       // Prevent default for left-click to handle navigation programmatically
       event.preventDefault();
       this.$router.push({ name: routeName, params: { recipeId: this.recipe.id } });

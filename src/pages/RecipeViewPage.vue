@@ -13,7 +13,6 @@
               <div><strong>Ready in:</strong> {{ recipe.readyInMinutes }} minutes</div>
               <div><strong>Likes:</strong> {{ recipe.aggregateLikes }} likes</div>
               <div><strong>Servings:</strong> {{ recipe.servings }}</div>
-              <FavoriteButtonComponent :recipeId="recipe.id" :initialFavoriteState="isFavorite" />
             </div>
             <h3>Ingredients:</h3>
             <ul class="ingredients-list">
@@ -43,13 +42,11 @@
 import { mockAddLastViewedRecipe ,PostLastViewed} from "../services/user.js";
 import { mockGetRecipeFullDetails2, getFullView } from "../services/recipes.js";
 import RecipeLogos from "../components/RecipeLogos.vue";
-import FavoriteButtonComponent from "../components/FavoriteButtonComponent.vue";
 import PrepareAndMealButtons from '../components/PrepareAndMealButtons.vue';
 
 export default {
   components: {
     RecipeLogos,
-    FavoriteButtonComponent,
     PrepareAndMealButtons
   },
   data() {
@@ -107,24 +104,6 @@ export default {
       };
     } catch (error) {
       console.log(error);
-    }
-    // we log that the user saw that recipe
-    // mock to save something the user pressed to last viewed
-    // mockAddLastViewedRecipe(this.recipe.id);
-    try{
-      const response= await PostLastViewed(this.recipe.id);
-      if (response.status == 200){
-        console.log("Added to last viewed recipes " + this.recipe.id);
-      }
-      else{
-        console.log("Error adding to last viewed recipes " + this.recipe.id);
-      }
-    }
-    catch(error){
-      // if not loged in we dont care its not posting
-      if(error.status!=401){
-        console.log("Error adding to last viewed recipes " + this.recipe.id);
-      }
     }
   },
 };

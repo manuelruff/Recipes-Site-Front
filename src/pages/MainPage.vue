@@ -72,15 +72,18 @@ export default {
         else {
           console.log("Error fetching recipes: ", response);
         }
-
-        const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
-        // const lastViewedResponse = await getLastViewed();
-        if (lastViewedResponse.status == 200) {
-          this.lastViewedRecipes =  lastViewedResponse.data.recipes;
+        if (this.$root.store.username) {
+          const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
+          // const lastViewedResponse = await getLastViewed();
+          console.log(lastViewedResponse);
+          if (lastViewedResponse.status == 200) {
+            this.lastViewedRecipes =  lastViewedResponse.data.recipes;
+          }
+          else {
+            console.log("Error fetching last viewed recipes: ", lastViewedResponse);
+          }
         }
-        else {
-          console.log("Error fetching last viewed recipes: ", lastViewedResponse);
-        }
+        
         this.$refs.recipeList.randomizeRecipes();
       } catch (error) {
         console.log(error);

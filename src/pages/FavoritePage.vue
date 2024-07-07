@@ -42,7 +42,6 @@ export default {
         const response =await getFavorites(amountToFetch); 
         if (response.status == 200) {
           this.recipes = response.data.recipes;
-          console.log("this is recipes: ", this.recipes)
         }
         else {
           console.log("Error fetching recipes: ", response);

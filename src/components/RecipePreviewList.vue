@@ -14,6 +14,7 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
+import { getFavoriteAndViewed } from "../services/user.js";
 
 export default {
   name: "RecipePreviewList",
@@ -56,11 +57,38 @@ export default {
   },
   watch: {
     recipes: {
-      handler() {
+      async handler() {
         if (this.randomize) {
           this.randomizeRecipes();
         } else {
           this.randomizedRecipes = [...this.recipes];
+        }
+        // we want to get for each recipe if it is viewed or not and if its favorite or not
+        if (this.$root.store.username) {
+          try {
+            const response = await getFavoriteAndViewed();
+            console.log("Response: ", response);
+            if (response.status == 200) {
+              const favoriteRecipes = response.data.favoriteRecipes;
+              const lastViewedRecipes = response.data.lastViewedRecipes;
+              console.log("Favorite recipes: ", favoriteRecipes);
+              console.log("Last viewed recipes: ", lastViewedRecipes);
+              for (let i = 0; i < this.randomizedRecipes.length; i++) {
+                if (favoriteRecipes.includes(this.randomizedRecipes[i].id)) {
+                  this.randomizedRecipes[i].isFavorite = true;
+                }
+                if (lastViewedRecipes.includes(this.randomizedRecipes[i].id)) {
+                  this.randomizedRecipes[i].isViewed = true;
+                }
+              }
+            }
+            else{
+              console.log("Error fetching favorite and viewed recipes: ", response);
+            }
+            
+          } catch (error) {
+            console.log(error);
+          }
         }
       },
       deep: true,
