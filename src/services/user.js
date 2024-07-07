@@ -108,6 +108,29 @@ import axios from 'axios';
     }
   }
 
+  export async function checkFavoriteAndViewed(recipe_id) {
+    try {
+      const response = await axios.get('http://localhost:80/users/FavoriteAndViewed');
+      if (response.status === 200) {
+        const favoriteRecipes = response.data.favoriteRecipes;
+        const lastViewedRecipes = response.data.lastViewedRecipes;
+        
+        // Check if recipe_id exists in favoriteRecipes and lastViewedRecipes
+        const isFavorite = favoriteRecipes.includes(recipe_id);
+        const isViewed = lastViewedRecipes.includes(recipe_id);
+
+        return { isFavorite, isViewed };
+      } else {
+        throw new Error('Failed to fetch favorite and viewed recipes');
+      }
+    } catch (error) {
+      // Log the error and rethrow it for further handling
+      console.error('Error fetching favorite and viewed recipes:', error);
+      throw error;
+    }
+  }
+
+
   // Function to post favorite recipes
   export async function PostFavorite(recipeId) {
     try {
