@@ -18,7 +18,7 @@ export async function getRandom(amount = 3) {
       }
     });
     let recipes = response.data;
-    return { data: { recipes } };
+    return {status:200, data: { recipes } };
   } catch (error) {
     console.error('Error fetching random recipes:', error);
     throw error;
@@ -94,7 +94,7 @@ export function mockGetRecipesPreview2(amount = 1) {
   for (let i = 0; i < amount; i++) {
     recipes.push(recipe_preview2[i]);
   }
-  return { data: { recipes: recipes } };
+  return {status:200, data: { recipes: recipes } };
 }
 
 

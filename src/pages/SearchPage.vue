@@ -141,7 +141,7 @@ export default {
       sessionStorage.setItem('sortBy', this.sortBy);
       sessionStorage.setItem('selectedFilters', JSON.stringify(this.selectedFilters));
     },
-    onSearch() {
+    async onSearch() {
       try {
         const amountToFetch = this.resultsPerPage; // Set this to how many recipes you want to fetch
         const dietString = this.selectedFilters.diet.join(',');
@@ -155,7 +155,7 @@ export default {
         console.log("searching...");
 
         // Calling the real getSearch function
-        getSearch(this.query, amountToFetch, dietString, cuisineString, intolerancesString)
+        const result =await getSearch(this.query, amountToFetch, dietString, cuisineString, intolerancesString)
       .then(recipes => {
         console.log("Fetched recipes:", recipes);
         this.results = recipes;
