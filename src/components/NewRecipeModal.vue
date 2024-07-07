@@ -126,8 +126,13 @@ export default {
 
       try {
         const response = await PostMyRecipe(newRecipe);
-        console.log('Recipe added successfully:', response.data);
-        this.closeModal();
+        if(response.status == 200){
+          console.log('Recipe added successfully:', response.data);
+          this.closeModal();
+        }
+        else{
+          console.log("Error adding recipe: ", response);
+        }
       } catch (error) {
         console.error('Error adding recipe:', error);
       }

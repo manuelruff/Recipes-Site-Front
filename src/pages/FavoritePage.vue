@@ -40,10 +40,13 @@ export default {
         // then actually reading defult recipes
         // const response = mockGetRecipesPreview2(amountToFetch);
         const response =await getFavorites(amountToFetch); 
-        console.log(response);
-        const recipes = response.data.recipes;
-        console.log(recipes);
-        this.recipes = recipes;
+        if (response.status == 200) {
+          this.recipes = response.data.recipes;
+          console.log("this is recipes: ", this.recipes)
+        }
+        else {
+          console.log("Error fetching recipes: ", response);
+        }
 
       } catch (error) {
         console.log(error);

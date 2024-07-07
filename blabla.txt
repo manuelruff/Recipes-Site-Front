@@ -5,3 +5,12 @@ fix modal full view - myrecipes
 manu
 check api and responses from db
 recipepreviewbonus, check the mark as viewed, do i need to add from there?
+
+when returnning recipes, check if they are favorite for the user?
+now it wont show this..
+also not showing last view...
+
+
+button in meal is not plcaed good
+
+meal count not working good!

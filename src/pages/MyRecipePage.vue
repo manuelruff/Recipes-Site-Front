@@ -39,8 +39,13 @@ export default {
         //const amountToFetch = 8; // Adjust number of recipes to fetch as needed
         //const response = mockGetRecipesPreview2(amountToFetch);
         const response = await getMyRecipe();
-        this.recipes = response.data.recipes;
-        console.log("this is recipes: ", this.recipes)
+        if (response.status == 200) {
+          this.recipes = response.data.recipes;
+          console.log("this is recipes: ", this.recipes)
+        }
+        else {
+          console.log("Error fetching recipes: ", response);
+        }
       } catch (error) {
         console.error("Error fetching recipes:", error);
       }

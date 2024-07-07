@@ -111,8 +111,13 @@ export default {
     // mock to save something the user pressed to last viewed
     // mockAddLastViewedRecipe(this.recipe.id);
     try{
-      await PostLastViewed(this.recipe.id);
-      console.log("Added to last viewed recipes " + this.recipe.id);
+      const response= await PostLastViewed(this.recipe.id);
+      if (response.status == 200){
+        console.log("Added to last viewed recipes " + this.recipe.id);
+      }
+      else{
+        console.log("Error adding to last viewed recipes " + this.recipe.id);
+      }
     }
     catch(error){
       // if not loged in we dont care its not posting

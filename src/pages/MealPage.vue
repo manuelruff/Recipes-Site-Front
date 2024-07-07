@@ -39,18 +39,31 @@ export default {
       try {
         // const response = mockGetMealRecipesPreview();
         const response = await getMeals();
-        this.recipes = response.data.recipes;
+        if(response.status == 200){
+          this.recipes = response.data.recipes;
+        }
+        else {
+          console.log("Error fetching recipes: ", response);
+        }
       } catch (error) {
         console.log(error);
       }
     },
-    clearRecipes() {
-      DeleteMeal();
+    async clearRecipes() {
+      const response = await DeleteMeal();
+      if(response.status == 200){
+        this.recipes = [];
+              // Reset the meal count in sessionStorage to 0
+
+        sessionStorage.setItem('mealsPrepared', 0);
+              // Emit event to update meal count
+
+        this.$root.$emit('update-meal-count', 0);
+      }
+      else {
+        console.log("Error clearing recipes: ", response);
+      }
       this.recipes = [];
-      // Reset the meal count in sessionStorage to 0
-      sessionStorage.setItem('mealsPrepared', 0);
-      // Emit event to update meal count
-      this.$root.$emit('update-meal-count', 0);
     },
   },
 };

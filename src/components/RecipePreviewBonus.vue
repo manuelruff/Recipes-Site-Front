@@ -85,13 +85,15 @@ export default {
     async removeRecipe() {
       // mockRemoveFromMeal(this.recipe.id);
       const response = await DeleteMeal(this.recipe.id);
-      console.log(response);
       if (response.status === 200) {
         this.$emit('remove-recipe', this.recipe.id);
         let mealsPrepared = sessionStorage.getItem('mealsPrepared');
         mealsPrepared = parseInt(mealsPrepared) - 1;
         sessionStorage.setItem('mealsPrepared', mealsPrepared);
         this.$root.$emit('update-meal-count', mealsPrepared);
+      }
+      else{
+        console.error("Error in removing recipe from meal:", response.message);
       }
     }
   }
