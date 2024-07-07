@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal v-model="modalShow" title="Create New Recipe" @ok="submitForm" @cancel="closeModal">
+    <b-modal v-model="modalShow" title="Create New Recipe" @ok="submitForm" @cancel="closeModal" :ok-disabled="!isFormValid" @hidden="resetForm">
       <b-form @submit.prevent="submitForm">
         <!-- Title -->
         <b-form-group label="Title:" :state="validateField(formData.title)">
@@ -24,14 +24,14 @@
 
         <!-- Ready in Minutes -->
         <b-form-group label="Ready in Minutes:" :state="validateField(formData.readyInMinutes)">
-          <b-form-input type="number" v-model="formData.readyInMinutes" required :min="0"></b-form-input>
-          <b-form-invalid-feedback>Ready in minutes is required and cannot be less than 0.</b-form-invalid-feedback>
+          <b-form-input type="number" v-model="formData.readyInMinutes" required :min="1"></b-form-input>
+          <b-form-invalid-feedback>Ready in minutes is required and cannot be less than 1.</b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Servings -->
         <b-form-group label="Servings:" :state="validateField(formData.servings)">
-          <b-form-input type="number" v-model="formData.servings" required :min="0"></b-form-input>
-          <b-form-invalid-feedback>Servings is required and cannot be less than 0.</b-form-invalid-feedback>
+          <b-form-input type="number" v-model="formData.servings" required :min="1"></b-form-input>
+          <b-form-invalid-feedback>Servings is required and cannot be less than 1.</b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Dietary Preferences -->
@@ -49,7 +49,6 @@
         </b-form-group>
         <b-button @click="addIngredient" variant="success">Add Ingredient</b-button>
         <b-form-invalid-feedback v-if="!formData.ingredients.length">At least one ingredient is required.</b-form-invalid-feedback>
-
       </b-form>
     </b-modal>
   </div>
@@ -58,8 +57,7 @@
 <script>
 import { BModal, BButton, BForm, BFormGroup, BFormInput, BFormInvalidFeedback, BFormCheckbox } from 'bootstrap-vue';
 import axios from 'axios';
-import {PostMyRecipe} from "../services/user.js";
-
+import { PostMyRecipe } from "../services/user.js";
 
 export default {
   components: {
@@ -78,8 +76,8 @@ export default {
         title: '',
         image: '',
         instructions: [],
-        readyInMinutes: '',
-        servings: '',
+        readyInMinutes: 1,
+        servings: 1,
         glutenFree: false,
         vegan: false,
         vegetarian: false,
@@ -87,27 +85,34 @@ export default {
       }
     };
   },
+  computed: {
+    isFormValid() {
+      const fieldsFilled = this.formData.title && this.formData.image && this.formData.readyInMinutes >= 1 && this.formData.servings >= 1;
+      const instructionsFilled = this.formData.instructions.length > 0 && this.formData.instructions.every(instr => instr.text.trim() !== '');
+      const ingredientsFilled = this.formData.ingredients.length > 0 && this.formData.ingredients.every(ingr => ingr.name.trim() !== '' && ingr.amount.trim() !== '');
+      return fieldsFilled && instructionsFilled && ingredientsFilled;
+    }
+  },
   methods: {
     openModal() {
       this.modalShow = true;
     },
     closeModal() {
       this.modalShow = false;
-      this.resetForm();
     },
     resetForm() {
       this.formData.title = '';
       this.formData.image = '';
       this.formData.instructions = [];
-      this.formData.readyInMinutes = '';
-      this.formData.servings = '';
+      this.formData.readyInMinutes = 1;
+      this.formData.servings = 1;
       this.formData.glutenFree = false;
       this.formData.vegan = false;
       this.formData.vegetarian = false;
       this.formData.ingredients = [];
     },
     async submitForm() {
-      if (!this.validateForm()) {
+      if (!this.isFormValid) {
         return;
       }
 
@@ -126,7 +131,7 @@ export default {
 
       try {
         const response = await PostMyRecipe(newRecipe);
-        if(response.status == 200){
+        if(response.status === 200){
           console.log('Recipe added successfully:', response.data);
           this.closeModal();
         }
@@ -136,15 +141,6 @@ export default {
       } catch (error) {
         console.error('Error adding recipe:', error);
       }
-    },
-    validateForm() {
-      let valid = true;
-      if (!this.formData.title) valid = false;
-      if (!this.formData.image) valid = false;
-      if (!this.formData.instructions.length) valid = false;
-      if (!this.formData.readyInMinutes || this.formData.readyInMinutes < 0) valid = false;
-      if (!this.formData.servings || this.formData.servings < 0) valid = false;
-      return valid;
     },
     validateField(field) {
       return !!field;
