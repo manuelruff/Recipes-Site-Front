@@ -41,15 +41,15 @@ import axios from 'axios';
     }
   }
 
+  // get full view of a recipe of a user
   export async function getFullViewMyRecipe(recipeID) {
     console.log('Fetching recipe with ID:', recipeID);
     try {
       const response = await axios.get(`http://localhost:80/users/myrecipes/${recipeID}`);
-      const recipe = response.data; // Assuming response.data contains the recipe details directly
-      console.log('Fetched recipe:', recipe);
+      let recipe = response.data;
       return {
         status: response.status,
-        data: recipe // Adjust this according to how the backend sends data
+        data: { recipe }
       };
     } catch (error) {
       console.error('Error fetching recipe:', error);
@@ -59,7 +59,6 @@ import axios from 'axios';
       };
     }
   }
-  
 
 
   // Function to fetch last viewed recipes
@@ -221,21 +220,6 @@ import axios from 'axios';
     }
   }
 
- // Function to all the last viewed and favorite recipes
- export async function getFavoriteAndViewed() {
-  try {
-    const response = await axios.get('http://localhost:80/users/FavoriteAndViewed');
-    if (response.status === 200) {
-      return { status: 200, data: { favoriteRecipes: response.data.favoriteRecipes, lastViewedRecipes: response.data.lastViewedRecipes } };
-    } else {
-      throw new Error('Failed to get favorite and viewed recipes');
-    }
-  } catch (error) {
-    // Log the error and rethrow it for further handling
-    console.error('Error fetching data:', error);
-    throw error;
-  }
-}
 
   export function mockAddFavorite(recipeId) {
     return { status: 200, response: { data: { message: "The Recipe successfully saved as favorite", success: true}} };

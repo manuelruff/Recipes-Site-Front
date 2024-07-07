@@ -34,14 +34,15 @@ export default {
   methods: {
     async fetchRecipes() {
       try {
-        const amountToFetch = 8; // Set this to how many recipes you want to fetch
+        // const amountToFetch = 8; // Set this to how many recipes you want to fetch
         // lets say mockGetRecipesPreview2 is mock for get favorite
         // mockGetFavoriteRecipes(amountToFetch,$root.store.username);
         // then actually reading defult recipes
         // const response = mockGetRecipesPreview2(amountToFetch);
-        const response =await getFavorites(amountToFetch); 
+        const response =await getFavorites(); 
         if (response.status == 200) {
           this.recipes = response.data.recipes;
+          console.log("this is recipes: ", this.recipes)
         }
         else {
           console.log("Error fetching recipes: ", response);
