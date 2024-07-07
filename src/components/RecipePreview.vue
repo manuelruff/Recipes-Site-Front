@@ -61,7 +61,7 @@
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <FavoriteButtonComponent :recipeId="recipe.id" :initialFavoriteState="isFavorite" @click.stop />
+          <FavoriteButtonComponent :recipeId="recipe.id" ref="favButton" :initialFavoriteState="isFavorite" @click.stop />
           <RecipeLogos :recipe="recipe" />
           <i :class="viewedIconClass" class="viewed-icon"></i>
         </li>
@@ -73,6 +73,7 @@
 <script>
 import FavoriteButtonComponent from "./FavoriteButtonComponent.vue";
 import RecipeLogos from "./RecipeLogos.vue";
+import { PostLastViewed, checkFavoriteAndViewed } from "../services/user.js";
 
 export default {
   name: "RecipePreview",
@@ -92,26 +93,43 @@ export default {
   },
   data() {
     return {
-      isFavorite: this.initialFavoriteState
+      isFavorite: this.initialFavoriteState,
+      isViewed: false  // Initialize isViewed state
     };
   },
   methods: {
-    handleClick(event, routeName) {
-      // Mark the recipe as viewed for all types of clicks
-      if (!this.recipe.isViewed) {
+    async handleClick(event, routeName) {
         this.recipe.isViewed = true;
-        console.log(`Recipe ${this.recipe.title} marked as viewed`);
-        // Here you can add code to update the viewed state in your backend or store
+        try {
+          const response = await PostLastViewed(this.recipe.id);
+          console.log(response.status == 200 ? "Added to last viewed recipes " + this.recipe.id : "Error adding to last viewed recipes " + this.recipe.id);
+        } catch (error) {
+          console.error("Error posting last viewed:", error);
+        }
+        event.preventDefault();
+        this.$router.push({ name: routeName, params: { recipeId: this.recipe.id } });
+    },
+    async loadInitialData() {
+      if (this.$root.store.username) {  // Ensure there is a logged in user and a recipe ID
+        try {
+          const { isFavorite, isViewed } = await checkFavoriteAndViewed(this.recipe.id);
+          if (isFavorite==true){
+            this.$refs.favButton.toggleFavorite();  
+          }
+          this.isViewed = isViewed;
+        } catch (error) {
+          console.error("Error loading recipe details:", error);
+        }
       }
-      // Prevent default for left-click to handle navigation programmatically
-      event.preventDefault();
-      this.$router.push({ name: routeName, params: { recipeId: this.recipe.id } });
     }
   },
   computed: {
     viewedIconClass() {
-      return this.recipe.isViewed ? "fas fa-eye" : "far fa-eye";
+      return this.isViewed ? "fas fa-eye" : "far fa-eye";
     }
+  },
+  created() {
+    this.loadInitialData();  // Call the method to check favorite and viewed status when component is created
   }
 };
 </script>
