@@ -41,15 +41,15 @@ import axios from 'axios';
     }
   }
 
-  // get full view of a recipe of a user
   export async function getFullViewMyRecipe(recipeID) {
     console.log('Fetching recipe with ID:', recipeID);
     try {
       const response = await axios.get(`http://localhost:80/users/myrecipes/${recipeID}`);
-      let recipe = response.data;
+      const recipe = response.data; // Assuming response.data contains the recipe details directly
+      console.log('Fetched recipe:', recipe);
       return {
         status: response.status,
-        data: { recipe }
+        data: recipe // Adjust this according to how the backend sends data
       };
     } catch (error) {
       console.error('Error fetching recipe:', error);
@@ -59,6 +59,7 @@ import axios from 'axios';
       };
     }
   }
+  
 
 
   // Function to fetch last viewed recipes

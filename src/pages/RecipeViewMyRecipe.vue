@@ -11,23 +11,21 @@
           <div class="wrapped">
             <div class="mb-3">
               <div><strong>Ready in:</strong> {{ recipe.readyInMinutes }} minutes</div>
-              <div><strong>Likes:</strong> {{ recipe.aggregateLikes }} likes</div>
               <div><strong>Servings:</strong> {{ recipe.servings }}</div>
-              <FavoriteButtonComponent :recipeId="recipe.id" :initialFavoriteState="isFavorite" />
             </div>
             <h3>Ingredients:</h3>
             <ul class="ingredients-list">
-              <li v-for="(r, index) in recipe.extendedIngredients" :key="index + '_' + r.id">
-                {{ r.original }}
+              <li v-for="(ingredient, index) in recipe.extendedIngredients" :key="index + '_' + ingredient.name">
+                {{ ingredient.amount }} {{ ingredient.name }}
               </li>
             </ul>
           </div>
           <div class="wrapped">
             <h3>Instructions:</h3>
             <ol class="instructions-list">
-              <li v-for="(s, index) in recipe._instructions" :key="index">
+              <li v-for="(instruction, index) in recipe.instructions" :key="index">
                 <div>
-                  <span class="step-number">{{ index + 1 }}.</span> {{ s.step }}
+                  <span class="step-number">{{ index + 1 }}.</span> {{ instruction }}
                 </div>
               </li>
             </ol>
@@ -35,22 +33,16 @@
         </div>
       </div>
     </div>
-    <PrepareAndMealButtons/>
   </div>
 </template>
 
 <script>
-import { mockAddLastViewedRecipe ,PostLastViewed,getFullViewMyRecipe} from "../services/user.js";
-import { mockGetRecipeFullDetails2, getFullView } from "../services/recipes.js";
+import { getFullViewMyRecipe } from "../services/user.js";
 import RecipeLogos from "../components/RecipeLogos.vue";
-import FavoriteButtonComponent from "../components/FavoriteButtonComponent.vue";
-import PrepareAndMealButtons from '../components/PrepareAndMealButtons.vue';
 
 export default {
   components: {
     RecipeLogos,
-    FavoriteButtonComponent,
-    PrepareAndMealButtons
   },
   data() {
     return {
@@ -60,77 +52,50 @@ export default {
   },
   async created() {
     try {
-      let response;
-      try {
-        // response = mockGetRecipeFullDetails2(this.$route.params.recipeId);
-
-        response= await getFullViewMyRecipe(this.$route.params.recipeId);
-        console.log("response", response);
-        if (response.status !== 200) this.$router.replace("/NotFound");
-      } catch (error) {
-        console.log("error.response.status", error.response.status);
+      const response = await getFullViewMyRecipe(this.$route.params.recipeId);
+      if (response.status !== 200) {
         this.$router.replace("/NotFound");
         return;
       }
 
-      const {
-        analyzedInstructions,
-        instructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title,
-        servings,
-        glutenFree,
-        vegetarian,
-        vegan,
-        id // Ensure you get the recipe ID
-      } = response.data.recipe;
+      // Log the entire response to verify its structure
+      console.log("Full response:", response);
 
+      // Extract the recipe object from the array
+      const recipeArray = response.data;
+      if (Array.isArray(recipeArray) && recipeArray.length > 0) {
+        const recipe = recipeArray[0];
 
-      this.recipe = {
-        instructions,
-        _instructions,
-        analyzedInstructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title,
-        servings,
-        glutenFree,
-        vegetarian,
-        vegan,
-        id 
-      };
+        console.log("Recipe details:", recipe);
+
+        this.recipe = {
+          instructions: recipe.instructions || [],
+          extendedIngredients: recipe.ingredients || [], // Map ingredients to extendedIngredients
+          aggregateLikes: recipe.aggregateLikes || 0,
+          readyInMinutes: recipe.readyInMinutes || 0,
+          image: recipe.image || "",
+          title: recipe.title || "No Title",
+          servings: recipe.servings || 1,
+          glutenFree: recipe.glutenFree || false,
+          vegetarian: recipe.vegetarian || false,
+          vegan: recipe.vegan || false,
+          id: Number(recipe.id) // Ensure the id is a number
+        };
+
+        // Log the mapped recipe object to verify data assignment
+        console.log("Mapped Recipe data:", this.recipe);
+      } else {
+        this.$router.replace("/NotFound");
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching recipe:", error);
+      this.$router.replace("/NotFound");
     }
-    // we log that the user saw that recipe
-    // mock to save something the user pressed to last viewed
-    // mockAddLastViewedRecipe(this.recipe.id);
-    try{
-      const response= await PostLastViewed(this.recipe.id);
-      if (response.status == 200){
-        console.log("Added to last viewed recipes " + this.recipe.id);
-      }
-      else{
-        console.log("Error adding to last viewed recipes " + this.recipe.id);
-      }
-    }
-    catch(error){
-      // if not loged in we dont care its not posting
-      if(error.status!=401){
-        console.log("Error adding to last viewed recipes " + this.recipe.id);
-      }
-    }
-  },
+  }
 };
 </script>
 
 <style scoped>
-
 .recipe-header {
   text-align: center;
 }
