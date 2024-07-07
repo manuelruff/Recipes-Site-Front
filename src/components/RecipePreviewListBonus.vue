@@ -40,7 +40,6 @@ export default {
   methods: {
     removeRecipe(recipeId) {
       this.recipes = this.recipes.filter(recipe => recipe.id !== recipeId);
-      console.log('Recipe removed, new length:', this.recipes.length); // Debug statement
       this.$emit('update-meal-count', this.recipes.length); // Emit event with the updated count
     },
     updateOrder() {
@@ -48,7 +47,6 @@ export default {
     }
   },
   mounted() {
-    console.log('Component mounted, initial recipes length:', this.recipes.length); // Debug statement
     this.$emit('update-meal-count', this.recipes.length); // Emit initial meal count
   }
 };

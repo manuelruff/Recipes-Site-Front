@@ -86,7 +86,7 @@ export async function PostLastViewed(recipeId) {
       throw { status: 401, response: { data: { message: "you need to log in first", success: false } } };    }
     else {
       // Log the error and rethrow it for further handling
-      console.error('Error fetching last viewed recipes:', error);
+      console.error('Error posting last viewed recipes:', error);
       throw error;
     }
   }
@@ -149,7 +149,63 @@ export async function DeleteFavorite(recipeId) {
   }
 }
 
+// Function to post last viewed recipes
+export async function PostMeal(recipeId) {
+  try {
+    const response = await axios.post('http://localhost:80/users/meals', {
+      recipeId: recipeId
+    });
+    if (response.status === 200) {
+      return { message: "Recipe added successfully to meal" };
+    } 
+  }
+   catch (error) {
+    if (response.status === 401){
+      throw { status: 401, response: { data: { message: "you need to log in first", success: false } } };    }
+    else {
+      // Log the error and rethrow it for further handling
+      console.error('Error fetching meals recipes:', error);
+      throw error;
+    }
+  }
+}
+// Function to fetch favorite recipes
+export async function getMeals() {
+  try {
+    const response = await axios.get('http://localhost:80/users/meals');
+    let recipes = response.data;
+    return { data: { recipes } };
+  } catch (error) {
+    // Log the error and rethrow it for further handling
+    console.error('Error fetching meals recipes:', error);
+    throw error;
+  }
+}
 
+// Function to delete a favorite recipe
+export async function DeleteMeal(recipeId) {
+  try {
+    const response = await axios.delete('http://localhost:80/users/meals', {
+      data: { recipeId: recipeId } // Corrected: Use 'data' instead of directly passing recipeId
+    });
+
+    if (response.status === 200) {
+      return { message: "Recipe deleted successfully from meals" };
+    } else {
+      // Handle other status codes if needed
+      console.error('Unexpected status code:', response.status);
+      throw new Error(`Unexpected status code: ${response.status}`);
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      throw { status: 401, response: { data: { message: "You need to log in first", success: false } } };
+    } else {
+      // Log the error and rethrow it for further handling
+      console.error('Error deleting recipe from meal:', error);
+      throw error;
+    }
+  }
+}
   export function mockAddFavorite(recipeId) {
     return { status: 200, response: { data: { message: "The Recipe successfully saved as favorite", success: true}} };
   }
