@@ -4,7 +4,7 @@
       <RecipePreviewList
         ref="recipeList"
         title="Family Recipes"
-        :displayCount="8"
+        :displayCount=recipes.length
         class="RandomRecipes center"
         :recipes="recipes"
       />

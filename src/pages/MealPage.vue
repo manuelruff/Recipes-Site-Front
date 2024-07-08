@@ -4,7 +4,7 @@
       <RecipePreviewListBonus
         ref="recipeList"
         title="My Meal"
-        :displayCount="8"
+        :displayCount=recipes.length
         class="RandomRecipes center"
         :recipes="recipes"
       />

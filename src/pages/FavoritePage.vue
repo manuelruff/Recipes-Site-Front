@@ -4,7 +4,7 @@
         <RecipePreviewList
           ref="recipeList"
           title="Favorite recipes"
-          :displayCount=2
+          :displayCount=recipes.length
           class="RandomRecipes center"
           :recipes="recipes"
         />
