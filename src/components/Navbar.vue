@@ -63,7 +63,7 @@
 
 <script>
 import CreateRecipeModal from './NewRecipeModal.vue';
-
+import {getMeals} from '../services/user.js';
 export default {
   name: 'Navbar',
   components: {
@@ -86,6 +86,10 @@ export default {
         const mealsKey = `${username}_mealsPrepared`;
         const storedMealCount = sessionStorage.getItem(mealsKey);
         this.mealCount = storedMealCount ? parseInt(storedMealCount) : 0;
+        getMeals(username).then(response => {
+            this.mealCount = response.data.recipes.length;
+            sessionStorage.setItem(mealsKey, this.mealCount);
+        });
     } else {
         // Handle guest or no-login scenario
         this.$root.toast("Hello Guest", "Welcome to Vue Recipes website!", "success");
