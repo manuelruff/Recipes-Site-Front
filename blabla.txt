@@ -4,6 +4,8 @@ fix modal full view - myrecipes
 
 manu
 check why favirote show only 2 revipes
+when closing site and openning again the meal number is wrong, need to load it in the beginning
+
 
 when returnning recipes, check if they are favorite for the user?
 now it wont show this..
