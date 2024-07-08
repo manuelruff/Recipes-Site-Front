@@ -96,19 +96,6 @@ import axios from 'axios';
     }
   }
 
-  // Function to fetch favorite recipes
-  export async function getFavorites() {
-    try {
-      const response = await axios.get('http://localhost:80/users/favorites');
-      let recipes = response.data;
-      return {status:200, data: { recipes } };
-    } catch (error) {
-      // Log the error and rethrow it for further handling
-      console.error('Error fetching last viewed recipes:', error);
-      throw error;
-    }
-  }
-
   export async function checkFavoriteAndViewed(recipe_id) {
     try {
         const response = await axios.get('http://localhost:80/users/FavoriteAndViewed');
@@ -128,8 +115,20 @@ import axios from 'axios';
         console.error('Error fetching favorite and viewed recipes:', error);
         throw error;
     }
-}
+  }
 
+  // Function to fetch favorite recipes
+  export async function getFavorites() {
+    try {
+      const response = await axios.get('http://localhost:80/users/favorites');
+      let recipes = response.data;
+      return {status:200, data: { recipes } };
+    } catch (error) {
+      // Log the error and rethrow it for further handling
+      console.error('Error fetching last viewed recipes:', error);
+      throw error;
+    }
+  }
 
   // Function to post favorite recipes
   export async function PostFavorite(recipeId) {
