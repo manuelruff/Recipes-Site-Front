@@ -27,7 +27,6 @@
       <ul class="list-group list-group-flush">
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <RecipeLogos :recipe="recipe" />
-          <i :class="viewedIconClass" class="viewed-icon"></i>
         </li>
       </ul>
       <button @click="removeRecipe" class="remove-button">X</button>
