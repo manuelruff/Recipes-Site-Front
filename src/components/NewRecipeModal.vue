@@ -2,16 +2,19 @@
   <div>
     <b-modal v-model="modalShow" title="Create New Recipe" @ok="submitForm" @cancel="closeModal" :ok-disabled="!isFormValid" @hidden="resetForm">
       <b-form @submit.prevent="submitForm">
+        <!-- Main Warning Message -->
+        <b-alert v-if="!isFormValid" variant="danger" show>
+          You must fill all the fields to insert recipe - at least one ingredient and instruction.
+        </b-alert>
+
         <!-- Title -->
         <b-form-group label="Title:" :state="validateField(formData.title)">
           <b-form-input v-model="formData.title" required></b-form-input>
-          <b-form-invalid-feedback>Title is required.</b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Image URL -->
         <b-form-group label="Image URL:" :state="validateField(formData.image)">
           <b-form-input v-model="formData.image" required></b-form-input>
-          <b-form-invalid-feedback>Image URL is required.</b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Instructions -->
@@ -20,18 +23,15 @@
           <b-button @click="removeInstruction(index)" variant="danger">Remove</b-button>
         </b-form-group>
         <b-button @click="addInstruction" variant="success">Add Instruction</b-button>
-        <b-form-invalid-feedback v-if="!formData.instructions.length">At least one instruction is required.</b-form-invalid-feedback>
 
         <!-- Ready in Minutes -->
         <b-form-group label="Ready in Minutes:" :state="validateField(formData.readyInMinutes)">
           <b-form-input type="number" v-model="formData.readyInMinutes" required :min="1"></b-form-input>
-          <b-form-invalid-feedback>Ready in minutes is required and cannot be less than 1.</b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Servings -->
         <b-form-group label="Servings:" :state="validateField(formData.servings)">
           <b-form-input type="number" v-model="formData.servings" required :min="1"></b-form-input>
-          <b-form-invalid-feedback>Servings is required and cannot be less than 1.</b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Dietary Preferences -->
@@ -48,15 +48,13 @@
           <b-button @click="removeIngredient(index)" variant="danger">Remove</b-button>
         </b-form-group>
         <b-button @click="addIngredient" variant="success">Add Ingredient</b-button>
-        <b-form-invalid-feedback v-if="!formData.ingredients.length">At least one ingredient is required.</b-form-invalid-feedback>
       </b-form>
     </b-modal>
   </div>
 </template>
 
 <script>
-import { BModal, BButton, BForm, BFormGroup, BFormInput, BFormInvalidFeedback, BFormCheckbox } from 'bootstrap-vue';
-import axios from 'axios';
+import { BModal, BButton, BForm, BFormGroup, BFormInput, BFormInvalidFeedback, BFormCheckbox, BAlert } from 'bootstrap-vue';
 import { PostMyRecipe } from "../services/user.js";
 
 export default {
@@ -67,7 +65,8 @@ export default {
     BFormGroup,
     BFormInput,
     BFormInvalidFeedback,
-    BFormCheckbox
+    BFormCheckbox,
+    BAlert
   },
   data() {
     return {
