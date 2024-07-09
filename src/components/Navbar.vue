@@ -77,7 +77,7 @@ export default {
   mounted() {
     console.log('Navbar mounted'); // Debug statement
     this.$root.$on('update-meal-count', this.updateMealCount); // Listen for the event
-
+    this.$root.$on('update-meal-count-login', this.updateMealCountLogin); // Listen for the event
     // Retrieve username from the root store
     const username = this.$root.store.username;
 
@@ -98,8 +98,23 @@ export default {
   },
   beforeDestroy() {
     this.$root.$off('update-meal-count', this.updateMealCount); // Clean up the event listener
+    this.$root.$off('update-meal-count-login', this.updateMealCountLogin); // Clean up the event listener
   },
   methods: {
+    updateMealCountLogin(count) {
+      // Retrieve username from the root store
+      const username = this.$root.store.username;
+      // If username is available, fetch the user-specific meal count
+      if (username) {
+          const mealsKey = `${username}_mealsPrepared`;
+          const storedMealCount = sessionStorage.getItem(mealsKey);
+          this.mealCount = storedMealCount ? parseInt(storedMealCount) : 0;
+          getMeals(username).then(response => {
+              this.mealCount = response.data.recipes.length;
+              sessionStorage.setItem(mealsKey, this.mealCount);
+          });
+        }
+    },
     updateMealCount(count) {
       console.log('Meal count updated:', count); // Debug statement
       this.mealCount = count || 0; // Update the meal count

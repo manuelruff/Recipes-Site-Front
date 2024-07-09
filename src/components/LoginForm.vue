@@ -105,6 +105,8 @@ export default {
 
         this.$root.store.login(this.form.username);
         this.$router.push("/");
+        //tell navbar that someone loged in so we update the meal count in session storage
+        this.$root.$emit('update-meal-count-login');
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
