@@ -75,11 +75,11 @@ export default {
   },
   methods: {
     setProgressValue() {
-        const completedSteps = sessionStorage.getItem(`completedSteps_${this.recipe.id}`);
-        const totalSteps = sessionStorage.getItem(`totalSteps_${this.recipe.id}`);
-
-        this.progressValue = completedSteps ? parseInt(completedSteps) : 0;
-        this.maxValue = totalSteps ? parseInt(totalSteps) : 0;
+      const getCompletedSteps = JSON.parse(sessionStorage.getItem(`completedSteps_${this.recipe.id}`));
+      const completedSteps = getCompletedSteps.filter(step => step).length;
+      const totalSteps = this.recipe.analyzedInstructions.flatMap(instr => instr.steps).length;
+      this.progressValue = completedSteps ? parseInt(completedSteps) : 0;
+      this.maxValue = totalSteps ? parseInt(totalSteps) : 0;
     },
     async removeRecipe() {
       // mockRemoveFromMeal(this.recipe.id);

@@ -120,23 +120,32 @@ export default {
   },
   computed: {
     progressValue() {
-        return this.completedSteps.filter(Boolean).length / this.maxValue * 100;
+      const totalSteps = this.completedSteps.length;
+      const completedStepsCount = this.completedSteps.filter(step => step).length;
+      return totalSteps ? (completedStepsCount / totalSteps) * 100 : 0;
     }
   },
   methods: {
     saveCheckboxState() {
-        sessionStorage.setItem(`completedSteps_${this.recipe.id}`, JSON.stringify(this.completedSteps.filter(Boolean).length));
-        sessionStorage.setItem(`totalSteps_${this.recipe.id}`, this.completedSteps.length);
+      sessionStorage.setItem(`completedSteps_${this.recipe.id}`, JSON.stringify(this.completedSteps));
+      sessionStorage.setItem(`totalSteps_${this.recipe.id}`, this.completedSteps.length.toString());
     },
     getSavedCheckboxState(recipeId, stepsCount) {
-        const completed = sessionStorage.getItem(`completedSteps_${recipeId}`);
-        const totalSteps = parseInt(sessionStorage.getItem(`totalSteps_${recipeId}`)) || stepsCount;
-        this.maxValue = totalSteps;
-        return completed ? JSON.parse(completed) : new Array(stepsCount).fill(false);
+      const completed = sessionStorage.getItem(`completedSteps_${recipeId}`);
+      // console.log(completed);
+      const totalSteps = parseInt(sessionStorage.getItem(`totalSteps_${recipeId}`)) || stepsCount;
+      this.totalSteps = totalSteps;  
+
+      if (completed) {
+        const parsedCompleted = JSON.parse(completed);
+        return Array.isArray(parsedCompleted) ? parsedCompleted : new Array(totalSteps).fill(false);
+      } else {
+        return new Array(totalSteps).fill(false);
+      }
     },
     getCheckboxIndex(sectionIndex, stepIndex) {
-        const stepsBefore = this.recipe.analyzedInstructions.slice(0, sectionIndex).reduce((acc, section) => acc + section.steps.length, 0);
-        return stepsBefore + stepIndex;
+      const stepsBefore = this.recipe.analyzedInstructions.slice(0, sectionIndex).reduce((acc, section) => acc + section.steps.length, 0);
+      return stepsBefore + stepIndex;
     }
   }
 };
