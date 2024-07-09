@@ -126,6 +126,13 @@ export default {
     }
   },
   methods: {
+    adjustQuantities() {
+      this.adjustedIngredients = this.recipe.extendedIngredients.map(ingredient => {
+        const adjustedAmount = (ingredient.amount * this.multiplier).toFixed(2);
+        return `${adjustedAmount} ${ingredient.unit} ${ingredient.originalName}`;
+      });
+      this.adjustedServings = (this.recipe.servings * this.multiplier).toFixed(2);
+    },
     saveCheckboxState() {
       sessionStorage.setItem(`completedSteps_${this.recipe.id}`, JSON.stringify(this.completedSteps));
       sessionStorage.setItem(`totalSteps_${this.recipe.id}`, this.completedSteps.length.toString());
