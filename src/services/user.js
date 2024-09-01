@@ -5,7 +5,7 @@ import axios from 'axios';
   export async function PostMyRecipe(newRecipe) {
     console.log(newRecipe);
     try {
-      const response = await axios.post('http://localhost:80/users/myrecipes', {
+      const response = await axios.post('/users/myrecipes', {
         title: newRecipe.title,
         image: newRecipe.image,
         instructions: newRecipe.instructions,
@@ -31,7 +31,7 @@ import axios from 'axios';
   // Function to fetch my recipes for user
   export async function getMyRecipe() {
     try {
-      const response = await axios.get('http://localhost:80/users/myrecipes');
+      const response = await axios.get('/users/myrecipes');
       let recipes = response.data;
       return { data: { recipes }, status:200 };
     } catch (error) {
@@ -43,7 +43,7 @@ import axios from 'axios';
   export async function getFullViewMyRecipe(recipeID) {
     console.log('Fetching recipe with ID:', recipeID);
     try {
-      const response = await axios.get(`http://localhost:80/users/myrecipes/${recipeID}`);
+      const response = await axios.get(`/users/myrecipes/${recipeID}`);
       const recipe = response.data; // Assuming response.data contains the recipe details directly
       console.log('Fetched recipe:', recipe);
       return {
@@ -65,7 +65,7 @@ import axios from 'axios';
   // Function to fetch last viewed recipes
   export async function getLastViewed() {
     try {
-      const response = await axios.get('http://localhost:80/users/lastview');
+      const response = await axios.get('/users/lastview');
       let recipes = response.data; // Assuming response.data directly contains the array of recipes
       return { data: { recipes }, status:200 };
     } catch (error) {
@@ -78,7 +78,7 @@ import axios from 'axios';
   // Function to post last viewed recipes
   export async function PostLastViewed(recipeId) {
     try {
-      const response = await axios.post('http://localhost:80/users/lastview', {
+      const response = await axios.post('/users/lastview', {
         recipeId: recipeId
       });
       if (response.status === 200) {
@@ -98,7 +98,7 @@ import axios from 'axios';
 
   export async function checkFavoriteAndViewed(recipe_id) {
     try {
-        const response = await axios.get('http://localhost:80/users/FavoriteAndViewed');
+        const response = await axios.get('/users/FavoriteAndViewed');
         if (response.status === 200) {
             // they dont return the same from server bevcause favoriteRecipes is used in another place and lastViewedRecipes is just here
             const favoriteRecipes = response.data.favoriteRecipes.map(recipe => recipe.recipe_id);
@@ -120,7 +120,7 @@ import axios from 'axios';
   // Function to fetch favorite recipes
   export async function getFavorites() {
     try {
-      const response = await axios.get('http://localhost:80/users/favorites');
+      const response = await axios.get('/users/favorites');
       let recipes = response.data;
       return {status:200, data: { recipes } };
     } catch (error) {
@@ -133,7 +133,7 @@ import axios from 'axios';
   // Function to post favorite recipes
   export async function PostFavorite(recipeId) {
     try {
-      const response = await axios.post('http://localhost:80/users/favorites', {
+      const response = await axios.post('/users/favorites', {
         recipeId: recipeId
       });
       if (response.status === 200) {
@@ -154,7 +154,7 @@ import axios from 'axios';
   // Function to delete a favorite recipe
   export async function DeleteFavorite(recipeId) {
     try {
-      const response = await axios.delete('http://localhost:80/users/favorites', {
+      const response = await axios.delete('/users/favorites', {
         data: { recipeId: recipeId } // Corrected: Use 'data' instead of directly passing recipeId
       });
 
@@ -179,7 +179,7 @@ import axios from 'axios';
   // Function to post recipe to meal
   export async function PostMeal(recipeId) {
     try {
-      const response = await axios.post('http://localhost:80/users/meals', {
+      const response = await axios.post('/users/meals', {
         recipeId: recipeId
       });
       if (response.status === 200) {
@@ -200,7 +200,7 @@ import axios from 'axios';
   // Function to fetch meal 
   export async function getMeals() {
     try {
-      const response = await axios.get('http://localhost:80/users/meals');
+      const response = await axios.get('/users/meals');
       let recipes = response.data;
       return {status:200, data: { recipes } };
     } catch (error) {
@@ -216,11 +216,11 @@ import axios from 'axios';
       let response;
       if (!recipeId) {
         // Remove all meals for the user
-        response=await axios.delete('http://localhost:80/users/meals');
+        response=await axios.delete('/users/meals');
       }
       else{
         // Remove a specific meal
-        response = await axios.delete('http://localhost:80/users/meals', {
+        response = await axios.delete('/users/meals', {
           data: { recipeId: recipeId } // Corrected: Use 'data' instead of directly passing recipeId
         });
       }

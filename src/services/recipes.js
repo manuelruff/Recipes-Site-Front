@@ -8,11 +8,10 @@ import recipeInformation324694 from "../assets/mocks/GetRecipeInformation324694.
 import recipe_prepare_full from "../assets/mocks/recipe_prepare_full.json";
 
 import axios from 'axios';
-
 export async function getRandom(amount = 3) {
   console.log('Fetching random recipes with amount:', amount);
   try {
-    const response = await axios.get('http://localhost:80/recipes/random', {
+    const response = await axios.get('/recipes/random', {
       params: {
         number: amount
       }
@@ -28,7 +27,7 @@ export async function getRandom(amount = 3) {
 export async function getFullView(recipeID) {
   console.log('Fetching recipe with ID:', recipeID);
   try {
-    const response = await axios.get(`http://localhost:80/recipes/${recipeID}`);
+    const response = await axios.get(`/recipes/${recipeID}`);
     let recipe = response.data;
     return {
       status: response.status,
@@ -45,7 +44,7 @@ export async function getFullView(recipeID) {
 
 export async function getSearch(query, amountToFetch, dietString, cuisineString, intolerancesString) {
   try {
-    const response = await axios.get(`http://localhost:80/recipes/search`, {
+    const response = await axios.get(`/recipes/search`, {
       params: {
         recipeName: query,
         number: amountToFetch,

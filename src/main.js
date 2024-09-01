@@ -40,7 +40,8 @@ import {
 Vue.use(Vuelidate);
 
 // Axios configuration
-axios.defaults.baseURL = 'http://localhost:80'; // Adjust this to your server URL
+//axios.defaults.baseURL = 'http://localhost:80'; // Adjust this to your server URL
+axios.defaults.baseURL =  process.env.URL;
 axios.defaults.withCredentials = true; // Make sure this is set
 
 
@@ -72,7 +73,8 @@ Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 
 const shared_data = {
-  server_domain: "http://localhost:80",
+  // server_domain: "http://localhost:80",
+  server_domain: "http://manu-omri-recipes.cs.bgu.ac.il",
   username: localStorage.username,
   login(username) {
     localStorage.setItem("username", username);

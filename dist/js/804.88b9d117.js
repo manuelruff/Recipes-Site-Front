@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkassignment_2_1"]=self["webpackChunkassignment_2_1"]||[]).push([[804],{8804:(n,s,e)=>{e.r(s),e.d(s,{default:()=>u});var t=function(){var n=this,s=n._self._c;return s("div",{staticClass:"container"},[s("LoginForm")],1)},a=[],o=e(6263);const i={name:"LoginPage",components:{LoginForm:o.Z}},l=i;var r=e(1001),c=(0,r.Z)(l,t,a,!1,null,null,null);const u=c.exports}}]);
-//# sourceMappingURL=804.88b9d117.js.map

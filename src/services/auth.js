@@ -1,12 +1,15 @@
 // src/services/auth.js
 
 import axios from "axios";
+// axios.defaults.baseURL =  process.env.URL;
 
 
 
 export async function PostLogin(username, password) {
   try {
-    const response = await axios.post('http://localhost/auth/Login', {
+    console.log("im hereeeeeeeeeeee");
+
+    const response = await axios.post('/auth/Login', {
       username: username,
       password: password,
     });
@@ -31,7 +34,7 @@ export async function PostLogin(username, password) {
 
 export async function PostRegister(userDetails) {
   try {
-    const response = await axios.post('http://localhost:80/auth/Register', {
+    const response = await axios.post('/auth/Register', {
       username: userDetails.username,
       password: userDetails.password,
       firstname: userDetails.firstname,
