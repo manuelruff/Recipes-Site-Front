@@ -14,7 +14,7 @@
 
         <!-- Image URL -->
         <b-form-group label="Image URL:" :state="validateField(formData.image)">
-          <b-form-input v-model="formData.image" required></b-form-input>
+          <b-form-input v-model="formData.image" required maxlength="150"></b-form-input>
         </b-form-group>
 
         <!-- Instructions -->
@@ -64,7 +64,7 @@ export default {
     BForm,
     BFormGroup,
     BFormInput,
-    BFormInvalidFeedback,
+    // BFormInvalidFeedback,
     BFormCheckbox,
     BAlert
   },

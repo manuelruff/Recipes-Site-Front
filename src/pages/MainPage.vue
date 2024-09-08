@@ -62,8 +62,8 @@ export default {
     async fetchRecipes() {
       try {
         const amountToFetch = 3; // Set this to how many recipes you want to fetch
-        const response = mockGetRecipesPreview2(amountToFetch);
-        // const response = await getRandom(amountToFetch);
+        // const response = mockGetRecipesPreview2(amountToFetch);
+        const response = await getRandom(amountToFetch);
         if (response.status == 200) {
           this.recipes = response.data.recipes;
           console.log(response);
@@ -73,8 +73,8 @@ export default {
           console.log("Error fetching recipes: ", response);
         }
 
-        const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
-        // const lastViewedResponse = await getLastViewed();
+        // const lastViewedResponse = mockGetRecipesPreview2(amountToFetch);
+        const lastViewedResponse = await getLastViewed();
         if (lastViewedResponse.status == 200) {
           this.lastViewedRecipes =  lastViewedResponse.data.recipes;
         }
@@ -88,20 +88,20 @@ export default {
     },
     async randomizeRecipes() {
       // with api 
-      // const amountToFetch = 3; // Set this to how many recipes you want to fetch
-      // const response = await getRandom(amountToFetch);
-      // this.recipes = response.data.recipes;
-      // if (response.status == 200) {
-      //     this.recipes = response.data.recipes;
-      //     console.log(response);
+      const amountToFetch = 3; // Set this to how many recipes you want to fetch
+      const response = await getRandom(amountToFetch);
+      this.recipes = response.data.recipes;
+      if (response.status == 200) {
+          this.recipes = response.data.recipes;
+          console.log(response);
 
-      //   }
-      //   else {
-      //     console.log("Error fetching recipes: ", response);
-      //   }
+        }
+        else {
+          console.log("Error fetching recipes: ", response);
+        }
       
       // just thos withou api
-      this.$refs.recipeList.randomizeRecipes();
+      // this.$refs.recipeList.randomizeRecipes();
     }
   }
 };
