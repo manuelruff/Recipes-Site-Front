@@ -1,14 +1,7 @@
-// src/services/auth.js
-
 import axios from "axios";
-// axios.defaults.baseURL =  process.env.URL;
-
-
 
 export async function PostLogin(username, password) {
   try {
-    console.log("im hereeeeeeeeeeee");
-
     const response = await axios.post('/auth/Login', {
       username: username,
       password: password,

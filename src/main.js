@@ -2,14 +2,12 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
-
 import routes from "./routes";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 const router = new VueRouter({
   routes,
 });
-
 import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -40,10 +38,8 @@ import {
 Vue.use(Vuelidate);
 
 // Axios configuration
-//axios.defaults.baseURL = 'http://localhost:80'; // Adjust this to your server URL
-axios.defaults.baseURL =  process.env.URL;
-axios.defaults.withCredentials = true; // Make sure this is set
-
+axios.defaults.baseURL = process.env.VUE_APP_URL;
+axios.defaults.withCredentials = true; 
 
 axios.interceptors.request.use(
   function(config) {
@@ -56,7 +52,6 @@ axios.interceptors.request.use(
   }
 );
 
-// Add a response interceptor
 axios.interceptors.response.use(
   function(response) {
     // Do something with response data
@@ -73,8 +68,7 @@ Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 
 const shared_data = {
-  // server_domain: "http://localhost:80",
-  server_domain: "http://manu-omri-recipes.cs.bgu.ac.il",
+  server_domain: process.env.URL,
   username: localStorage.username,
   login(username) {
     localStorage.setItem("username", username);

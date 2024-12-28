@@ -162,10 +162,8 @@ export default {
         console.log(this.results);
         this.sortResults(); // Sort the results after fetching
         this.saveState(); // Save state after fetching and sorting
-        console.log("im here!!!!!!!!!!!")
       })
     .catch(error => {
-      console.log("nothing here ")
       this.results=[]
       console.error("Error fetching recipes:", error);
     });

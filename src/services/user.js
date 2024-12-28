@@ -1,4 +1,3 @@
-// src/services/user.js
 import axios from 'axios';
 
   // Function to register a new recipe for user
@@ -44,16 +43,16 @@ import axios from 'axios';
     console.log('Fetching recipe with ID:', recipeID);
     try {
       const response = await axios.get(`/users/myrecipes/${recipeID}`);
-      const recipe = response.data; // Assuming response.data contains the recipe details directly
+      const recipe = response.data; 
       console.log('Fetched recipe:', recipe);
       return {
         status: response.status,
-        data: recipe // Adjust this according to how the backend sends data
+        data: recipe
       };
     } catch (error) {
       console.error('Error fetching recipe:', error);
       return {
-        status: error.response.status || 500, // Use 500 if no status code available
+        status: error.response.status || 500, 
         data: null
       };
     }
@@ -66,7 +65,7 @@ import axios from 'axios';
   export async function getLastViewed() {
     try {
       const response = await axios.get('/users/lastview');
-      let recipes = response.data; // Assuming response.data directly contains the array of recipes
+      let recipes = response.data; 
       return { data: { recipes }, status:200 };
     } catch (error) {
       // Log the error and rethrow it for further handling

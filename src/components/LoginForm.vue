@@ -56,16 +56,12 @@
     >
       Login failed: {{ form.submitError }}
     </b-alert>
-     <!-- <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card> -->
   </div>
 </template>
 
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mockLogin } from "../services/auth.js";
-import { PostLogin } from "../services/auth.js";
+import { mockLogin,PostLogin } from "../services/auth.js";
 
 export default {
   name: "LoginForm",
@@ -96,13 +92,11 @@ export default {
     async Login() {
       try {
 
-        // const success = false; // Modify this to test the error handling
-        // const response = mockLogin(this.form.username, this.form.password, success);
-        const response = await PostLogin(this.form.username, this.form.password);
-
-        console.log(response);
-        // this.$root.loggedIn = true;
-
+        //  no server
+        const response =await mockLogin(this.form.username, this.form.password);
+        // with server
+        // const response = await PostLogin(this.form.username, this.form.password);
+        this.$root.loggedIn = true;
         this.$root.store.login(this.form.username);
         this.$router.push("/");
         //tell navbar that someone loged in so we update the meal count in session storage
@@ -113,15 +107,11 @@ export default {
       }
     },
     onLogin() {
-      // console.log("login method called");
       this.form.submitError = undefined;
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-
-      // console.log("login method go");
-
       this.Login();
     }
   }
@@ -131,11 +121,11 @@ export default {
 <style scoped>
 .container {
   max-width: 400px;
-  background-color: rgba(0, 0, 0, 0.5); /* Black with 50% transparency */
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 40px 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: white; /* Set the text color to white */
+  color: white;
 }
 
 .title {

@@ -52,15 +52,17 @@ export default {
   data() {
     return {
       recipe: null,
-      isFavorite: false // Assuming you have a way to get the initial favorite state
+      isFavorite: false 
     };
   },
   async created() {
     try {
       let response;
       try {
-        // response = mockGetRecipeFullDetails2(this.$route.params.recipeId);
-        response= await getFullView(this.$route.params.recipeId);
+        //  no server
+        response = mockGetRecipeFullDetails2(this.$route.params.recipeId);
+        // with server
+        // response= await getFullView(this.$route.params.recipeId);
         if (response.status !== 200) this.$router.replace("/NotFound");
       } catch (error) {
         console.log("error.response.status", error.response.status);

@@ -36,7 +36,7 @@ export async function getFullView(recipeID) {
   } catch (error) {
     console.error('Error fetching recipe:', error);
     return {
-      status: error.response.status || 500, // Use 500 if no status code available
+      status: error.response.status || 500, 
       data: null
     };
   }
@@ -56,7 +56,7 @@ export async function getSearch(query, amountToFetch, dietString, cuisineString,
     
     if (response.status === 200) {
       // Successfully fetched the data
-      return response.data; // Directly returning the data if status is 200
+      return response.data; 
     } else {
       // Throw an error if the response status is not 200
       throw new Error(`Failed to fetch recipes: Server responded with status ${response.status}`);
